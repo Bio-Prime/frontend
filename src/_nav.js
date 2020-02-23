@@ -24,15 +24,25 @@ export default {
       ],
     },
     {
-      divider: true,
-    },
-    {
       name: 'Export',
       icon: 'Cloud',
       children: [
         {
           name: 'Preview',
           url: '/apps/invoice',
+        }
+      ],
+    },
+    {
+      divider: true,
+    },
+    {
+      name: 'Admin',
+      icon: 'Cpu',
+      children: [
+        {
+          name: 'Members',
+          url: '/elements/forms',
         }
       ],
     },
