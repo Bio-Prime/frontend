@@ -8,9 +8,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.3",
+    "@material-ui/icons": "^4.9.1",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.7.3",
     "classnames": "^2.2.6",
+    "material-table": "^1.57.2",
     "node-sass": "^4.13.1",
     "react": "^16.8.1",
     "react-chartjs-2": "2.6.4",
