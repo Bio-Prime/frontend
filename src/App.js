@@ -8,8 +8,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/home' component={DashboardLayout} />
         <Route path='/login' component={LoginLayout} />
+
+        <Route path='/home' component={DashboardLayout} />
+        <Route path='/apps' component={DashboardLayout} />
+        <Route path='/elements' component={DashboardLayout} />
       </Switch>
     </BrowserRouter>
   );
