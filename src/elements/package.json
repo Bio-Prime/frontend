@@ -1,6 +1,6 @@
 {
-    "name": "vibe",
-    "description": "Vibe Components",
-    "version": "1.0.0",
+    "name": "BioPrime",
+    "description": "BioPrime Components",
+    "version": "0.0.0",
     "main": "index.js"
   }
