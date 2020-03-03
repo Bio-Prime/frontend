@@ -10,6 +10,7 @@ export default function App() {
       <Switch>
         <Route path='/login' component={LoginLayout} />
 
+        <Route path='/' component={DashboardLayout} />
         <Route path='/home' component={DashboardLayout} />
         <Route path='/apps' component={DashboardLayout} />
         <Route path='/elements' component={DashboardLayout} />
