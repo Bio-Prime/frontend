@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardBody, Col, Row, Button } from 'reactstrap';
-import { Loader } from '../../vibe/';
-import PageLoaderContext from '../../vibe/components/PageLoader/PageLoaderContext';
+import { Loader } from '../../elements/';
+import PageLoaderContext from '../../elements/components/PageLoader/PageLoaderContext';
 
 export default function Loaders() {
   return (

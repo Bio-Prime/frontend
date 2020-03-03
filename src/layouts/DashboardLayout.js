@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Button, Badge, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Header, SidebarNav, Footer, PageContent, Page } from '../vibe';
+import { Header, SidebarNav, Footer, PageContent, Page } from '../elements';
 import Logo from '../assets/images/vibe-logo.svg';
 import nav from '../_nav';
 import routes from '../views';
-import ContextProviders from '../vibe/components/utilities/ContextProviders';
-import handleKeyAccessibility, { handleClickAccessibility } from '../vibe/helpers/handleTabAccessibility';
+import ContextProviders from '../elements/components/utilities/ContextProviders';
+import handleKeyAccessibility, { handleClickAccessibility } from '../elements/helpers/handleTabAccessibility';
 
 const MOBILE_SIZE = 992;
 
