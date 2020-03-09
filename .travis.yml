@@ -16,7 +16,7 @@ before_install:
 
 script:
   - npm test
-  - npm build
+  - npm run build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t $DOCKER_USERNAME/frontend:latest -t $DOCKER_USERNAME/frontend:$TRAVIS_JOB_NUMBER .
   - docker push $DOCKER_USERNAME/frontend:latest
