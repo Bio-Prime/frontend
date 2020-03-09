@@ -9,7 +9,7 @@ cache:
     - node_modules
 
 notifications:
-  slack: bioprimeworkspace:PeSqLEmvdR8KucSYVLSPBzWU
+  slack: bioprimeworkspace:$SLACK_TOKEN
 
 before_install:
   - npm i -g npm@5.1.0
@@ -18,6 +18,6 @@ script:
   - npm test
   - npm build
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t $DOCKER_USERNAME/backend:latest -t $DOCKER_USERNAME/backend:$TRAVIS_JOB_NUMBER .
-  - docker push $DOCKER_USERNAME/backend:latest
-  - docker push $DOCKER_USERNAME/backend:$TRAVIS_JOB_NUMBER
+  - docker build -t $DOCKER_USERNAME/frontend:latest -t $DOCKER_USERNAME/frontend:$TRAVIS_JOB_NUMBER .
+  - docker push $DOCKER_USERNAME/frontend:latest
+  - docker push $DOCKER_USERNAME/frontend:$TRAVIS_JOB_NUMBER
