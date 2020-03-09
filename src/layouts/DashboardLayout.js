@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Button, Badge, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Header, SidebarNav, Footer, PageContent, Avatar, Page } from '../vibe';
+import { Header, SidebarNav, Footer, PageContent, Page } from '../elements';
 import Logo from '../assets/images/vibe-logo.svg';
-import avatar1 from '../assets/images/avatar1.png';
 import nav from '../_nav';
 import routes from '../views';
-import ContextProviders from '../vibe/components/utilities/ContextProviders';
-import handleKeyAccessibility, { handleClickAccessibility } from '../vibe/helpers/handleTabAccessibility';
+import ContextProviders from '../elements/components/utilities/ContextProviders';
+import handleKeyAccessibility, { handleClickAccessibility } from '../elements/helpers/handleTabAccessibility';
 
 const MOBILE_SIZE = 992;
 
@@ -49,10 +48,6 @@ export default class DashboardLayout extends Component {
     this.setState(prevState => ({ sidebarCollapsed: !prevState.sidebarCollapsed }));
   };
 
-  closeChat = () => {
-    this.setState({ showChat1: false });
-  };
-
   render() {
     const { sidebarCollapsed } = this.state;
     const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
@@ -88,10 +83,7 @@ export default class DashboardLayout extends Component {
             </Page>
           </div>
           <Footer>
-            <span>Copyright © 2020 BioPrime. All rights reserved.</span>
-            <span>
-              <a href="#!">Terms</a> | <a href="#!">Privacy Policy</a>
-            </span>
+            <span>Copyright © 2020 BioPrime.</span>
             <span className="ml-auto hidden-xs">
               BioPrime.
             </span>
@@ -105,14 +97,6 @@ export default class DashboardLayout extends Component {
 function HeaderNav() {
   return (
     <React.Fragment>
-      <NavItem>
-        <form className="form-inline">
-          <input className="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search" />
-          <Button type="submit" className="d-none d-sm-block">
-            <i className="fa fa-search" />
-          </Button>
-        </form>
-      </NavItem>
       <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
           New
@@ -126,17 +110,11 @@ function HeaderNav() {
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
-      <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav>
-          <Avatar size="small" color="blue" initials="JS" />
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem>Option 1</DropdownItem>
-          <DropdownItem>Option 2</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Reset</DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+        <NavItem>
+            <Button type="submit" className="btn">
+                <i className="fa fa-sign-out" /> Logout
+            </Button>
+        </NavItem>
     </React.Fragment>
   );
 }
