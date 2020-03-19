@@ -19,6 +19,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import routes from '../views/index'
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
 
 const drawerWidth = 240;
 
@@ -92,7 +93,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function DashboardLayout() {
+export default function DashboardLayout({onClickDark}) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const handleDrawerOpen = () => {
@@ -103,7 +104,7 @@ export default function DashboardLayout() {
     };
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root} >
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
@@ -119,8 +120,11 @@ export default function DashboardLayout() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Dashboard
                     </Typography>
+                    <IconButton color="inherit" aria-label="delete" className={classes.margin} onClick={onClickDark}>
+                        <InvertColorsIcon />
+                    </IconButton>
                     <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
+                        <Badge badgeContent={1} color="secondary">
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
