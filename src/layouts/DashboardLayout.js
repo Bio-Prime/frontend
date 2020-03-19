@@ -1,120 +1,203 @@
-import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { Button, Badge, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Header, SidebarNav, Footer, PageContent, Page } from '../elements';
-import Logo from '../assets/images/vibe-logo.svg';
-import nav from '../_nav';
-import routes from '../views';
-import ContextProviders from '../elements/components/utilities/ContextProviders';
-import handleKeyAccessibility, { handleClickAccessibility } from '../elements/helpers/handleTabAccessibility';
+import React from 'react';
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { mainListItems, secondaryListItems } from './listItems';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Chart from "../components/Chart";
+import Deposits from "../components/Deposits";
+import Orders from "../components/Orders";
 
-const MOBILE_SIZE = 992;
+const drawerWidth = 240;
 
-export default class DashboardLayout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sidebarCollapsed: false,
-      isMobile: window.innerWidth <= MOBILE_SIZE,
-      showChat1: true,
+const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+    },
+    toolbar: {
+        paddingRight: 24, // keep right padding when drawer closed
+    },
+    toolbarIcon: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginRight: 36,
+    },
+    menuButtonHidden: {
+        display: 'none',
+    },
+    title: {
+        flexGrow: 1,
+    },
+    drawerPaper: {
+        position: 'relative',
+        whiteSpace: 'nowrap',
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerPaperClose: {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(9),
+        },
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+    },
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+    },
+    fixedHeight: {
+        height: 240,
+    },
+}));
+
+export default function DashboardLayout() {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(true);
+    const handleDrawerOpen = () => {
+        setOpen(true);
     };
-  }
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
-  handleResize = () => {
-    if (window.innerWidth <= MOBILE_SIZE) {
-      this.setState({ sidebarCollapsed: false, isMobile: true });
-    } else {
-      this.setState({ isMobile: false });
-    }
-  };
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  componentDidUpdate(prev) {
-    if (this.state.isMobile && prev.location.pathname !== this.props.location.pathname) {
-      this.toggleSideCollapse();
-    }
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-    document.addEventListener('keydown', handleKeyAccessibility);
-    document.addEventListener('click', handleClickAccessibility);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  toggleSideCollapse = () => {
-    this.setState(prevState => ({ sidebarCollapsed: !prevState.sidebarCollapsed }));
-  };
-
-  render() {
-    const { sidebarCollapsed } = this.state;
-    const sidebarCollapsedClass = sidebarCollapsed ? 'side-menu-collapsed' : '';
     return (
-      <ContextProviders>
-        <div className={`app ${sidebarCollapsedClass}`}>
-          <div className="app-body">
-            <SidebarNav
-              nav={nav}
-              logo={Logo}
-              logoText="BioPrime."
-              isSidebarCollapsed={sidebarCollapsed}
-              toggleSidebar={this.toggleSideCollapse}
-              {...this.props}
-            />
-            <Page>
-              <Header
-                toggleSidebar={this.toggleSideCollapse}
-                isSidebarCollapsed={sidebarCollapsed}
-                routes={routes}
-                {...this.props}
-              >
-                <HeaderNav />
-              </Header>
-              <PageContent>
-                <Switch>
-                  {routes.map((page, key) => (
-                    <Route path={page.path} component={page.component} key={key} />
-                  ))}
-                  <Redirect from="/" to="/home" />
-                </Switch>
-              </PageContent>
-            </Page>
-          </div>
-          <Footer>
-            <span>Copyright © 2020 BioPrime.</span>
-            <span className="ml-auto hidden-xs">
-              BioPrime.
-            </span>
-          </Footer>
+        <div className={classes.root}>
+            <CssBaseline />
+            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                <Toolbar className={classes.toolbar}>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                        Dashboard
+                    </Typography>
+                    <IconButton color="inherit">
+                        <Badge badgeContent={4} color="secondary">
+                            <NotificationsIcon />
+                        </Badge>
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+            <Drawer
+                variant="permanent"
+                classes={{
+                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                }}
+                open={open}
+            >
+                <div className={classes.toolbarIcon}>
+                    <IconButton onClick={handleDrawerClose}>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </div>
+                <Divider />
+                <List>{mainListItems}</List>
+                <Divider />
+                <List>{secondaryListItems}</List>
+            </Drawer>
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
+                    <Grid container spacing={3}>
+                        {/* Chart */}
+                        <Grid item xs={12} md={8} lg={9}>
+                            <Paper className={fixedHeightPaper}>
+                                <Chart />
+                            </Paper>
+                        </Grid>
+                        {/* Recent Deposits */}
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <Deposits />
+                            </Paper>
+                        </Grid>
+                        {/* Recent Orders */}
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                <Orders />
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    <Box pt={4}>
+                        <Copyright />
+                    </Box>
+                </Container>
+            </main>
         </div>
-      </ContextProviders>
     );
-  }
 }
 
-function HeaderNav() {
-  return (
-    <React.Fragment>
-      <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav caret>
-          New
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem>Project</DropdownItem>
-          <DropdownItem>User</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>
-            Message <Badge color="primary">10</Badge>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-        <NavItem>
-            <Button type="submit" className="btn">
-                <i className="fa fa-sign-out" /> Logout
-            </Button>
-        </NavItem>
-    </React.Fragment>
-  );
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="#">
+                BioPrime
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
 }
