@@ -7,7 +7,6 @@ const palette = {
     type: "dark",
     primary: {
         main: '#26A69A',
-        dark: '#212121',
     }
 };
 
