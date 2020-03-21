@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Chart from "../../components/Chart";
 import Count from "../../components/Count";
 import clsx from "clsx";
+import CustomToolbar from '../elements/CustomToolbar'
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -358,6 +359,15 @@ export default function Dashboard() {
 
     const options = {
         filterType: 'checkbox',
+        downloadOptions: {
+            filename: "primers.csv",
+            separator: ","
+        },
+        customToolbar: () => {
+            return (
+                <CustomToolbar />
+            );
+        },
     };
 
     const classes = useStyles();
