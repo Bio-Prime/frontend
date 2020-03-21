@@ -1,5 +1,5 @@
+import Orders from "./pages/Orders";
 import Dashboard from "./pages/Dashboard";
-import Primers from "./pages/Primers";
 
 const pageList = [
     {
@@ -8,9 +8,9 @@ const pageList = [
         component: Dashboard,
     },
     {
-        name: 'Primers',
-        path: '/primers',
-        component: Primers,
+        name: 'Orders',
+        path: '/orders',
+        component: Orders,
     },
 ];
 

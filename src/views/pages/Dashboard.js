@@ -1,49 +1,30 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Chart from '../../components/Chart';
-import Deposits from '../../components/Deposits';
-import Orders from '../../components/Orders';
-
-const useStyles = makeStyles(theme => ({
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
-    fixedHeight: {
-        height: 240,
-    },
-}));
+import DataTable from "../../components/DataTable";
 
 export default function Dashboard() {
-    const classes = useStyles();
 
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const columns =
+        [
+            "Name", "Sequence", "Orientation", "Location in lab", "Position in the reference", "Tm (°C)", "Optimal T of annealing (°C)",
+            "Purification method", "Amount available", "Date", "Length of amplicone", "Storing T (°C)", "GC%", "Organism", "Gen", "Designer (name and surname)",
+            "5' modification", "3' modification", "Manufacturer", "Supplier", "Type of primer", "Human genom build", "NCBI gen ID",
+            "Did you check specificity in blast?", "Formulation", "Application", "Project", "If TaqMan: sonda sequence", "Ordered by",
+            "Comment", "Analysis"
+        ];
+
+    const data = [
+        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
+            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "LipBled", "DNA/RNA probe", "NCBI Build 34",
+            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
+
+    ];
+
+    const options = {
+        filterType: 'checkbox',
+    };
 
     return (
-        <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-                <Paper className={fixedHeightPaper}>
-                    <Chart />
-                </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}>
-                    <Deposits />
-                </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                    <Orders />
-                </Paper>
-            </Grid>
-        </Grid>
+        <DataTable columns={columns} data={data} options={options}/>
     );
+
 }
