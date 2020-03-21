@@ -21,6 +21,6 @@ export default function Orders() {
     const theme = useTheme();
 
     return (
-        <Title><Text style={{color: theme.palette.text.primary}}>Orders page is yet to be implemented!</Text></Title>
+        <Title><Text style={{color: theme.palette.text.primary}}>Analytics page is yet to be implemented!</Text></Title>
     );
 }

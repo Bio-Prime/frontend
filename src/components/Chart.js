@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, Bar, Legend } from 'recharts';
+import { BarChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Bar, Legend } from 'recharts';
 import Title from './Title';
 import Text from "recharts/lib/component/Text";
 

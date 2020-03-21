@@ -7,6 +7,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import {Link} from "react-router-dom";
+import {Assessment, History, SupervisorAccount} from "@material-ui/icons";
 
 export const mainListItems = (
     <div>
@@ -22,17 +23,29 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Orders" />
         </ListItem>
+        <ListItem button component={Link} to="/history">
+            <ListItemIcon>
+                <History />
+            </ListItemIcon>
+            <ListItemText primary="History" />
+        </ListItem>
+        <ListItem button component={Link} to="/analytics">
+            <ListItemIcon>
+                <Assessment />
+            </ListItemIcon>
+            <ListItemText primary="Analytics" />
+        </ListItem>
     </div>
 );
 
 export const secondaryListItems = (
     <div>
-        <ListSubheader inset>Extra</ListSubheader>
+        <ListSubheader inset>Admin Extra</ListSubheader>
         <ListItem button component={Link} to="/admin">
             <ListItemIcon>
-                <AssignmentIcon />
+                <SupervisorAccount />
             </ListItemIcon>
-            <ListItemText primary="Admin" />
+            <ListItemText primary="Manage users" />
         </ListItem>
     </div>
 );
