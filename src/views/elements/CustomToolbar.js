@@ -2,33 +2,24 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import { withStyles } from "@material-ui/core/styles";
+import PrimersAddForm from "./PrimersAddForm";
 
-const defaultToolbarStyles = {
-    iconButton: {
-    },
-};
+export default function CustomToolbar() {
 
-class CustomToolbar extends React.Component {
+    const [open, setOpen] = React.useState(false);
 
-    handleClick = () => {
-        console.log("clicked on icon!");
+    const handleClickOpen = () => {
+        setOpen(true);
     };
 
-    render() {
-        const { classes } = this.props;
-
-        return (
-            <React.Fragment>
-                <Tooltip title={"Add new Primer"}>
-                    <IconButton className={classes.iconButton} onClick={this.handleClick}>
-                        <AddIcon className={classes.deleteIcon} />
-                    </IconButton>
-                </Tooltip>
-            </React.Fragment>
-        );
-    }
-
+    return (
+        <React.Fragment>
+            <Tooltip title={"Add"}>
+                <IconButton onClick={handleClickOpen}>
+                    <AddIcon />
+                </IconButton>
+            </Tooltip>
+            <PrimersAddForm open={open} setOpen={setOpen}/>
+        </React.Fragment>
+    );
 }
-
-export default withStyles(defaultToolbarStyles, { name: "CustomToolbar" })(CustomToolbar);
