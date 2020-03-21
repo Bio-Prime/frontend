@@ -1,6 +1,5 @@
 import React from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Text from "recharts/lib/component/Text";
 import Title from "../../components/Title";
 
 const useStyles = makeStyles(theme => ({
@@ -21,6 +20,6 @@ export default function Orders() {
     const theme = useTheme();
 
     return (
-        <Title><Text style={{color: theme.palette.text.primary}}>Admin page is yet to be implemented!</Text></Title>
+        <Title>Admin page is yet to be implemented!</Title>
     );
 }

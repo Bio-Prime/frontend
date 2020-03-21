@@ -40,7 +40,7 @@ export default function Chart() {
 
     return (
         <React.Fragment>
-            <Title><Text style={{color: theme.palette.text.primary}}>Occupancy of Refrigerators</Text></Title>
+            <Title>Occupancy of Refrigerators</Title>
             <ResponsiveContainer>
                 <BarChart width={730} height={250} data={data}>
                     <XAxis dataKey="name"  stroke={theme.palette.text.secondary}/>

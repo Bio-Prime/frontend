@@ -20,7 +20,7 @@ export default function Count() {
     const theme = useTheme();
     return (
         <React.Fragment>
-            <Title><Text style={{color: theme.palette.text.primary}}>Total Number of Primers</Text></Title>
+            <Title>Total Number of Primers</Title>
             <Typography component="p" variant="h4">
                 161
             </Typography>
