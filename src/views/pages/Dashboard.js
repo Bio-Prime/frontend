@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Chart from "../../components/Chart";
-import Deposits from "../../components/Deposits";
+import Count from "../../components/Count";
 import clsx from "clsx";
 
 const useStyles = makeStyles(theme => ({
@@ -375,7 +375,7 @@ export default function Dashboard() {
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
                 <Paper className={fixedHeightPaper}>
-                    <Deposits />
+                    <Count />
                 </Paper>
             </Grid>
             {/* Recent Orders */}

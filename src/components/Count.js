@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
+import Text from "recharts/lib/component/Text";
 
 function preventDefault(event) {
     event.preventDefault();
@@ -14,20 +15,21 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Deposits() {
+export default function Count() {
     const classes = useStyles();
+    const theme = useTheme();
     return (
         <React.Fragment>
-            <Title>Recent Deposits</Title>
+            <Title><Text style={{color: theme.palette.text.primary}}>Total Number of Primers</Text></Title>
             <Typography component="p" variant="h4">
-                $3,024.00
+                161
             </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
-                on 15 March, 2019
+                on {new Date().toDateString()}
             </Typography>
             <div>
                 <Link color="primary" href="#" onClick={preventDefault}>
-                    View balance
+                    More Analytics
                 </Link>
             </div>
         </React.Fragment>
