@@ -5,7 +5,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import {Link} from "react-router-dom";
 import {Assessment, History, SupervisorAccount} from "@material-ui/icons";
 

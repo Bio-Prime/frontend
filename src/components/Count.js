@@ -1,9 +1,8 @@
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
-import Text from "recharts/lib/component/Text";
 
 function preventDefault(event) {
     event.preventDefault();
@@ -17,7 +16,6 @@ const useStyles = makeStyles({
 
 export default function Count() {
     const classes = useStyles();
-    const theme = useTheme();
     return (
         <React.Fragment>
             <Title>Total Number of Primers</Title>
