@@ -20,6 +20,25 @@ const orientations = [
     }
 ];
 
+const amountUnits = [
+    {
+        value: "nmol",
+        label: "nmol"
+    },
+    {
+        value: "µL",
+        label: "µL"
+    },
+    {
+        value: "µM",
+        label: "µM"
+    },
+    {
+        value: "nM",
+        label: "nM"
+    }
+];
+
 export default function PrimersAddForm({open, setOpen}) {
 
     const handleClose = () => {
@@ -37,6 +56,10 @@ export default function PrimersAddForm({open, setOpen}) {
         fridge: '',
         drawer: '',
         box: '',
+        amount: '',
+        amountUnit: '',
+        date: new Date('2014-08-18T21:11:54'),
+
     });
 
     const handleChange = event => {
@@ -83,6 +106,41 @@ export default function PrimersAddForm({open, setOpen}) {
                             {orientations.map(option => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} justify="flex-end">
+                    <Grid item xs={12} sm={3}>
+                        <TextField
+                            required
+                            variant="outlined"
+                            fullWidth
+                            id="amount"
+                            label="Amount available"
+                            name="amount"
+                            type="number"
+                            value={data.amount}
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <TextField
+                            fullWidth
+                            name="amountUnit"
+                            id="amountUnit"
+                            variant="outlined"
+                            select
+                            label="Units"
+                            required
+                            value={data.amountUnit}
+                            onChange={handleChange}
+                            helperText="Enter measurement units"
+                        >
+                            {amountUnits.map(unit => (
+                                <MenuItem key={unit.value} value={unit.value}>
+                                    {unit.label}
                                 </MenuItem>
                             ))}
                         </TextField>
