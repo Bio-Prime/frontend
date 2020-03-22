@@ -32,8 +32,11 @@ export default function PrimersAddForm({open, setOpen}) {
     };
 
     const [data, setData] = React.useState({
+        sequence: '',
         orientation: '',
-        sequence: ''
+        fridge: '',
+        drawer: '',
+        box: '',
     });
 
     const handleChange = event => {
@@ -45,10 +48,10 @@ export default function PrimersAddForm({open, setOpen}) {
 
     return (
         <Dialog fullWidth={true} maxWidth={"md"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Create new Primer</DialogTitle>
+            <DialogTitle id="form-dialog-title">Add Primer</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    This will be the form for adding primers into the database. It is yet to be implemented!
+                    Essential Data
                 </DialogContentText>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={9}>
@@ -83,6 +86,53 @@ export default function PrimersAddForm({open, setOpen}) {
                                 </MenuItem>
                             ))}
                         </TextField>
+                    </Grid>
+                </Grid>
+                <DialogContentText>
+                    Location in the Lab
+                </DialogContentText>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            name="fridge"
+                            id="fridge"
+                            select
+                            label="Fridge name/number"
+                            required
+                            value={data.fridge}
+                            onChange={handleChange}
+                            helperText="Select fridge or freezer">
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            name="drawer"
+                            id="drawer"
+                            select
+                            label="Drawer"
+                            required
+                            value={data.drawer}
+                            onChange={handleChange}
+                            helperText="Select drawer"
+                        >
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            required
+                            variant="outlined"
+                            fullWidth
+                            id="box"
+                            label="Box"
+                            name="box"
+                            type="number"
+                            value={data.box}
+                            onChange={handleChange}
+                        />
                     </Grid>
                 </Grid>
             </DialogContent>
