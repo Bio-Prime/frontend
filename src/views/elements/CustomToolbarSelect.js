@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
+import PrimersDetails from "./PrimerDetails";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -15,25 +16,26 @@ const defaultToolbarSelectStyles = {
     },
 };
 
-class CustomToolbarSelect extends React.Component {
+function CustomToolbarSelect(props) {
 
-    handleClickEditSelected = () => {
-        console.log(`block users with dataIndexes: ${this.props.selectedRows.data.map(row => row.dataIndex)}`);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
     };
 
-    render() {
-        const { classes } = this.props;
+    const { classes } = props;
 
-        return (
-            <div className={classes.iconContainer}>
-                <Tooltip title={"Open selected"}>
-                    <IconButton className={classes.iconButton} onClick={this.handleClickEditSelected}>
-                        <OpenInNewIcon className={classes.icon} />
-                    </IconButton>
-                </Tooltip>
-            </div>
-        );
-    }
+    return (
+        <div className={classes.iconContainer}>
+            <Tooltip title={"Open selected"}>
+                <IconButton className={classes.iconButton} onClick={handleClickOpen}>
+                    <OpenInNewIcon className={classes.icon} />
+                </IconButton>
+            </Tooltip>
+            <PrimersDetails open={open} setOpen={setOpen}/>
+        </div>
+    );
 }
 
 export default withStyles(defaultToolbarSelectStyles, { name: "CustomToolbarSelect" })(CustomToolbarSelect);
