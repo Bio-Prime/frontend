@@ -4,7 +4,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const palette = {
-    type: "dark",
+    type: "light",
     primary: {
         main: '#26A69A',
     }

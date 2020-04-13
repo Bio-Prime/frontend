@@ -18,6 +18,8 @@ const defaultToolbarSelectStyles = {
 
 function CustomToolbarSelect(props) {
 
+    console.log(props);
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -33,7 +35,7 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <PrimersDetails open={open} setOpen={setOpen}/>
+            <PrimersDetails open={open} setOpen={setOpen} />
         </div>
     );
 }
