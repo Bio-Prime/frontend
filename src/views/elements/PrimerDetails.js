@@ -13,6 +13,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Grid from "@material-ui/core/Grid";
+import DialogContentText from "@material-ui/core/DialogContentText";
 
 const useStyles = makeStyles({
     table: {
@@ -21,41 +23,41 @@ const useStyles = makeStyles({
 
 function createData(label, value) {
     return { label, value};
-}
+};
 
 const rows = [
     createData('Generated Name', "ATCGNU"),
-    createData('Sequence', "ATCGNU"),
-    createData('Orientation', "ATCGNU"),
-    createData('Length', "ATCGNU"),
-    createData('Location in Lab', "ATCGNU"),
-    createData('Position in the reference', "ATCGNU"),
-    createData('Tm (°C)', "ATCGNU"),
-    createData('Optimal T of annealing (°C)', "ATCGNU"),
-    createData('Purification method', "ATCGNU"),
-    createData('Amount available', "ATCGNU"),
-    createData('Date', "ATCGNU"),
-    createData('Length of amplicone', "ATCGNU"),
-    createData('Storing T (°C)', "ATCGNU"),
-    createData('GC%', "ATCGNU"),
-    createData('Organism', "ATCGNU"),
-    createData('Gen', "ATCGNU"),
-    createData('Designer (name and surname)', "ATCGNU"),
-    createData('5\' modification', "ATCGNU"),
-    createData('3\' modification', "ATCGNU"),
-    createData('Manufacturer', "ATCGNU"),
-    createData('Supplier', "ATCGNU"),
-    createData('Type of primer', "ATCGNU"),
-    createData('Human genom build', "ATCGNU"),
-    createData('NCBI gen ID', "ATCGNU"),
-    createData('Checked specificity in blast?', "ATCGNU"),
-    createData('Formulation', "ATCGNU"),
-    createData('Application', "ATCGNU"),
-    createData('Project', "ATCGNU"),
-    createData('If TaqMan: sonda sequence', "ATCGNU"),
-    createData('Ordered By', "ATCGNU"),
-    createData('Comment', "ATCGNU"),
-    createData('Analysis', "ATCGNU"),
+    createData('Sequence', "TCTAAAAAGCATGTAAAAGAAA"),
+    createData('Orientation', "Forward"),
+    createData('Length', "553"),
+    createData('Location in Lab', "Freezer1"),
+    createData('Position in the reference', "5'-promotor"),
+    createData('Tm (°C)', "52"),
+    createData('Optimal T of annealing (°C)', "30"),
+    createData('Purification method', "Desalted"),
+    createData('Amount available', "10 nmol"),
+    createData('Date', "20. 3. 2020"),
+    createData('Length of amplicone', "10"),
+    createData('Storing T (°C)', "0"),
+    createData('GC%', "95"),
+    createData('Organism', "Homo Sapiens"),
+    createData('Gen', "gen-3"),
+    createData('Designer (name and surname)', "nekinevem"),
+    createData('5\' modification', "Aldehyde Modifier"),
+    createData('3\' modification', "Amino Linker C7"),
+    createData('Manufacturer', "nek manufacturer"),
+    createData('Supplier', "LipBled"),
+    createData('Type of primer', "DNA/RNA probe"),
+    createData('Human genom build', "NCBI Build 34"),
+    createData('NCBI gen ID', "NCBIgenI"),
+    createData('Checked specificity in blast?', "yes"),
+    createData('Formulation', "Lyophilized"),
+    createData('Application', "cDNA synthesis"),
+    createData('Project', "Analiza oligov"),
+    createData('If TaqMan: sonda sequence', "nekinevem"),
+    createData('Ordered By', "Simen Ravnik"),
+    createData('Comment', "Tole sem jaz narocil"),
+    createData('Analysis', "nekinevem"),
 ];
 
 export default function PrimersAddForm({open, setOpen}) {
@@ -67,30 +69,37 @@ export default function PrimersAddForm({open, setOpen}) {
     const classes = useStyles();
 
     return (
-        <Dialog fullWidth={true} maxWidth={"md"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Dialog fullWidth={true} maxWidth={"xl"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Primer Details</DialogTitle>
             <DialogContent>
 
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Label</TableCell>
-                                <TableCell align="right">Value</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                        {row.label}
-                                    </TableCell>
-                                    <TableCell align="right">{row.value}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <DialogContentText>
+                    Selected Oligonucleotide Primer
+                </DialogContentText>
+                <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                        <TableContainer component={Paper}>
+                            <Table size="small" className={classes.table} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Label</TableCell>
+                                        <TableCell align="right">Value</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {rows.map((row) => (
+                                        <TableRow key={row.name}>
+                                            <TableCell component="th" scope="row">
+                                                {row.label}
+                                            </TableCell>
+                                            <TableCell align="right">{row.value}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                </Grid>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
