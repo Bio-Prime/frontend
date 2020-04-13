@@ -4,18 +4,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import {
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+} from 'recharts';
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
 import Paper from "@material-ui/core/Paper";
-import Count from "../../components/Count";
 import clsx from "clsx";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Title from "../../components/Title";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
-import CustomToolbar from "./CustomToolbar";
-import CustomToolbarSelect from "./CustomToolbarSelect";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -26,6 +23,9 @@ const useStyles = makeStyles(theme => ({
     },
     fixedHeight: {
         height: 140,
+    },
+    fixedHeightTimesTwo: {
+        height: 405,
     },
 }));
 
@@ -94,7 +94,6 @@ const options = {
     responsive: "scrollMaxHeight",
     print: false,
     download: false,
-    search: false,
     filter: false,
     sort: false,
     viewColumns: false,
@@ -396,13 +395,31 @@ const dataRelated = [
 
 ];
 
+const chartData = [
+    {
+        name: '20.2. 2020', nMol: 50,
+    },
+    {
+        name: '1. 3. 2020', nMol: 20,
+    },
+    {
+        name: '17. 3. 2020', nMol: 12,
+    },
+    {
+        name: '20. 4. 2020', nMol: 8,
+    },
+];
+
 const optionsRelated = {
     filterType: 'checkbox',
     downloadOptions: {
         filename: "primers.csv",
         separator: ","
     },
-    selectableRows: "single",
+    selectableRows: "none",
+    print: false,
+    download: false,
+    filter: false,
 };
 
 export default function PrimersAddForm({open, setOpen}) {
@@ -414,6 +431,8 @@ export default function PrimersAddForm({open, setOpen}) {
     const classes = useStyles();
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    const fixedHeightPaperTimesTwo = clsx(classes.paper, classes.fixedHeightTimesTwo);
+    const theme = useTheme();
 
     return (
         <Dialog fullWidth={true} maxWidth={"xl"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -424,12 +443,39 @@ export default function PrimersAddForm({open, setOpen}) {
                         <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6}>
-                        <Paper className={fixedHeightPaper}>
-                            <Title>Location in the Lab</Title>
-                            <Typography component="p" variant="h4">
-                                Freezer 1
-                            </Typography>
-                        </Paper>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={6} lg={6}>
+                                <Paper className={fixedHeightPaper}>
+                                    <Title>Sequence</Title>
+                                    TCTAAAAAGCATGTAAAAGAAA
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={6}>
+                                <Paper className={fixedHeightPaper}>
+                                    <Title>Location in the Lab</Title>
+                                        Freezer 1, Drawer 23, Box 5
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={12}>
+                                <Paper className={fixedHeightPaperTimesTwo}>
+                                    <Title>Amount Available</Title>
+                                    <AreaChart
+                                        width={600}
+                                        height={300}
+                                        data={chartData}
+                                        margin={{
+                                            top: 20, right: 20, left: 0, bottom: 0,
+                                        }}
+                                    >
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="name" stroke={theme.palette.text.secondary} />
+                                        <YAxis stroke={theme.palette.text.secondary} />
+                                        <Tooltip />
+                                        <Area type="monotone" dataKey="nMol" stroke="#8884d8" fill="#8884d8" />
+                                    </AreaChart>
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
                         <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={dataRelated} options={optionsRelated}/>
