@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Admin from "./pages/Admin";
 import Analytics from "./pages/Analytics";
+import AddTwo from "./pages/AddTwo";
 
 const pageList = [
     {
@@ -29,6 +30,11 @@ const pageList = [
         name: 'Admin',
         path: '/admin',
         component: Admin,
+    },
+    {
+        name: 'AddTwo',
+        path: '/add-two',
+        component: AddTwo,
     },
 ];
 
