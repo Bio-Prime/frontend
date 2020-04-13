@@ -395,7 +395,7 @@ export default function Dashboard() {
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
-                <DataTable columns={columns} data={data} options={options}/>
+                <DataTable title={"Oligonucleotide Primers"} columns={columns} data={data} options={options}/>
             </Grid>
         </Grid>
     );
