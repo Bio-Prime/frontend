@@ -7,6 +7,27 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
+import Paper from "@material-ui/core/Paper";
+import Count from "../../components/Count";
+import clsx from "clsx";
+import {makeStyles} from "@material-ui/core/styles";
+import Title from "../../components/Title";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import CustomToolbar from "./CustomToolbar";
+import CustomToolbarSelect from "./CustomToolbarSelect";
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        padding: theme.spacing(2),
+        display: 'flex',
+        overflow: 'auto',
+        flexDirection: 'column',
+    },
+    fixedHeight: {
+        height: 140,
+    },
+}));
 
 const columns = [
     {
@@ -79,19 +100,339 @@ const options = {
     viewColumns: false,
 };
 
+const columnsRelated = [
+    {
+        name: "name",
+        label: "Name",
+        options: {
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "sequence",
+        label: "Sequence",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "orientation",
+        label: "Orientation",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "length",
+        label: "Length",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "location",
+        label: "Location in Lab",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "position",
+        label: "Position in the reference",
+        options: {
+            display: false,
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "tm",
+        label: "Tm (°C)",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "temperatureAnnealing",
+        label: "Optimal T of annealing (°C)",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "purification",
+        label: "Purification method",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "amount",
+        label: "Amount available",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "date",
+        label: "Date",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "ampliconeLength",
+        label: "Length of amplicone",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "storingTemperature",
+        label: "Storing T (°C)",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "gc",
+        label: "GC%",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "organism",
+        label: "Organism",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "gen",
+        label: "Gen",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "designer",
+        label: "Designer (name and surname)",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "5modification",
+        label: "5' modification",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "3modification",
+        label: "3' modification",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "manufacturer",
+        label: "Manufacturer",
+        options: {
+            display: false,
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "supplier",
+        label: "Supplier",
+        options: {
+            display: false,
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "type",
+        label: "Type of primer",
+        options: {
+            display: false,
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "humanBuild",
+        label: "Human genom build",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "ncbi",
+        label: "NCBI gen ID",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "checkBlast",
+        label: "Checked specificity in blast?",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "formulation",
+        label: "Formulation",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "application",
+        label: "Application",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "project",
+        label: "Project",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "sondaSequence",
+        label: "If TaqMan: sonda sequence",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "orderedBy",
+        label: "Ordered By",
+        options: {
+            display: false,
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "comment",
+        label: "Comment",
+        options: {
+            display: false,
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "analysis",
+        label: "Analysis",
+        options: {
+            display: false,
+            filter: true,
+            sort: true,
+        }
+    },
+];
+
+const dataRelated = [
+    ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
+        "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
+        "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
+    ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Reverse", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
+        "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
+        "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
+    ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
+        "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
+        "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
+
+];
+
+const optionsRelated = {
+    filterType: 'checkbox',
+    downloadOptions: {
+        filename: "primers.csv",
+        separator: ","
+    },
+    selectableRows: "single",
+};
+
 export default function PrimersAddForm({open, setOpen}) {
 
     const handleClose = () => {
         setOpen(false);
     };
 
+    const classes = useStyles();
+
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
     return (
         <Dialog fullWidth={true} maxWidth={"xl"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Primer Details</DialogTitle>
             <DialogContent>
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6} lg={6}>
                         <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6}>
+                        <Paper className={fixedHeightPaper}>
+                            <Title>Location in the Lab</Title>
+                            <Typography component="p" variant="h4">
+                                Freezer 1
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={12} lg={12}>
+                        <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={dataRelated} options={optionsRelated}/>
                     </Grid>
                 </Grid>
             </DialogContent>
