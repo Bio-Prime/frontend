@@ -6,7 +6,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
-import Title from "../../components/Title";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
