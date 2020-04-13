@@ -422,7 +422,7 @@ const optionsRelated = {
     filter: false,
 };
 
-export default function PrimersAddForm({open, setOpen}) {
+export default function PrimerDetails({open, setOpen}) {
 
     const handleClose = () => {
         setOpen(false);
