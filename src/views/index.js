@@ -4,6 +4,7 @@ import History from "./pages/History";
 import Admin from "./pages/Admin";
 import Analytics from "./pages/Analytics";
 import AddTwo from "./pages/AddTwo";
+import AddOne from "./pages/AddOne";
 
 const pageList = [
     {
@@ -35,6 +36,11 @@ const pageList = [
         name: 'AddTwo',
         path: '/add-two',
         component: AddTwo,
+    },
+    {
+        name: 'AddOne',
+        path: '/add-one',
+        component: AddOne,
     },
 ];
 
