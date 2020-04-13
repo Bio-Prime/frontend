@@ -7,6 +7,7 @@ import Chart from "../../components/Chart";
 import Count from "../../components/Count";
 import clsx from "clsx";
 import CustomToolbar from '../elements/CustomToolbar'
+import CustomToolbarSelect from "../elements/CustomToolbarSelect";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -363,11 +364,15 @@ export default function Dashboard() {
             filename: "primers.csv",
             separator: ","
         },
+        selectableRows: "single",
         customToolbar: () => {
             return (
                 <CustomToolbar />
             );
         },
+        customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+        ),
     };
 
     const classes = useStyles();
