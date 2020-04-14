@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimersAddForm({open, setOpen}) {
 
+    const history = useHistory();
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -24,11 +27,11 @@ export default function PrimersAddForm({open, setOpen}) {
     const classes = useStyles();
 
     const handleClickOne = () => {
-        setOpen(false);
+        history.push('/add-one');
     };
 
     const handleClickTwo = () => {
-        setOpen(false);
+        history.push('/add-two');
     };
 
     return (
