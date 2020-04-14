@@ -48,11 +48,6 @@ const amountUnits = [
 
 export default function AddOne() {
 
-    const handleConfirm = () => {
-        // handle on submit
-        console.log(data);
-    };
-
     const [data, setData] = React.useState({
         sequence: '',
         orientation: '',
