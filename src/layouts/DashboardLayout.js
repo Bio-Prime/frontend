@@ -12,7 +12,6 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -20,6 +19,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import routes from '../views/index'
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import Copyright from "../components/Copyright";
 
 const drawerWidth = 240;
 
@@ -165,15 +165,3 @@ export default function DashboardLayout({onClickDark}) {
     );
 }
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="#">
-                BioPrime
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
