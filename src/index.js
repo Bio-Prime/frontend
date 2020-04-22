@@ -4,4 +4,4 @@ import App from './App';
 import * as serviceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
-serviceWorker.register();
+serviceWorker.unregister();
