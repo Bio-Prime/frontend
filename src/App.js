@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import DashboardLayout from "./layouts/DashboardLayout";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import LoginLayout from "./layouts/LoginLayout";
 
 const palette = {
     type: "light",
@@ -34,6 +35,7 @@ function App() {
         <MuiThemeProvider theme={muiTheme}>
             <BrowserRouter>
                 <Switch>
+                    <Route path='/login' component={() => <LoginLayout />}/>
                     <Route path='/' component={() => <DashboardLayout onClickDark={toggleDarkTheme} />}/>
                 </Switch>
             </BrowserRouter>
