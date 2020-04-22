@@ -26,9 +26,18 @@ export default function Dashboard() {
 
     const columns = [
         {
+            name: "generatedName",
+            label: "Generated name",
+            options: {
+                filter: false,
+                sort: true,
+            }
+        },
+        {
             name: "name",
             label: "Name",
             options: {
+                display: false,
                 filter: false,
                 sort: true,
             }
@@ -45,6 +54,7 @@ export default function Dashboard() {
             name: "orientation",
             label: "Orientation",
             options: {
+                display: false,
                 filter: true,
                 sort: true,
             }
@@ -59,15 +69,31 @@ export default function Dashboard() {
             }
         },
         {
-            name: "location",
-            label: "Location in Lab",
+            name: "freezer",
+            label: "Freezer",
             options: {
                 filter: true,
                 sort: true,
             }
         },
         {
-            name: "position",
+            name: "drawer",
+            label: "Drawer",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "box",
+            label: "Box",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "positionInReference",
             label: "Position in the reference",
             options: {
                 display: false,
@@ -85,7 +111,7 @@ export default function Dashboard() {
             }
         },
         {
-            name: "temperatureAnnealing",
+            name: "optimalTOfAnnealing",
             label: "Optimal T of annealing (°C)",
             options: {
                 display: false,
@@ -94,7 +120,7 @@ export default function Dashboard() {
             }
         },
         {
-            name: "purification",
+            name: "purificationMethod",
             label: "Purification method",
             options: {
                 display: false,
@@ -103,9 +129,18 @@ export default function Dashboard() {
             }
         },
         {
-            name: "amount",
-            label: "Amount available",
+            name: "amountAvailableMikroL",
+            label: "Amount available (µL)",
             options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "amountAvailablePackSize",
+            label: "Amount available (Pack size)",
+            options: {
+                display: false,
                 filter: true,
                 sort: true,
             }
@@ -114,12 +149,13 @@ export default function Dashboard() {
             name: "date",
             label: "Date",
             options: {
+                display: false,
                 filter: true,
                 sort: true,
             }
         },
         {
-            name: "ampliconeLength",
+            name: "lengthOfAmplicone",
             label: "Length of amplicone",
             options: {
                 display: false,
@@ -128,17 +164,8 @@ export default function Dashboard() {
             }
         },
         {
-            name: "storingTemperature",
+            name: "storingT",
             label: "Storing T (°C)",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "gc",
-            label: "GC%",
             options: {
                 display: false,
                 filter: false,
@@ -164,70 +191,7 @@ export default function Dashboard() {
             }
         },
         {
-            name: "designer",
-            label: "Designer (name and surname)",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "5modification",
-            label: "5' modification",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "3modification",
-            label: "3' modification",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "manufacturer",
-            label: "Manufacturer",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "supplier",
-            label: "Supplier",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "type",
-            label: "Type of primer",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "humanBuild",
-            label: "Human genom build",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "ncbi",
+            name: "ncbiGenId",
             label: "NCBI gen ID",
             options: {
                 display: false,
@@ -236,8 +200,8 @@ export default function Dashboard() {
             }
         },
         {
-            name: "checkBlast",
-            label: "Checked specificity in blast?",
+            name: "humanGenomBuild",
+            label: "Human genom build",
             options: {
                 display: false,
                 filter: false,
@@ -254,9 +218,127 @@ export default function Dashboard() {
             }
         },
         {
-            name: "application",
-            label: "Application",
+            name: "typeOfPrimer",
+            label: "Type of primer",
             options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "sondaSequence",
+            label: "Sonda sequence",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "assayId",
+            label: "Assay ID",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "size",
+            label: "Size",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "primerApplication",
+            label: "Primer application",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "applicationComment",
+            label: "Application comment",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "fiveModification",
+            label: "5' Modification",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "threeModification",
+            label: "3' Modification",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "concentrationOrdered",
+            label: "Concentration ordered",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "concentrationOrderedUnit",
+            label: "Concentration ordered unit",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "checkSpecifityInBlast",
+            label: "Check specifity in blast",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "designerName",
+            label: "Designer name",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "designerPublication",
+            label: "Designer publication",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "designerDatabase",
+            label: "Designer database",
+            options: {
+                display: false,
                 filter: true,
                 sort: true,
             }
@@ -265,22 +347,32 @@ export default function Dashboard() {
             name: "project",
             label: "Project",
             options: {
+                display: false,
                 filter: true,
                 sort: true,
             }
         },
         {
-            name: "sondaSequence",
-            label: "If TaqMan: sonda sequence",
+            name: "orderedBy",
+            label: "Ordered by",
             options: {
                 display: false,
-                filter: false,
+                filter: true,
                 sort: true,
             }
         },
         {
-            name: "orderedBy",
-            label: "Ordered By",
+            name: "supplier",
+            label: "Supplier",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "manufacturer",
+            label: "Manufacturer",
             options: {
                 display: false,
                 filter: true,
@@ -292,7 +384,16 @@ export default function Dashboard() {
             label: "Comment",
             options: {
                 display: false,
-                filter: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "document",
+            label: "Document",
+            options: {
+                display: false,
+                filter: true,
                 sort: true,
             }
         },
@@ -305,58 +406,105 @@ export default function Dashboard() {
                 sort: true,
             }
         },
+        {
+            name: "orderStatus",
+            label: "Order status",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "user",
+            label: "User",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "pairs",
+            label: "Pairs",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "tm",
+            label: "Tm",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "gcpercent",
+            label: "Gcpercent",
+            options: {
+                display: false,
+                filter: true,
+                sort: true,
+            }
+        },
     ];
 
     const data = [
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Reverse", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "Projekt2", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer3", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "Projekt1", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer3", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer3", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer3", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Reverse", "553", "Freezer4", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer4", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer4", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer4", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Matic Ravnik", "Tole sem sedaj narocil", "nekineki"],
-
+        {
+            "id": 1,
+            "generatedName": "generatedname",
+            "name": "testname",
+            "sequence": "testsequence",
+            "orientation": "REVERSE",
+            "length": 42,
+            "freezer": "freezer2",
+            "drawer": "drawer5",
+            "box": "box1",
+            "positionInReference": "5'-intron",
+            "optimalTOfAnnealing": 53.0,
+            "purificationMethod": "Cartridge",
+            "amountAvailableMikroL": 42.3,
+            "amountAvailablePacks": 28,
+            "amountAvailablePackSize": "PLATE",
+            "date": 1577750400000,
+            "lengthOfAmplicone": 4251,
+            "storingT": 324.2,
+            "organism": "Mus musculus",
+            "gen": "gen123",
+            "ncbiGenId": "ncbiGenId42",
+            "humanGenomBuild": "GRCh37",
+            "formulation": "Resuspended in 0,1 X TE",
+            "typeOfPrimer": "T7 primer",
+            "sondaSequence": "SondaSequence123",
+            "assayId": "assayId24",
+            "size": "L",
+            "primerApplication": "Methylation-specific PCR",
+            "applicationComment": "application comment 123",
+            "fiveModification": "Biotin TEG",
+            "threeModification": "Quasar 705",
+            "concentrationOrdered": 76,
+            "concentrationOrderedUnit": "NANOM",
+            "checkSpecifityInBlast": true,
+            "designerName": "ime designerja",
+            "designerPublication": "publikacija designerja",
+            "designerDatabase": "link do podatkovne baze designerja",
+            "project": "project4",
+            "orderedBy": "Matija Potokar",
+            "supplier": "Omega",
+            "manufacturer": "BioSearch",
+            "comment": "moj komentar",
+            "document": "link do dokumenta",
+            "analysis": "analysis 123",
+            "orderStatus": "RECEIVED",
+            "user": null,
+            "pairs": [],
+            "tm": 24.0,
+            "gcpercent": 32.9
+        }
     ];
 
     const options = {
