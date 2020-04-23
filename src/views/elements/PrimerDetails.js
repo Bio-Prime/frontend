@@ -13,6 +13,7 @@ import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Title from "../../components/Title";
+import PrimersColumns from "./PrimersColumns";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -48,41 +49,6 @@ const columns = [
     }
 ];
 
-const data = [
-        ['Generated Name', "ATCGNU"],
-        ['Sequence', "TCTAAAAAGCATGTAAAAGAAA"],
-        ['Orientation', "Forward"],
-        ['Length', "553"],
-        ['Location in Lab', "Freezer1"],
-        ['Position in the reference', "5'-promotor"],
-        ['Tm (°C)', "52"],
-        ['Optimal T of annealing (°C)', "30"],
-        ['Purification method', "Desalted"],
-        ['Amount available', "10 nmol"],
-        ['Date', "20. 3. 2020"],
-        ['Length of amplicone', "10"],
-        ['Storing T (°C)', "0"],
-        ['GC%', "95"],
-        ['Organism', "Homo Sapiens"],
-        ['Gen', "gen-3"],
-        ['Designer (name and surname)', "nekinevem"],
-        ['5\' modification', "Aldehyde Modifier"],
-        ['3\' modification', "Amino Linker C7"],
-        ['Manufacturer', "nek manufacturer"],
-        ['Supplier', "LipBled"],
-        ['Type of primer', "DNA/RNA probe"],
-        ['Human genom build', "NCBI Build 34"],
-        ['NCBI gen ID', "NCBIgenI"],
-        ['Checked specificity in blast?', "yes"],
-        ['Formulation', "Lyophilized"],
-        ['Application', "cDNA synthesis"],
-        ['Project', "Analiza oligov"],
-        ['If TaqMan: sonda sequence', "nekinevem"],
-        ['Ordered By', "Simen Ravnik"],
-        ['Comment', "Tole sem jaz narocil"],
-        ['Analysis', "nekinevem"],
-];
-
 const options = {
     filterType: 'checkbox',
     downloadOptions: {
@@ -99,288 +65,7 @@ const options = {
     viewColumns: false,
 };
 
-const columnsRelated = [
-    {
-        name: "name",
-        label: "Name",
-        options: {
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "sequence",
-        label: "Sequence",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "orientation",
-        label: "Orientation",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "length",
-        label: "Length",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "location",
-        label: "Location in Lab",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "position",
-        label: "Position in the reference",
-        options: {
-            display: false,
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "tm",
-        label: "Tm (°C)",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "temperatureAnnealing",
-        label: "Optimal T of annealing (°C)",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "purification",
-        label: "Purification method",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "amount",
-        label: "Amount available",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "date",
-        label: "Date",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "ampliconeLength",
-        label: "Length of amplicone",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "storingTemperature",
-        label: "Storing T (°C)",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "gc",
-        label: "GC%",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "organism",
-        label: "Organism",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "gen",
-        label: "Gen",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "designer",
-        label: "Designer (name and surname)",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "5modification",
-        label: "5' modification",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "3modification",
-        label: "3' modification",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "manufacturer",
-        label: "Manufacturer",
-        options: {
-            display: false,
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "supplier",
-        label: "Supplier",
-        options: {
-            display: false,
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "type",
-        label: "Type of primer",
-        options: {
-            display: false,
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "humanBuild",
-        label: "Human genom build",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "ncbi",
-        label: "NCBI gen ID",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "checkBlast",
-        label: "Checked specificity in blast?",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "formulation",
-        label: "Formulation",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "application",
-        label: "Application",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "project",
-        label: "Project",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "sondaSequence",
-        label: "If TaqMan: sonda sequence",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "orderedBy",
-        label: "Ordered By",
-        options: {
-            display: false,
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "comment",
-        label: "Comment",
-        options: {
-            display: false,
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "analysis",
-        label: "Analysis",
-        options: {
-            display: false,
-            filter: true,
-            sort: true,
-        }
-    },
-];
+const columnsRelated = PrimersColumns.getPrimersColumns();
 
 const dataRelated = [
     ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
@@ -422,10 +107,46 @@ const optionsRelated = {
     filter: false,
 };
 
-export default function PrimerDetails({open, setOpen}) {
+export default function PrimerDetails({open, setOpen, selectedPrimerData}) {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    let labels = PrimersColumns.getColumnsLabels();
+    let data = [];
+    const formatSelectedPrimerData = () => {
+        for (let i = 0; i < selectedPrimerData.length; i++) {
+
+            data.push({
+                "label": labels[i][0],
+                "value": selectedPrimerData[i]
+            });
+        }
+    };
+    formatSelectedPrimerData();
+
+    const getLocationInLab = () => {
+        let freezer = '';
+        let drawer = '';
+        let box = '';
+        for (let i = 0; i < data.length; i++) {
+
+            if (data[i].label === "Freezer") {
+                freezer = data[i].value;
+            }
+
+            if (data[i].label === "Drawer") {
+                drawer = data[i].value;
+            }
+
+            if (data[i].label === "Box") {
+                box = data[i].value;
+            }
+        }
+
+        let location = freezer + ', ' + drawer + ', ' + box;
+        return location;
     };
 
     const classes = useStyles();
@@ -440,20 +161,21 @@ export default function PrimerDetails({open, setOpen}) {
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} lg={6}>
-                        <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
+                        <div>
+                            <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
+                        </div>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={6} lg={6}>
                                 <Paper className={fixedHeightPaper}>
                                     <Title>Sequence</Title>
-                                    TCTAAAAAGCATGTAAAAGAAA
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={6} lg={6}>
                                 <Paper className={fixedHeightPaper}>
                                     <Title>Location in the Lab</Title>
-                                        Freezer 1, Drawer 23, Box 5
+                                    {getLocationInLab()}
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={12} lg={12}>

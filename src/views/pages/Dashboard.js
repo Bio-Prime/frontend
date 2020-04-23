@@ -159,6 +159,8 @@ export default function Dashboard() {
     console.log(error);
     console.log(isLoaded);
 
+    console.log(data);
+
     return (
         <Grid container spacing={3}>
             {/* Chart */}

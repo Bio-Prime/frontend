@@ -18,7 +18,11 @@ const defaultToolbarSelectStyles = {
 
 function CustomToolbarSelect(props) {
 
-    console.log(props);
+    // the row that was selected
+    let selectedRow = props.selectedRows.data[0].index;
+
+    // the data of the row that was selected
+    let dataArray = props.displayData[selectedRow].data;
 
     const [open, setOpen] = React.useState(false);
 
@@ -35,7 +39,7 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <PrimersDetails open={open} setOpen={setOpen} />
+            <PrimersDetails open={open} setOpen={setOpen} selectedPrimerData={dataArray} />
         </div>
     );
 }

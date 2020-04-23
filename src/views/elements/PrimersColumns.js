@@ -1,5 +1,21 @@
 export default class PrimersColumns {
 
+    static getColumnsLabels = () => {
+        let labels =  [
+            ['Id'], ['Generated Name'], ['Name'], ['Sequence'], ['Orientation'], ['Length'], ['Freezer'], ['Drawer'], ['Box'],
+            ['Position in the reference'], ['Tm (°C)'], ['Optimal T of annealing (°C)'], ['Purification method'],
+            ['Amount available (µL)'], ['Amount available (Pack size)'], ['Date'], ['Length of amplicone'],
+            ['Storing T (°C)'], ['Organism'], ['Gen'], ['NCBI gen ID'], ['Human genom build'], ['Formulation'],
+            ['Type of primer'], ['Sonda sequence'], ['Assay ID'], ['Size'], ['Primer application'], ['Application comment'],
+            ['5\' Modification'], ['3\' Modification'], ['Concentration ordered'], ['Concentration ordered unit'],
+            ['Check specifity in blast'], ['Designer name'], ['Designer publication'], ['Designer database'],
+            ['Project'], ['Ordered by'], ['Supplier'], ['Manufacturer'], ['Comment'], ['[Document'], ['Analysis'],
+            ['Order status'], ['User'], ['Pairs'], ['Tm'], ['GCpercent']
+        ];
+
+        return labels;
+    };
+
     static getPrimersColumns = () => {
         const columns = [
             {
