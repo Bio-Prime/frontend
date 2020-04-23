@@ -43,7 +43,6 @@ function CustomToolbarSelect(props) {
                 }
             }
         }
-        console.log(pairsData);
     };
     getPrimersPairs();
 

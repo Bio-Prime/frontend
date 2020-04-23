@@ -79,21 +79,6 @@ const optionsRelated = {
     filter: false,
 };
 
-const chartData = [
-    {
-        name: '20.2. 2020', nMol: 50,
-    },
-    {
-        name: '1. 3. 2020', nMol: 20,
-    },
-    {
-        name: '17. 3. 2020', nMol: 12,
-    },
-    {
-        name: '20. 4. 2020', nMol: 8,
-    },
-];
-
 export default function PrimerDetails({open, setOpen, selectedPrimerData, pairsData}) {
 
     const handleClose = () => {
@@ -147,6 +132,32 @@ export default function PrimerDetails({open, setOpen, selectedPrimerData, pairsD
         }
         return sequence;
     };
+
+
+    const getAmountAvailable = () => {
+        let amountAvailableMikroL = '';
+        for (let i = 0; i < data.length; i++) {
+
+            if (data[i].label === "Amount available (µL)") {
+                amountAvailableMikroL = data[i].value;
+                break;
+            }
+        }
+        return amountAvailableMikroL;
+    };
+
+    const getDate = () => {
+        let date = new Date();
+        return date.getDay() + ". " + date.getMonth() + ". " + date.getFullYear();
+    };
+
+
+    const chartData = [
+        {
+            name: getDate(), nMol: getAmountAvailable(),
+        },
+    ];
+
 
     const classes = useStyles();
 
