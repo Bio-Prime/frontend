@@ -149,6 +149,18 @@ export default function PrimerDetails({open, setOpen, selectedPrimerData}) {
         return location;
     };
 
+    const getSequence = () => {
+        let sequence = '';
+        for (let i = 0; i < data.length; i++) {
+
+            if (data[i].label === "Sequence") {
+                sequence = data[i].value;
+                break;
+            }
+        }
+        return sequence;
+    };
+
     const classes = useStyles();
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -170,6 +182,7 @@ export default function PrimerDetails({open, setOpen, selectedPrimerData}) {
                             <Grid item xs={12} md={6} lg={6}>
                                 <Paper className={fixedHeightPaper}>
                                     <Title>Sequence</Title>
+                                    {getSequence()}
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={6} lg={6}>
