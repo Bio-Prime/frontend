@@ -67,18 +67,17 @@ const options = {
 
 const columnsRelated = PrimersColumns.getPrimersColumns();
 
-const dataRelated = [
-    ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-        "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-        "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-    ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Reverse", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-        "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-        "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-    ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-        "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-        "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-
-];
+const optionsRelated = {
+    filterType: 'checkbox',
+    downloadOptions: {
+        filename: "primers.csv",
+        separator: ","
+    },
+    selectableRows: "none",
+    print: false,
+    download: false,
+    filter: false,
+};
 
 const chartData = [
     {
@@ -95,19 +94,7 @@ const chartData = [
     },
 ];
 
-const optionsRelated = {
-    filterType: 'checkbox',
-    downloadOptions: {
-        filename: "primers.csv",
-        separator: ","
-    },
-    selectableRows: "none",
-    print: false,
-    download: false,
-    filter: false,
-};
-
-export default function PrimerDetails({open, setOpen, selectedPrimerData}) {
+export default function PrimerDetails({open, setOpen, selectedPrimerData, pairsData}) {
 
     const handleClose = () => {
         setOpen(false);
@@ -173,9 +160,7 @@ export default function PrimerDetails({open, setOpen, selectedPrimerData}) {
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} lg={6}>
-                        <div>
-                            <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
-                        </div>
+                        <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6}>
                         <Grid container spacing={2}>
@@ -213,7 +198,7 @@ export default function PrimerDetails({open, setOpen, selectedPrimerData}) {
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12}>
-                        <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={dataRelated} options={optionsRelated}/>
+                        <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={pairsData} options={optionsRelated}/>
                     </Grid>
                 </Grid>
             </DialogContent>

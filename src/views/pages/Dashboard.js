@@ -75,7 +75,7 @@ export default function Dashboard() {
             "analysis": "analysis 123",
             "orderStatus": "RECEIVED",
             "user": null,
-            "pairs": [],
+            "pairs": [1, 2],
             "tm": 24.0,
             "gcpercent": 32.9
         },
@@ -145,7 +145,7 @@ export default function Dashboard() {
             );
         },
         customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-            <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} />
+            <CustomToolbarSelect selectedRows={selectedRows} displayData={displayData} setSelectedRows={setSelectedRows} allData={data}/>
         ),
     };
 

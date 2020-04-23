@@ -4,6 +4,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
 import PrimersDetails from "./PrimerDetails";
+import PrimersColumns from "./PrimersColumns";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -24,6 +25,28 @@ function CustomToolbarSelect(props) {
     // the data of the row that was selected
     let dataArray = props.displayData[selectedRow].data;
 
+    let labels = PrimersColumns.getColumnsLabels();
+    let pairsData = [];
+    const getPrimersPairs = () => {
+        let idx;
+        for (idx = 0; idx < labels.length; idx++) {
+            if (labels[idx][0] === 'Pairs') {
+                break;
+            }
+        }
+
+        let pairs = dataArray[idx];
+        for (let i = 0; i < props.displayData.length; i++) {
+            for (let j = 0; j < pairs.length; j++) {
+                if (props.displayData[i].data[0] === pairs[j]) {
+                    pairsData.push(props.displayData[i].data);
+                }
+            }
+        }
+        console.log(pairsData);
+    };
+    getPrimersPairs();
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -39,7 +62,7 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <PrimersDetails open={open} setOpen={setOpen} selectedPrimerData={dataArray} />
+            <PrimersDetails open={open} setOpen={setOpen} selectedPrimerData={dataArray} pairsData={pairsData} />
         </div>
     );
 }
