@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PrimersAddForm({open, setOpen}) {
+export default function PrimersAddDialog({open, setOpen}) {
 
     const history = useHistory();
 

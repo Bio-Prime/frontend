@@ -2,7 +2,7 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import PrimersAddForm from "./PrimersAddForm";
+import PrimersAddDialog from "./PrimersAddDialog";
 
 export default function CustomToolbar() {
 
@@ -19,7 +19,7 @@ export default function CustomToolbar() {
                     <AddIcon />
                 </IconButton>
             </Tooltip>
-            <PrimersAddForm open={open} setOpen={setOpen}/>
+            <PrimersAddDialog open={open} setOpen={setOpen}/>
         </React.Fragment>
     );
 }
