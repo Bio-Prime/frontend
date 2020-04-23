@@ -539,7 +539,7 @@ export default function Dashboard() {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
                 <Paper className={fixedHeightPaper}>
-                    <Chart />
+                    <Chart allData={data} />
                 </Paper>
             </Grid>
             {/* Recent Deposits */}

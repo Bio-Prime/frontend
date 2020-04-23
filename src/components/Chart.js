@@ -3,39 +3,39 @@ import { useTheme } from '@material-ui/core/styles';
 import { BarChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Bar, Legend } from 'recharts';
 import Title from './Title';
 
-const data = [
-    {
-        "name": "fridge1",
-        "num": 10
-    },
-    {
-        "name": "fridge2",
-        "num": 50
-    },
-    {
-        "name": "fridge3",
-        "num": 23
-    },
-    {
-        "name": "fridge4",
-        "num": 54
-    },
-    {
-        "name": "fridge5",
-        "num": 64
-    },
-    {
-        "name": "fridge6",
-        "num": 43
-    },
-    {
-        "name": "fridge7",
-        "num": 31
-    }
-];
-
-export default function Chart() {
+export default function Chart({allData}) {
     const theme = useTheme();
+
+    let names = [];
+    let values = [];
+
+    let data = [];
+
+    const countFridgeOccupancy = () => {
+        for (let i = 0; i < allData.length; i++) {
+            let name = allData[i].freezer;
+
+            let idx = names.indexOf(name);
+
+            if (idx === -1) {
+                names.push(name);
+                values.push(1);
+            } else {
+                values[idx] += 1;
+            }
+        }
+
+        for (let i = 0; i < names.length; i++) {
+            let element = {};
+
+            element.name = names[i];
+            element.num = values[i];
+
+            data.push(element);
+        }
+    };
+
+    countFridgeOccupancy();
 
     return (
         <React.Fragment>
