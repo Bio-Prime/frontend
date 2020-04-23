@@ -3,6 +3,15 @@ export default class PrimersColumns {
     static getPrimersColumns = () => {
         const columns = [
             {
+                name: "id",
+                label: "Id",
+                options: {
+                    display: 'excluded',
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
                 name: "generatedName",
                 label: "Generated name",
                 options: {
