@@ -8,7 +8,7 @@ import Count from "../../components/Count";
 import clsx from "clsx";
 import CustomToolbar from '../elements/CustomToolbar'
 import CustomToolbarSelect from "../elements/CustomToolbarSelect";
-import PrimersService from "../../services/PrimersService"
+// import PrimersService from "../../services/PrimersService"
 import PrimersColumns from "../elements/PrimersColumns";
 
 const useStyles = makeStyles(theme => ({
@@ -153,11 +153,11 @@ export default function Dashboard() {
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    const [items, error, isLoaded] = PrimersService.getAllPrimers();
+    // const [items, error, isLoaded] = PrimersService.getAllPrimers();
 
-    console.log(items);
-    console.log(error);
-    console.log(isLoaded);
+    // console.log(items);
+    // console.log(error);
+    // console.log(isLoaded);
 
     console.log(data);
 

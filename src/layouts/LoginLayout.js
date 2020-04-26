@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "../components/Copyright";
+import {login} from "../services/DataFetcher";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,7 +35,7 @@ export default function SignIn() {
     const classes = useStyles();
 
     const [data, setData] = React.useState({
-        email: '',
+        username: '',
         password: '',
     });
 
@@ -47,8 +48,11 @@ export default function SignIn() {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(data.email);
-        console.log(data.password);
+        login(data)
+        .then((response) => response.text())
+        .then((data) => {
+          console.log('Token:', data);
+        });
     };
 
     return (
@@ -69,7 +73,7 @@ export default function SignIn() {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        name="email"
+                        name="username"
                         autoComplete="email"
                         autoFocus
                         onChange={handleChange}
