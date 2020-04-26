@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "../components/Copyright";
+import PrimersService from "../services/PrimersService";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -30,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
     const classes = useStyles();
 
     const [data, setData] = React.useState({
@@ -45,10 +47,14 @@ export default function SignIn() {
         });
     };
 
+    const history = useHistory();
     const submit = (e) => {
         e.preventDefault();
         console.log(data.email);
         console.log(data.password);
+        PrimersService.setUserLoggedIn();
+
+        history.push("/dashboard");
     };
 
     return (

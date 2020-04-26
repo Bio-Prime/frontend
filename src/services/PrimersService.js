@@ -3,6 +3,14 @@ const URL = "http://83.212.82.248:8080/primers";
 
 export default class PrimersService {
 
+    static isUserLoggedIn = () => {
+        return localStorage.getItem("loggedIn") === "true";
+    };
+
+    static setUserLoggedIn = () => {
+        localStorage.setItem("loggedIn", "true");
+    };
+
     static getAllPrimers() {
 
         let error;

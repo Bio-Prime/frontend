@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import DashboardLayout from "./layouts/DashboardLayout";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import LoginLayout from "./layouts/LoginLayout";
+import PrimersService from "./services/PrimersService";
 
 const palette = {
     type: "light",
@@ -36,7 +37,10 @@ function App() {
             <BrowserRouter>
                 <Switch>
                     <Route path='/login' component={() => <LoginLayout />}/>
-                    <Route path='/' component={() => <DashboardLayout onClickDark={toggleDarkTheme} />}/>
+                    {PrimersService.isUserLoggedIn()
+                        ? <Route path='/' component={() => <DashboardLayout onClickDark={toggleDarkTheme} />}/>
+                        : <Redirect to='/login'/>
+                    }
                 </Switch>
             </BrowserRouter>
         </MuiThemeProvider>
