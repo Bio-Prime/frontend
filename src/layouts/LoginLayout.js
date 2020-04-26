@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
     const classes = useStyles();
 
     const [data, setData] = React.useState({
