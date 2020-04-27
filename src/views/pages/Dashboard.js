@@ -50,7 +50,7 @@ export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   useEffect(() => {
-    PrimersService.getAllPrimers().then(setData);
+    PrimersService.getAll().then(setData);
   }, []);
 
   if(data != null){

@@ -28,4 +28,24 @@ export default {
     const response_1 = await handleErrors(response);
     return response_1.json();
   },
+  async post(path,data) {
+    const url = ADDRESS + path;
+
+    let params = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "error",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    };
+
+    const response = await fetch(url, AuthService.addTokenToParameters(params));
+    const response_1 = await handleErrors(response);
+    return response_1.json();
+  },
 };
