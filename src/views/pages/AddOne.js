@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -143,20 +144,22 @@ export default function AddOne() {
         console.log(data);
     };
 
+    const xsWidth = 12;
+    const smWidth = 6;
+
     return (
-        <React.Fragment>
             <Paper className={classes.paper}>
                 <div className={classes.paperCenter}>
                 <Typography variant="h6" gutterBottom>
                     Add one oligonucleotide primer
                 </Typography>
                 <DialogContentText>
-                    Please enter the fields below
+                   The fields marked with a "*" are mandatory.
                 </DialogContentText>
 
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="name"
                                 variant="outlined"
@@ -169,7 +172,7 @@ export default function AddOne() {
                                 autoFocus
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="sequence"
                                 variant="outlined"
@@ -181,7 +184,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="orientation"
                                 variant="outlined"
@@ -202,7 +205,7 @@ export default function AddOne() {
                             />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="length"
                                 variant="outlined"
@@ -214,7 +217,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={4}>
                             <TextField
                                 name="freezer"
                                 variant="outlined"
@@ -226,7 +229,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={4}>
                             <TextField
                                 name="drawer"
                                 variant="outlined"
@@ -238,7 +241,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={4}>
                             <TextField
                                 name="box"
                                 variant="outlined"
@@ -250,7 +253,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="positionInReference"
                                 variant="outlined"
@@ -270,7 +273,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="tm"
                                 variant="outlined"
@@ -282,7 +285,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="optimalTOfAnnealing"
                                 variant="outlined"
@@ -294,7 +297,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="purificationMethod"
                                 variant="outlined"
@@ -314,7 +317,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="amountAvailableMikroL"
                                 variant="outlined"
@@ -334,7 +337,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="amountAvailablePackSize"
                                 variant="outlined"
@@ -354,7 +357,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="lengthOfAmplicone"
                                 variant="outlined"
@@ -366,7 +369,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="storingT"
                                 variant="outlined"
@@ -386,7 +389,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="organism"
                                 variant="outlined"
@@ -406,7 +409,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="gen"
                                 variant="outlined"
@@ -418,7 +421,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="ncbiGenId"
                                 variant="outlined"
@@ -430,7 +433,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="humanGenomBuild"
                                 variant="outlined"
@@ -450,7 +453,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="formulation"
                                 variant="outlined"
@@ -470,7 +473,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="typeOfPrimer"
                                 variant="outlined"
@@ -490,7 +493,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="sondaSequence"
                                 variant="outlined"
@@ -502,7 +505,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="assayId"
                                 variant="outlined"
@@ -514,7 +517,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="size"
                                 variant="outlined"
@@ -534,27 +537,30 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                name="primerApplication"
-                                variant="outlined"
-                                required
-                                select
-                                fullWidth
-                                id="primerApplication"
-                                label="Primer application"
-                                value={data.primerApplication}
-                                onChange={handleChange}
-                            >
-                                {application.map(value => (
-                                    <MenuItem key={value} value={value}>
-                                        {value}
-                                    </MenuItem>
-                                ))}
-                                />
-                            </TextField>
+                        <Grid item xs={xsWidth} sm={smWidth}>
+                            
+                                
+                            <Autocomplete
+                                id="free-solo-demo"
+                                freeSolo
+                                options={application}
+                                renderInput={(params) => (
+                                    <TextField
+                                     {...params}
+                                        name="primerApplication"
+                                        variant="outlined"
+                                        required
+                                        select
+                                        fullWidth
+                                        id="primerApplication"
+                                        label="Primer application"
+                                        value={data.primerApplication}
+                                        onChange={handleChange}
+                                    />
+                                )}
+                            />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="applicationComment"
                                 variant="outlined"
@@ -566,7 +572,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="fiveModification"
                                 variant="outlined"
@@ -586,7 +592,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="threeModification"
                                 variant="outlined"
@@ -606,7 +612,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="concentrationOrdered"
                                 variant="outlined"
@@ -626,7 +632,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="concentrationOrderedUnit"
                                 variant="outlined"
@@ -638,7 +644,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="checkSpecifityInBlast"
                                 variant="outlined"
@@ -658,7 +664,7 @@ export default function AddOne() {
                                 />
                             </TextField>
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="designerName"
                                 variant="outlined"
@@ -670,7 +676,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="designerPublication"
                                 variant="outlined"
@@ -682,7 +688,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="designerDatabase"
                                 variant="outlined"
@@ -694,7 +700,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="project"
                                 variant="outlined"
@@ -707,7 +713,7 @@ export default function AddOne() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="orderedBy"
                                 variant="outlined"
@@ -720,7 +726,7 @@ export default function AddOne() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="supplier"
                                 variant="outlined"
@@ -741,7 +747,7 @@ export default function AddOne() {
                             </TextField>
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="manufacturer"
                                 variant="outlined"
@@ -762,7 +768,7 @@ export default function AddOne() {
                             </TextField>
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="comment"
                                 variant="outlined"
@@ -775,7 +781,7 @@ export default function AddOne() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="document"
                                 variant="outlined"
@@ -788,7 +794,7 @@ export default function AddOne() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="analysis"
                                 variant="outlined"
@@ -801,7 +807,7 @@ export default function AddOne() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="orderStatus"
                                 variant="outlined"
@@ -814,7 +820,7 @@ export default function AddOne() {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="user"
                                 variant="outlined"
@@ -826,7 +832,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="pairs"
                                 variant="outlined"
@@ -838,19 +844,7 @@ export default function AddOne() {
                                 onChange={handleChange}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                name="tm"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="tm"
-                                label="Tm"
-                                value={data.tm}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
+                        <Grid item xs={xsWidth} sm={smWidth}>
                             <TextField
                                 name="gcpercent"
                                 variant="outlined"
@@ -876,7 +870,6 @@ export default function AddOne() {
                 </form>
                 </div>
             </Paper>
-        </React.Fragment>
     );
 }
 

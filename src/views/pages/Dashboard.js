@@ -2,6 +2,7 @@ import DataTable from "../../components/DataTable";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Chart from "../../components/Chart";
 import Count from "../../components/Count";
 import clsx from "clsx";
@@ -10,6 +11,7 @@ import CustomToolbarSelect from "../elements/CustomToolbarSelect";
 import PrimersService from "../../services/PrimersService";
 import PrimersColumns from "../elements/PrimersColumns";
 import React, { useState, useEffect } from "react";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
@@ -53,30 +55,41 @@ export default function Dashboard() {
     PrimersService.getAll().then(setData);
   }, []);
 
-  if(data != null){
+  if (data != null) {
     return (
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={8} lg={9}>
-            <Paper className={fixedHeightPaper}>
-              <Chart allData={data} />
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={4} lg={3}>
-            <Paper className={fixedHeightPaper}>
-              <Count dataCount={data.length} />
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
-            <DataTable
-              title={"Oligonucleotide Primers"}
-              columns={columns}
-              data={data}
-              options={options}
-            />
-          </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8} lg={9}>
+          <Paper className={fixedHeightPaper}>
+            <Chart allData={data} />
+          </Paper>
         </Grid>
-      );
+        <Grid item xs={12} md={4} lg={3}>
+          <Paper className={fixedHeightPaper}>
+            <Count dataCount={data.length} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <DataTable
+            title={"Oligonucleotide Primers"}
+            columns={columns}
+            data={data}
+            options={options}
+          />
+        </Grid>
+      </Grid>
+    );
   } else {
-      return <div></div>
+    return (
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "90vh" }}
+      >
+        <CircularProgress />
+      </Grid>
+    );
   }
 }

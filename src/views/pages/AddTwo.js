@@ -69,7 +69,6 @@ export default function Checkout() {
     };
 
     return (
-        <React.Fragment>
             <Paper className={classes.paper}>
                 <Title>Add two oligonucleotide primers</Title>
                 <Stepper activeStep={activeStep} className={classes.stepper}>
@@ -111,6 +110,6 @@ export default function Checkout() {
                     )}
                 </React.Fragment>
             </Paper>
-        </React.Fragment>
+        
     );
 }
