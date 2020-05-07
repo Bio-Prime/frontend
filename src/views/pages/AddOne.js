@@ -14,6 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
+import PrimersService from "../../services/PrimersService"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -73,6 +74,7 @@ export default function AddOne() {
       object[key] = value;
     });
     console.log(object);
+    PrimersService.add(object);
   };
 
   const xsWidth = 12;
@@ -297,15 +299,10 @@ export default function AddOne() {
               />
             </Grid>
 
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Typography
-                variant="subtitle1"
-                align="center"
-                dispaly="block"
-                style={useStyles.verticalCenter}
-              >
+            <Grid item xs={xsWidth} sm={smWidth} align="center">
+              <DialogContentText style={{ marginTop: 12 }}>
                 Did you chech specificity in Blast?
-              </Typography>
+              </DialogContentText>
             </Grid>
 
             <Grid item xs={xsWidth} sm={smWidth}>
@@ -421,12 +418,12 @@ export default function AddOne() {
                 name="amountAvailable"
                 variant="outlined"
                 fullWidth
-                label="Amount available"
+                label="Amount avail."
                 value={state.amountAvailable}
                 onChange={handleNumbers}
               />
             </Grid>
-            <Grid item xs={3} sm={1}>
+            <Grid item xs={3} sm={2}>
               <TextField
                 variant="outlined"
                 fullWidth
@@ -436,8 +433,6 @@ export default function AddOne() {
                 }
               />
             </Grid>
-
-            <Grid item xs={1} sm={1} />
 
             <Grid item xs={8} sm={2}>
               <TextField
@@ -478,11 +473,11 @@ export default function AddOne() {
               <Autocomplete
                 freeSolo
                 options={Constants.freezer}
-                name="freezer"
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     variant="outlined"
+                    name="freezer"
                     required
                     fullWidth
                     label="Freezerd"
@@ -495,10 +490,10 @@ export default function AddOne() {
               <Autocomplete
                 freeSolo
                 options={Constants.drawer}
-                name="drawer"
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    name="drawer"
                     variant="outlined"
                     required
                     fullWidth
@@ -512,10 +507,10 @@ export default function AddOne() {
               <Autocomplete
                 freeSolo
                 options={Constants.box}
-                name="box"
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    name="box"
                     variant="outlined"
                     required
                     fullWidth
@@ -535,10 +530,10 @@ export default function AddOne() {
               <Autocomplete
                 freeSolo
                 options={Constants.project}
-                name="project"
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    name="project"
                     variant="outlined"
                     required
                     fullWidth
@@ -551,11 +546,11 @@ export default function AddOne() {
             <Grid item xs={xsWidth} sm={smWidth}>
               <Autocomplete
                 freeSolo
-                options={Constants.projectApplication}
-                name="projectApplication"
+                options={Constants.primerApplication}
                 renderInput={(params) => (
                   <TextField
                     {...params}
+                    name="primerApplication"
                     variant="outlined"
                     required
                     fullWidth
