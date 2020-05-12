@@ -88,10 +88,12 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
     const formatSelectedPrimerData = () => {
 
         primerColumns.forEach((item, index) => {
-            tableData.push({
-                "label": item.label,
-                "value": data[item.name]
-            });
+            if (item.name !== 'id') {
+                tableData.push({
+                    "label": item.label,
+                    "value": data[item.name]
+                });
+            }
         });
     };
     formatSelectedPrimerData();
