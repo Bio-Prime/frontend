@@ -4,9 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {
-    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
-} from 'recharts';
+import {Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis,} from 'recharts';
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
 import Paper from "@material-ui/core/Paper";
@@ -79,71 +77,40 @@ const optionsRelated = {
     filter: false,
 };
 
-export default function PrimerDetails({open, setOpen, selectedPrimerData, pairsData}) {
+export default function PrimerDetails({open, setOpen, data, pairsData}) {
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    let labels = PrimersColumns.getColumnsLabels();
-    let data = [];
+    let primerColumns = PrimersColumns.getPrimersColumns();
+    let tableData = [];
     const formatSelectedPrimerData = () => {
-        for (let i = 0; i < selectedPrimerData.length; i++) {
 
-            data.push({
-                "label": labels[i][0],
-                "value": selectedPrimerData[i]
+        primerColumns.forEach((item, index) => {
+            tableData.push({
+                "label": item.label,
+                "value": data[item.name]
             });
-        }
+        });
     };
     formatSelectedPrimerData();
 
     const getLocationInLab = () => {
-        let freezer = '';
-        let drawer = '';
-        let box = '';
-        for (let i = 0; i < data.length; i++) {
+        let freezer = data.freezer;
+        let drawer = data.drawer;
+        let box = data.box;
 
-            if (data[i].label === "Freezer") {
-                freezer = data[i].value;
-            }
-
-            if (data[i].label === "Drawer") {
-                drawer = data[i].value;
-            }
-
-            if (data[i].label === "Box") {
-                box = data[i].value;
-            }
-        }
-
-        let location = freezer + ', ' + drawer + ', ' + box;
-        return location;
+        return freezer + ', ' + drawer + ', ' + box;
     };
 
     const getSequence = () => {
-        let sequence = '';
-        for (let i = 0; i < data.length; i++) {
-
-            if (data[i].label === "Sequence") {
-                sequence = data[i].value;
-                break;
-            }
-        }
-        return sequence;
+        return data.sequence;
     };
 
 
     const getAmountAvailable = () => {
-        let amountAvailableMikroL = '';
-        for (let i = 0; i < data.length; i++) {
-
-            if (data[i].label === "Amount available (µL)") {
-                amountAvailableMikroL = data[i].value;
-                break;
-            }
-        }
-        return amountAvailableMikroL;
+        return data.amountAvailable;
     };
 
     const getDate = () => {
@@ -171,7 +138,7 @@ export default function PrimerDetails({open, setOpen, selectedPrimerData, pairsD
             <DialogContent>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} lg={6}>
-                        <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={data} options={options}/>
+                        <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={tableData} options={options}/>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6}>
                         <Grid container spacing={2}>

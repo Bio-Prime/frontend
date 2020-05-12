@@ -25,17 +25,18 @@ function CustomToolbarSelect(props) {
     // the data of the row that was selected
     let dataArray = props.displayData[selectedRow].data;
 
-    let labels = PrimersColumns.getColumnsLabels();
+    // data json
+    let dataJson = {};
+    const columns = PrimersColumns.getPrimersColumns();
+    columns.forEach((item, index) => {
+        dataJson[item.name] = dataArray[index];
+    });
+
+
     let pairsData = [];
     const getPrimersPairs = () => {
-        let idx;
-        for (idx = 0; idx < labels.length; idx++) {
-            if (labels[idx][0] === 'Pairs') {
-                break;
-            }
-        }
 
-        let pairs = dataArray[idx];
+        let pairs = dataJson.pairs;
         for (let i = 0; i < props.displayData.length; i++) {
             for (let j = 0; j < pairs.length; j++) {
                 if (props.displayData[i].data[0] === pairs[j]) {
@@ -61,7 +62,7 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <PrimersDetails open={open} setOpen={setOpen} selectedPrimerData={dataArray} pairsData={pairsData} />
+            <PrimersDetails open={open} setOpen={setOpen} data={dataJson} pairsData={pairsData} />
         </div>
     );
 }
