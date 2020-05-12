@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
 import Paper from "@material-ui/core/Paper";
@@ -12,8 +11,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Title from "../../components/Title";
 import PrimersColumns from "./PrimersColumns";
 import TextField from "@material-ui/core/TextField/TextField";
-import Constants from "../pages/constants";
-import MenuItem from "@material-ui/core/MenuItem";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -26,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         height: 140,
     },
     fixedHeightTimesTwo: {
-        height: 405,
+        height: 250,
     },
     form: {
         width: "100%", // Fix IE 11 issue.
@@ -91,16 +89,7 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
 
     const [formData, setFormData] = React.useState({
         amountAvailable: data.amountAvailable,
-        amountAvailablePackType: lowerCaseAllWordsExceptFirstLetters(data.amountAvailablePackType),
-        amountAvailablePacks: data.amountAvailablePacks
     });
-
-
-    function lowerCaseAllWordsExceptFirstLetters(string) {
-        return string.replace(/\w\S*/g, function (word) {
-            return word.charAt(0) + word.slice(1).toLowerCase();
-        });
-    }
 
     let primerColumns = PrimersColumns.getPrimersColumns();
     let tableData = [];
@@ -129,13 +118,6 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
         return data.sequence;
     };
 
-    const handleChange = event => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-        });
-    };
-
     const handleNumbers = (event) => {
         if (!isNaN(event.target.value))
             setFormData({
@@ -147,8 +129,6 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
     const submit = (e) => {
         e.preventDefault();
         data.amountAvailable = formData.amountAvailable;
-        data.amountAvailablePackType = formData.amountAvailablePackType;
-        data.amountAvailablePacks = formData.amountAvailablePacks;
 
         console.log(data);
     };
@@ -168,13 +148,13 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
                     </Grid>
                     <Grid item xs={12} md={6} lg={6}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} md={6} lg={6}>
+                            <Grid item xs={12} md={12} lg={12}>
                                 <Paper className={fixedHeightPaper}>
                                     <Title>Sequence</Title>
                                     {getSequence()}
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12} md={6} lg={6}>
+                            <Grid item xs={12} md={12} lg={12}>
                                 <Paper className={fixedHeightPaper}>
                                     <Title>Location in the Lab</Title>
                                     {getLocationInLab()}
@@ -211,33 +191,6 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
                                                     value={
                                                         formData.amountAvailablePackType === "Plate" ? "wells" : "µl"
                                                     }
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={12}>
-                                                <TextField
-                                                    name="amountAvailablePackType"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    select
-                                                    label="Pack type"
-                                                    value={formData.amountAvailablePackType}
-                                                    onChange={handleChange}
-                                                >
-                                                    {Constants.amountAvailablePackType.map((value) => (
-                                                        <MenuItem key={value} value={value}>
-                                                            {value}
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField>
-                                            </Grid>
-                                            <Grid item xs={12} sm={12}>
-                                                <TextField
-                                                    name="amountAvailablePacks"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    label="Number of packs"
-                                                    value={formData.amountAvailablePacks}
-                                                    onChange={handleNumbers}
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={12}>
