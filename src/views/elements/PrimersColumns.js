@@ -4,7 +4,7 @@ export default class PrimersColumns {
         let labels =  [
             ['Id'], ['Generated Name'], ['Name'], ['Sequence'], ['Orientation'], ['Length'], ['Freezer'], ['Drawer'], ['Box'],
             ['Position in the reference'], ['Optimal T of annealing (°C)'], ['Purification method'],
-            ['Amount available (µL)'], ['Amount available (Pack size)'], ['Date'], ['Length of amplicone'],
+            ['Amount available (µL)'], ['Amount available (Pack type)'], ['Amount available (Packs)'], ['Date'], ['Length of amplicone'],
             ['Storing T (°C)'], ['Organism'], ['Gen'], ['NCBI gen ID'], ['Human genom build'], ['Formulation'],
             ['Type of primer'], ['Sonda sequence'], ['Assay ID'], ['Size'], ['Primer application'], ['Application comment'],
             ['5\' Modification'], ['3\' Modification'], ['Concentration ordered'], ['Concentration ordered unit'],
@@ -122,7 +122,7 @@ export default class PrimersColumns {
                 }
             },
             {
-                name: "amountAvailableMikroL",
+                name: "amountAvailable",
                 label: "Amount available (µL)",
                 options: {
                     filter: true,
@@ -130,8 +130,17 @@ export default class PrimersColumns {
                 }
             },
             {
-                name: "amountAvailablePackSize",
-                label: "Amount available (Pack size)",
+                name: "amountAvailablePackType",
+                label: "Amount available (Pack Type)",
+                options: {
+                    display: false,
+                    filter: true,
+                    sort: true,
+                }
+            },
+            {
+                name: "amountAvailablePacks",
+                label: "Amount available (Packs)",
                 options: {
                     display: false,
                     filter: true,
