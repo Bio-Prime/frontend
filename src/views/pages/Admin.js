@@ -11,7 +11,6 @@ import CustomToolbarAdmin from "../elements/CustomToolbarAdmin";
 import CustomToolbarSelectAdmin from "../elements/CustomToolbarSelectAdmin";
 import UserService from "../../services/UserService";
 import UsersChart from "../../components/UsersChart";
-import Title from "../../components/Title";
 
 const useStyles = makeStyles((theme) => ({
     paper: {

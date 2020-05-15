@@ -37,7 +37,11 @@ export default function PrimersAddDialog({open, setOpen}) {
     };
 
     const handleClickCSV = () => {
-        setDropzone(true);
+        if (showDropzone) {
+            setDropzone(false);
+        } else {
+            setDropzone(true);
+        }
     };
 
     return (

@@ -11,7 +11,6 @@ import CustomToolbarSelect from "../elements/CustomToolbarSelect";
 import PrimersService from "../../services/PrimersService";
 import PrimersColumns from "../elements/PrimersColumns";
 import React, { useState, useEffect } from "react";
-import Title from "../../components/Title";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
