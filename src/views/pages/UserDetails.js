@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
         width: "60%", // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
+    bgColor: {
+        backgroundColor: theme.palette.bgDialog
+    },
 }));
 
 export default function UserDetails({open, setOpen, data}) {
@@ -64,7 +67,7 @@ export default function UserDetails({open, setOpen, data}) {
     return (
         <Dialog fullWidth={true} maxWidth={"md"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">User Details</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.bgColor}>
                 <Paper className={classes.paper}>
                     <div className={classes.paperCenter}>
                         <Typography variant="h5" gutterBottom>

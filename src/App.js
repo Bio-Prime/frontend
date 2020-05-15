@@ -6,10 +6,11 @@ import LoginLayout from "./layouts/LoginLayout";
 import PrivateRoute from "./components/PrivateRoute";
 
 const palette = {
-  type: "light",
+  type: "dark",
   primary: {
     main: "#26A69A",
   },
+  bgDialog: '#303030',
 };
 
 function App() {
@@ -23,8 +24,15 @@ function App() {
     let newPalette = {
       palette: palette,
     };
+
+    // set type
     let newPaletteType = theme.palette.type === "light" ? "dark" : "light";
     newPalette.palette.type = newPaletteType;
+
+    // set dialog background
+    let newPaletteBgDialog = theme.palette.type === "light" ? '#E3E3E3' : "#303030";
+    newPalette.palette.bgDialog = newPaletteBgDialog;
+
     setTheme(newPalette);
   };
 

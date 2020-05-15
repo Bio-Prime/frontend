@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
         width: "100%", // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     },
+    bgColor: {
+        backgroundColor: theme.palette.bgDialog
+    },
 }));
 
 const columns = [
@@ -142,8 +145,7 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
 
     return (
         <Dialog fullWidth={true} maxWidth={"xl"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Primer Details</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.bgColor}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} lg={6}>
                         <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={tableData} options={options}/>
@@ -219,7 +221,7 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
                     </Grid>
                 </Grid>
             </DialogContent>
-            <DialogActions>
+            <DialogActions className={classes.bgColor}>
                 <Button onClick={handleClose} color="primary">
                     Close
                 </Button>
