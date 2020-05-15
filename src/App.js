@@ -8,7 +8,10 @@ import PrivateRoute from "./components/PrivateRoute";
 const palette = {
   type: "dark",
   primary: {
-    main: "#26A69A",
+    main: "#876E9B",
+  },
+  secondary: {
+    main: '#FFD65D',
   },
   bgDialog: '#303030',
 };
