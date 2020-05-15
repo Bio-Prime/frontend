@@ -272,7 +272,6 @@ export default function EditPrimer(props) {
                                 variant="outlined"
                                 fullWidth
                                 label="Length of amplicone"
-                                value={state.lengthOfAmplicone}
                                 onChange={handleNumbers}
                             />
                         </Grid>
