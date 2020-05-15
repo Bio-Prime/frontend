@@ -14,6 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,18 +40,19 @@ const useStyles = makeStyles((theme) => ({
 export default function EditPrimer(props) {
 
     const setPrimersData = () => {
-        const primerData = props.location.state.data;
-        for (let key in Constants.defaultPrimerData) {
-            primerData[key] = (typeof props.location.state.data[key] !== 'undefined') ? props.location.state.data[key] : '';
-        }
+        if (typeof props.location.state !== 'undefined') {
+            const primerData = props.location.state.data;
+            for (let key in Constants.defaultPrimerData) {
+                primerData[key] = (typeof props.location.state.data[key] !== 'undefined') ? props.location.state.data[key] : '';
+            }
 
-        // NEED TO FIX THIS
-        // this is only because dropdown doesnt allow to have different values as defined in Constants
-        primerData.amountAvailablePackType = lowerCaseAllWordsExceptFirstLetters(primerData.amountAvailablePackType);
-        primerData.concentrationOrderedUnit = 'nmol';
+            // NEED TO FIX THIS
+            // this is only because dropdown doesnt allow to have different values as defined in Constants
+            primerData.amountAvailablePackType = lowerCaseAllWordsExceptFirstLetters(primerData.amountAvailablePackType);
+            primerData.concentrationOrderedUnit = 'nmol';
 
-        console.log(primerData);
-        return primerData;
+            return primerData;
+        } else return Constants.defaultPrimerData;
     };
 
     const [state, setState] = React.useState(setPrimersData);
@@ -100,8 +102,15 @@ export default function EditPrimer(props) {
         });
     }
 
+    const renderRedirect = () => {
+        if (typeof props.location.state === 'undefined') {
+            return <Redirect to='/' />
+        }
+    };
+
     return (
         <Paper className={classes.paper}>
+            {renderRedirect()}
             <div className={classes.paperCenter}>
                 <Typography variant="h5" gutterBottom>
                     Edit oligonucleotide primer
