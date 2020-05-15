@@ -14,11 +14,11 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Count({dataCount}) {
+export default function Count({dataCount, title}) {
     const classes = useStyles();
     return (
         <React.Fragment>
-            <Title>Total Number of Primers</Title>
+            <Title>{title}</Title>
             <Typography component="p" variant="h4">
                 {dataCount}
             </Typography>

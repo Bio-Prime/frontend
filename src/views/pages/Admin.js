@@ -11,6 +11,7 @@ import CustomToolbarAdmin from "../elements/CustomToolbarAdmin";
 import CustomToolbarSelectAdmin from "../elements/CustomToolbarSelectAdmin";
 import UserService from "../../services/UserService";
 import UsersChart from "../../components/UsersChart";
+import Title from "../../components/Title";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -67,7 +68,7 @@ export default function Admin() {
                 </Grid>
                 <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
-                        <Count dataCount={data.length}/>
+                        <Count dataCount={data.length} title={'Total Number of Users'}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
