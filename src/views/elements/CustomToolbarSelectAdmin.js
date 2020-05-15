@@ -5,6 +5,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
 import UserDetails from "../pages/UserDetails";
 import UsersColumns from "./UsersColumns";
+import {Delete} from "@material-ui/icons";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -40,6 +41,10 @@ function CustomToolbarSelectAdmin(props) {
 
     const { classes } = props;
 
+    const handleClickDelete = () => {
+        console.log("Delete user with id: ", + dataJson.id);
+    };
+
     return (
         <div className={classes.iconContainer}>
             <Tooltip title={"Open selected"}>
@@ -48,6 +53,11 @@ function CustomToolbarSelectAdmin(props) {
                 </IconButton>
             </Tooltip>
             <UserDetails open={open} setOpen={setOpen} data={dataJson} />
+            <Tooltip title={"Delete"}>
+                <IconButton className={classes.iconButton} onClick={handleClickDelete}>
+                    <Delete className={classes.icon} />
+                </IconButton>
+            </Tooltip>
         </div>
     );
 }

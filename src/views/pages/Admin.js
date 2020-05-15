@@ -54,7 +54,6 @@ export default function Admin() {
     useEffect(() => {
         UserService.getAll().then((data) => {
             setData(data);
-            console.log(data);
         });
     }, []);
 

@@ -5,6 +5,7 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
 import PrimersDetails from "../pages/PrimerDetails";
 import PrimersColumns from "./PrimersColumns";
+import {Delete} from "@material-ui/icons";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -53,6 +54,10 @@ function CustomToolbarSelect(props) {
         setOpen(true);
     };
 
+    const handleClickDelete = () => {
+        console.log("Delete primer with id: ", + dataJson.id);
+    };
+
     const { classes } = props;
 
     return (
@@ -63,6 +68,11 @@ function CustomToolbarSelect(props) {
                 </IconButton>
             </Tooltip>
             <PrimersDetails open={open} setOpen={setOpen} data={dataJson} pairsData={pairsData} />
+            <Tooltip title={"Delete"}>
+                <IconButton className={classes.iconButton} onClick={handleClickDelete}>
+                    <Delete className={classes.icon} />
+                </IconButton>
+            </Tooltip>
         </div>
     );
 }
