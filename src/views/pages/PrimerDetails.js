@@ -9,9 +9,10 @@ import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import {makeStyles} from "@material-ui/core/styles";
 import Title from "../../components/Title";
-import PrimersColumns from "./PrimersColumns";
+import PrimersColumns from "../elements/PrimersColumns";
 import TextField from "@material-ui/core/TextField/TextField";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import CustomToolbarEdit from "../elements/CustomToolbarEdit";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -51,22 +52,6 @@ const columns = [
     }
 ];
 
-const options = {
-    filterType: 'checkbox',
-    downloadOptions: {
-        filename: "primers.csv",
-        separator: ","
-    },
-    selectableRows: "none",
-    pagination: false,
-    responsive: "scrollMaxHeight",
-    print: false,
-    download: false,
-    filter: false,
-    sort: false,
-    viewColumns: false,
-};
-
 const columnsRelated = PrimersColumns.getPrimersColumns();
 
 const optionsRelated = {
@@ -82,6 +67,23 @@ const optionsRelated = {
 };
 
 export default function PrimerDetails({open, setOpen, data, pairsData}) {
+
+    const options = {
+        filterType: 'checkbox',
+        downloadOptions: {
+            filename: "primers.csv",
+            separator: ","
+        },
+        selectableRows: "none",
+        pagination: false,
+        responsive: "scrollMaxHeight",
+        print: false,
+        download: false,
+        filter: false,
+        sort: false,
+        viewColumns: false,
+        customToolbar: () => <CustomToolbarEdit data={data}/>,
+    };
 
     const handleClose = () => {
         setOpen(false);

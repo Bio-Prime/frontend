@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
-import PrimersDetails from "./PrimerDetails";
+import PrimersDetails from "../pages/PrimerDetails";
 import PrimersColumns from "./PrimersColumns";
 
 const defaultToolbarSelectStyles = {
