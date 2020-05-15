@@ -6,6 +6,7 @@ import Analytics from "./pages/Analytics";
 import AddTwo from "./pages/AddTwo";
 import AddOne from "./pages/AddOne";
 import EditPrimer from "./pages/EditPrimer";
+import AddUser from "./pages/AddUser";
 
 const pageList = [
     {
@@ -47,6 +48,11 @@ const pageList = [
         name: 'EditPrimer',
         path: '/edit',
         component: EditPrimer,
+    },
+    {
+        name: 'AddUser',
+        path: '/add-user',
+        component: AddUser,
     },
 ];
 

@@ -47,8 +47,6 @@ export default function UserDetails({open, setOpen, data}) {
         primers: data.primers
     });
 
-    console.log(data);
-
     const handleChange = (event) => {
         setFormData({
             ...formData,

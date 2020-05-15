@@ -271,4 +271,10 @@ export default {
     gcpercent: '',
     amountAvailablePacks: '',
   },
+  defaultUserData: {
+    name: '',
+    username: '',
+    role: '',
+    password: '',
+  },
 };

@@ -2,24 +2,23 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
-import PrimersAddDialog from "./PrimersAddDialog";
+import { useHistory } from 'react-router-dom';
 
 export default function CustomToolbarAdmin() {
 
-    const [open, setOpen] = React.useState(false);
+    const history = useHistory();
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClick = () => {
+        history.push('/add-user');
     };
 
     return (
         <React.Fragment>
             <Tooltip title={"Add"}>
-                <IconButton onClick={handleClickOpen}>
+                <IconButton onClick={handleClick}>
                     <AddIcon />
                 </IconButton>
             </Tooltip>
-            <PrimersAddDialog open={open} setOpen={setOpen}/>
         </React.Fragment>
     );
 }
