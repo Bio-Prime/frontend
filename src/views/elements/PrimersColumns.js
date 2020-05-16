@@ -258,6 +258,15 @@ export default class PrimersColumns {
                 }
             },
             {
+                name: "fiveDye",
+                label: "Five Dye",
+                options: {
+                    display: false,
+                    filter: true,
+                    sort: true,
+                }
+            },
+            {
                 name: "fiveModification",
                 label: "5' Modification",
                 options: {
