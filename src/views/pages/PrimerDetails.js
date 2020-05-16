@@ -145,7 +145,7 @@ export default function PrimerDetails(props) {
         return (
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6} lg={6}>
-                    <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={tableData}
+                    <DataTable title={data.generatedName} columns={columns} data={tableData}
                                options={options}/>
                 </Grid>
                 <Grid item xs={12} md={6} lg={6}>
@@ -192,7 +192,6 @@ export default function PrimerDetails(props) {
                                             </Grid>
                                             <Grid item xs={3} sm={3}>
                                                 <TextField
-                                                    disabled
                                                     variant="outlined"
                                                     fullWidth
                                                     label="Unit"
