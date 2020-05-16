@@ -2,7 +2,6 @@ import Orders from "./pages/Orders";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Admin from "./pages/Admin";
-import Analytics from "./pages/Analytics";
 import AddTwo from "./pages/AddTwo";
 import AddOne from "./pages/AddOne";
 import EditPrimer from "./pages/EditPrimer";
@@ -23,11 +22,6 @@ const pageList = [
         name: 'History',
         path: '/history',
         component: History,
-    },
-    {
-        name: 'Analytics',
-        path: '/analytics',
-        component: Analytics,
     },
     {
         name: 'Admin',

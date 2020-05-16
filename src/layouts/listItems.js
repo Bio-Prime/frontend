@@ -27,12 +27,6 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="History" />
         </ListItem>
-        <ListItem button component={Link} to="/analytics">
-            <ListItemIcon>
-                <Assessment />
-            </ListItemIcon>
-            <ListItemText primary="Analytics" />
-        </ListItem>
     </div>
 );
 
