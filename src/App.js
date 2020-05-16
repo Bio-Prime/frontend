@@ -6,14 +6,14 @@ import LoginLayout from "./layouts/LoginLayout";
 import PrivateRoute from "./components/PrivateRoute";
 
 const palette = {
-  type: "light",
+  type: "dark",
   primary: {
     main: "#876E9B",
   },
   secondary: {
     main: '#FFD65D',
   },
-  bgDialog: '#E3E3E3',
+  bgDialog: '#303030',
 };
 
 function App() {
