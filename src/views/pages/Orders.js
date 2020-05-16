@@ -19,6 +19,11 @@ import {
     Tooltip,
     Legend, Line,
 } from 'recharts';
+import OrdersColumns from "../elements/OrdersColumns";
+import CustomToolbarOrdered from "../elements/OrderedToolbars/CustomToolbarOrdered";
+import CustomToolbarSelectOrdered from "../elements/OrderedToolbars/CustomToolbarSelectOrdered";
+import CustomToolbarWanted from "../elements/WantedToolbars/CustomToolbarWanted";
+import CustomToolbarSelectWanted from "../elements/WantedToolbars/CustomToolbarSelectWanted";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -40,313 +45,34 @@ const useStyles = makeStyles(theme => ({
 
 export default function Orders() {
 
-    const columns = [
-        {
-            name: "name",
-            label: "Name",
-            options: {
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "sequence",
-            label: "Sequence",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "orientation",
-            label: "Orientation",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "length",
-            label: "Length",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "location",
-            label: "Location in Lab",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "position",
-            label: "Position in the reference",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "tm",
-            label: "Tm (°C)",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "temperatureAnnealing",
-            label: "Optimal T of annealing (°C)",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "purification",
-            label: "Purification method",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "amount",
-            label: "Amount available",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "date",
-            label: "Date",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "ampliconeLength",
-            label: "Length of amplicone",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "storingTemperature",
-            label: "Storing T (°C)",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "gc",
-            label: "GC%",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "organism",
-            label: "Organism",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "gen",
-            label: "Gen",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "designer",
-            label: "Designer (name and surname)",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "5modification",
-            label: "5' modification",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "3modification",
-            label: "3' modification",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "manufacturer",
-            label: "Manufacturer",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "supplier",
-            label: "Supplier",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "type",
-            label: "Type of primer",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "humanBuild",
-            label: "Human genom build",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "ncbi",
-            label: "NCBI gen ID",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "checkBlast",
-            label: "Checked specificity in blast?",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "formulation",
-            label: "Formulation",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "application",
-            label: "Application",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "project",
-            label: "Project",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "sondaSequence",
-            label: "If TaqMan: sonda sequence",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "orderedBy",
-            label: "Ordered By",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "comment",
-            label: "Comment",
-            options: {
-                display: false,
-                filter: false,
-                sort: true,
-            }
-        },
-        {
-            name: "analysis",
-            label: "Analysis",
-            options: {
-                display: false,
-                filter: true,
-                sort: true,
-            }
-        },
-    ];
+    const columns = OrdersColumns.getOrdersColumns();
 
-    const data = [
+    const dataOrdered = [
         ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Reverse", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
             "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
             "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
         ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
             "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "Projekt2", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-        ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer2", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
-            "0", "95", "Homo Sapiens", "gen-3", "nekinevem", "Aldehyde Modifier", "Amino Linker C7", "nek manufacturer", "LipBled", "DNA/RNA probe", "NCBI Build 34",
-            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
-
+            "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"]
     ];
+
+    const optionsOrdered = {
+        filterType: 'checkbox',
+        download: false,
+        print: false,
+        selectableRows: "single",
+        rowsPerPage: 5,
+        rowsPerPageOptions: [5, 10, 15],
+        customToolbar: () => <CustomToolbarOrdered />,
+        customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            <CustomToolbarSelectOrdered
+                selectedRows={selectedRows}
+                displayData={displayData}
+                setSelectedRows={setSelectedRows}
+                allData={dataOrdered}
+            />
+        )
+    };
 
     const dataWanted = [
         ["ATCGNU", "TCTAAAAAGCATGTAAAAGAAA", "Forward", "553", "Freezer1", "5'-promotor", "52", "30", "Desalted", "10 nmol", "20. 3. 2020", "10",
@@ -354,13 +80,22 @@ export default function Orders() {
             "NCBIgenI", "yes", "Lyophilized", "cDNA synthesis", "new Project", "nek string", "Simen Ravnik", "Tole sem sedaj narocil", "nekineki"],
     ];
 
-    const options = {
+    const optionsWanted = {
         filterType: 'checkbox',
         download: false,
         print: false,
         selectableRows: "multiple",
         rowsPerPage: 5,
         rowsPerPageOptions: [5, 10, 15],
+        customToolbar: () => <CustomToolbarWanted />,
+        customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+            <CustomToolbarSelectWanted
+                selectedRows={selectedRows}
+                displayData={displayData}
+                setSelectedRows={setSelectedRows}
+                allData={dataOrdered}
+            />
+        )
     };
 
 
@@ -435,7 +170,7 @@ export default function Orders() {
                         <Paper className={fixedHeightPaper}>
                             <Title>Number of ordered primers</Title>
                             <Typography component="p" variant="h4">
-                                {data.length}
+                                {dataOrdered.length}
                             </Typography>
                             <Typography color="textSecondary" className={classes.depositContext}>
                                 on {new Date().toDateString()}
@@ -465,10 +200,10 @@ export default function Orders() {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <DataTable title={"Ordered Oligonucleotide Primers"} columns={columns} data={data} options={options}/>
+                <DataTable title={"Ordered Oligonucleotide Primers"} columns={columns} data={dataOrdered} options={optionsOrdered}/>
             </Grid>
             <Grid item xs={12}>
-                <DataTable title={"Wanted Oligonucleotide Primers"} columns={columns} data={dataWanted} options={options}/>
+                <DataTable title={"Wanted Oligonucleotide Primers"} columns={columns} data={dataWanted} options={optionsWanted}/>
             </Grid>
         </Grid>
     );
