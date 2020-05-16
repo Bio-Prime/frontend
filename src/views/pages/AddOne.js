@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       padding: theme.spacing(3),
     },
-    width: '80%',
+    width: '85%',
   },
   paperCenter: {
     display: "flex",
