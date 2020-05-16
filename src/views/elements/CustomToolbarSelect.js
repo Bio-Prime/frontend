@@ -3,9 +3,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
-import PrimersDetails from "../pages/PrimerDetails";
 import PrimersColumns from "./PrimersColumns";
 import {Delete} from "@material-ui/icons";
+import { useHistory } from 'react-router-dom';
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -19,6 +19,7 @@ const defaultToolbarSelectStyles = {
 };
 
 function CustomToolbarSelect(props) {
+    const history = useHistory();
 
     // the row that was selected
     let selectedRow = props.selectedRows.data[0].index;
@@ -48,10 +49,11 @@ function CustomToolbarSelect(props) {
     };
     getPrimersPairs();
 
-    const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
-        setOpen(true);
+        history.push('/primer-details', {
+            data: dataJson,
+            pairsData: pairsData
+        });
     };
 
     const handleClickDelete = () => {
@@ -67,7 +69,6 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <PrimersDetails open={open} setOpen={setOpen} data={dataJson} pairsData={pairsData} />
             <Tooltip title={"Delete"}>
                 <IconButton className={classes.iconButton} onClick={handleClickDelete}>
                     <Delete className={classes.icon} />

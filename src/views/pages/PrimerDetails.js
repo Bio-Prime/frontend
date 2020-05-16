@@ -1,8 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
 import Paper from "@material-ui/core/Paper";
@@ -12,6 +9,7 @@ import Title from "../../components/Title";
 import PrimersColumns from "../elements/PrimersColumns";
 import TextField from "@material-ui/core/TextField/TextField";
 import CustomToolbarEdit from "../elements/CustomToolbarEdit";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -68,7 +66,10 @@ const optionsRelated = {
     filter: false,
 };
 
-export default function PrimerDetails({open, setOpen, data, pairsData}) {
+export default function PrimerDetails(props) {
+
+    let data = typeof props.location.state !== 'undefined' ? props.location.state.data : {};
+    let pairsData = typeof props.location.state !== 'undefined' ? props.location.state.pairsData : {};
 
     const options = {
         filterType: 'checkbox',
@@ -85,10 +86,6 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
         sort: false,
         viewColumns: false,
         customToolbar: () => <CustomToolbarEdit data={data}/>,
-    };
-
-    const handleClose = () => {
-        setOpen(false);
     };
 
     const [formData, setFormData] = React.useState({
@@ -142,30 +139,38 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     const fixedHeightPaperTimesTwo = clsx(classes.paper, classes.fixedHeightTimesTwo);
 
-    return (
-        <Dialog fullWidth={true} maxWidth={"xl"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogContent className={classes.bgColor}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={6} lg={6}>
-                        <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={tableData} options={options}/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Paper className={fixedHeightPaper}>
-                                    <Title>Sequence</Title>
-                                    {getSequence()}
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Paper className={fixedHeightPaper}>
-                                    <Title>Location in the Lab</Title>
-                                    {getLocationInLab()}
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Paper className={fixedHeightPaperTimesTwo}>
-                                    <div>
+    if (typeof props.location.state === 'undefined') {
+        return <Redirect to='/' />
+    } else {
+        return (
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={6}>
+                    <DataTable title={'Selected Oligonucleotide Primer'} columns={columns} data={tableData}
+                               options={options}/>
+                </Grid>
+                <Grid item xs={12} md={6} lg={6}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} md={6} lg={6}>
+                            <Paper className={fixedHeightPaper}>
+                                <Title>Name</Title>
+                                {data.name}
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={6}>
+                            <Paper className={fixedHeightPaper}>
+                                <Title>Sequence</Title>
+                                {getSequence()}
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Paper className={fixedHeightPaper}>
+                                <Title>Location in the Lab</Title>
+                                {getLocationInLab()}
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Paper className={fixedHeightPaperTimesTwo}>
+                                <div>
                                     <Title>Amount Available</Title>
                                     <br></br>
                                     <form
@@ -210,21 +215,16 @@ export default function PrimerDetails({open, setOpen, data, pairsData}) {
                                             </Grid>
                                         </Grid>
                                     </form>
-                                    </div>
-                                </Paper>
-                            </Grid>
+                                </div>
+                            </Paper>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12} md={12} lg={12}>
-                        <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={pairsData} options={optionsRelated}/>
-                    </Grid>
                 </Grid>
-            </DialogContent>
-            <DialogActions className={classes.bgColor}>
-                <Button onClick={handleClose} color="primary">
-                    Close
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
+                <Grid item xs={12} md={12} lg={12}>
+                    <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={pairsData}
+                               options={optionsRelated}/>
+                </Grid>
+            </Grid>
+        );
+    }
 }
