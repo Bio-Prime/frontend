@@ -15,11 +15,12 @@ import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './ListItems';
+import { mainListItems, secondaryListItems } from './listItems';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import routes from '../views/index'
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import Copyright from "../components/Copyright";
+import { useLocation } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -94,6 +95,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function DashboardLayout({onClickDark}) {
+    const location = useLocation();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
@@ -101,6 +103,15 @@ export default function DashboardLayout({onClickDark}) {
     };
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const renderPageTitle = () => {
+        return capitalize(location.pathname.substr(1));
+    };
+
+    const capitalize = (s) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
     };
 
     return (
@@ -118,7 +129,7 @@ export default function DashboardLayout({onClickDark}) {
                         <MenuIcon />
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Dashboard
+                        {renderPageTitle()}
                     </Typography>
                     <IconButton color="inherit" aria-label="delete" className={classes.margin} onClick={onClickDark}>
                         <InvertColorsIcon />

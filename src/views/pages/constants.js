@@ -235,4 +235,10 @@ export default {
     concentrationOrdered: '',
     concentrationOrderedUnit: '',
   },
+  defaultUserData: {
+    name: '',
+    username: '',
+    role: '',
+    password: '',
+  },
 };

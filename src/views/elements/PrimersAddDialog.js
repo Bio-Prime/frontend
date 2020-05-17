@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
 import { useHistory } from 'react-router-dom';
+import DropzoneAreaCSV from "../../components/DropzoneAreaCSV";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimersAddDialog({open, setOpen}) {
 
     const history = useHistory();
+    const [showDropzone, setDropzone] = React.useState(false);
 
     const handleClose = () => {
         setOpen(false);
@@ -32,6 +34,14 @@ export default function PrimersAddDialog({open, setOpen}) {
 
     const handleClickTwo = () => {
         history.push('/add-two');
+    };
+
+    const handleClickCSV = () => {
+        if (showDropzone) {
+            setDropzone(false);
+        } else {
+            setDropzone(true);
+        }
     };
 
     return (
@@ -48,6 +58,12 @@ export default function PrimersAddDialog({open, setOpen}) {
                     <Button variant="contained" onClick={handleClickTwo} color="primary">
                         Two
                     </Button>
+                    <Button variant="contained" onClick={handleClickCSV} color="primary">
+                        CSV
+                    </Button>
+                    <div>
+                        { showDropzone ? <DropzoneAreaCSV /> : null }
+                    </div>
                 </div>
             </DialogContent>
             <DialogActions>

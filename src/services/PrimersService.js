@@ -24,6 +24,18 @@ export default {
             return null;
         }
   },
+  async update(primer) {
+    const updatePath = "/update";
+    try {
+        const id = primer.id;
+        const returnPrimer = await DataFetcher.post(path+updatePath+"?id="+id, primer);
+        return returnPrimer;
+    }
+    catch (error) {
+        console.error("Error adding primer:", error);
+        return null;
+    }
+  },
   async delete(id) {
     const addPath = "/delete"
     try {

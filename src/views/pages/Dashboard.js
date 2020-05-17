@@ -65,7 +65,7 @@ export default function Dashboard() {
         </Grid>
         <Grid item xs={12} md={4} lg={3}>
           <Paper className={fixedHeightPaper}>
-            <Count dataCount={data.length} />
+            <Count dataCount={data.length} title={'Total Number of Primers'}/>
           </Paper>
         </Grid>
         <Grid item xs={12}>

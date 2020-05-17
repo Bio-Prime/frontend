@@ -1,11 +1,10 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { withStyles } from "@material-ui/core/styles";
-import PrimersColumns from "./PrimersColumns";
-import {Delete} from "@material-ui/icons";
-import { useHistory } from 'react-router-dom';
+import {ArrowUpward, Delete} from "@material-ui/icons";
+import OrdersColumns from "../OrdersColumns";
+import WantedMoveDialog from "./dialogs/WantedMoveDialog";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -18,8 +17,7 @@ const defaultToolbarSelectStyles = {
     },
 };
 
-function CustomToolbarSelect(props) {
-    const history = useHistory();
+function CustomToolbarSelectWanted(props) {
 
     // the row that was selected
     let selectedRow = props.selectedRows.data[0].index;
@@ -29,31 +27,15 @@ function CustomToolbarSelect(props) {
 
     // data json
     let dataJson = {};
-    const columns = PrimersColumns.getPrimersColumns();
+    const columns = OrdersColumns.getOrdersColumns();
     columns.forEach((item, index) => {
         dataJson[item.name] = dataArray[index];
     });
 
-
-    let pairsData = [];
-    const getPrimersPairs = () => {
-
-        let pairs = dataJson.pairs;
-        for (let i = 0; i < props.displayData.length; i++) {
-            for (let j = 0; j < pairs.length; j++) {
-                if (props.displayData[i].data[0] === pairs[j]) {
-                    pairsData.push(props.displayData[i].data);
-                }
-            }
-        }
-    };
-    getPrimersPairs();
+    const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
-        history.push('/primer-details', {
-            data: dataJson,
-            pairsData: pairsData
-        });
+        setOpen(true);
     };
 
     const handleClickDelete = () => {
@@ -64,11 +46,12 @@ function CustomToolbarSelect(props) {
 
     return (
         <div className={classes.iconContainer}>
-            <Tooltip title={"Open selected"}>
+            <Tooltip title={"Move to ordered primers"}>
                 <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-                    <OpenInNewIcon className={classes.icon} />
+                    <ArrowUpward className={classes.icon} />
                 </IconButton>
             </Tooltip>
+            <WantedMoveDialog open={open} setOpen={setOpen} />
             <Tooltip title={"Delete"}>
                 <IconButton className={classes.iconButton} onClick={handleClickDelete}>
                     <Delete className={classes.icon} />
@@ -78,4 +61,4 @@ function CustomToolbarSelect(props) {
     );
 }
 
-export default withStyles(defaultToolbarSelectStyles, { name: "CustomToolbarSelect" })(CustomToolbarSelect);
+export default withStyles(defaultToolbarSelectStyles, { name: "CustomToolbarSelectWanted" })(CustomToolbarSelectWanted);

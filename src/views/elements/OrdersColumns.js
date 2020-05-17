@@ -1,6 +1,6 @@
-export default class PrimersColumns {
+export default class OrdersColumns {
 
-    static getPrimersColumns = () => {
+    static getOrdersColumns = () => {
         const columns = [
             {
                 name: "id",
@@ -37,44 +37,11 @@ export default class PrimersColumns {
                 }
             },
             {
-                name: "orientation",
-                label: "Orientation",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
                 name: "length",
                 label: "Length",
                 options: {
                     display: false,
                     filter: false,
-                    sort: true,
-                }
-            },
-            {
-                name: "freezer",
-                label: "Freezer",
-                options: {
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "drawer",
-                label: "Drawer",
-                options: {
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "box",
-                label: "Box",
-                options: {
-                    filter: true,
                     sort: true,
                 }
             },
@@ -102,41 +69,6 @@ export default class PrimersColumns {
                 options: {
                     display: false,
                     filter: false,
-                    sort: true,
-                }
-            },
-            {
-                name: "amountAvailable",
-                label: "Amount available (µL)",
-                options: {
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "amountAvailablePackType",
-                label: "Amount available (Pack Type)",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "amountAvailablePacks",
-                label: "Amount available (Packs)",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "date",
-                label: "Date",
-                options: {
-                    display: false,
-                    filter: true,
                     sort: true,
                 }
             },
@@ -258,15 +190,6 @@ export default class PrimersColumns {
                 }
             },
             {
-                name: "fiveDye",
-                label: "Five Dye",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
                 name: "fiveModification",
                 label: "5' Modification",
                 options: {
@@ -339,19 +262,9 @@ export default class PrimersColumns {
                 }
             },
             {
-                name: "project",
-                label: "Project",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
                 name: "orderedBy",
                 label: "Ordered by",
                 options: {
-                    display: false,
                     filter: true,
                     sort: true,
                 }
@@ -360,7 +273,6 @@ export default class PrimersColumns {
                 name: "supplier",
                 label: "Supplier",
                 options: {
-                    display: false,
                     filter: true,
                     sort: true,
                 }
@@ -369,7 +281,6 @@ export default class PrimersColumns {
                 name: "manufacturer",
                 label: "Manufacturer",
                 options: {
-                    display: false,
                     filter: true,
                     sort: true,
                 }
