@@ -35,14 +35,6 @@ export default class PrimersColumns {
                     sort: true,
                 }
             },
-            {
-                name: "primers",
-                label: "Primers",
-                options: {
-                    filter: false,
-                    sort: true,
-                }
-            }
         ];
 
         return columns;
