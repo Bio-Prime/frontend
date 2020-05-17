@@ -199,6 +199,7 @@ export default {
   ],
   project: [],
   primerApplication: [],
+  projectApplication:[],
   concentrationOrderedUnit: ["nmol", "µM", "nM"],
   amountAvailablePackType: ["Tube", "Plate"],
   amountAvailableVolume: ["µl", "number of wells"],

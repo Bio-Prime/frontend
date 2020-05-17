@@ -14,7 +14,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
-import PrimersService from "../../services/PrimersService"
+import { useHistory } from 'react-router-dom';
+import PrimersService from "../../services/PrimersService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -66,6 +67,7 @@ export default function AddOne() {
   };
 
   const classes = useStyles();
+  const history = useHistory();
 
   const submit = (e) => {
     e.preventDefault();
@@ -74,8 +76,10 @@ export default function AddOne() {
     formdata.forEach((value, key) => {
       object[key] = value;
     });
+
     console.log(object);
     PrimersService.add(object);
+    history.push('/dashboard');
   };
 
   const xsWidth = 12;
@@ -197,64 +201,18 @@ export default function AddOne() {
                     variant="outlined"
                     required
                     fullWidth
-                    label="3' Modification"
+                    label="Gen"
                   />
-                )}
-              />
-            </Grid>
+                </Grid>
 
-            <Grid item xs={xsWidth} sm={smWidth} align="center">
-              <DialogContentText style={{ marginTop: 12 }}>
-                Did you chech specificity in Blast?
-              </DialogContentText>
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  row
-                  aria-label="checkSpecifityInBlast"
-                  name="checkSpecifityInBlast"
-                  defaultValue="false"
-                >
-                  <FormControlLabel
-                    value="true"
-                    control={<Radio color="primary" />}
-                    label="Yes"
-                    labelPlacement="top"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={<Radio color="primary" />}
-                    label="No"
-                    labelPlacement="top"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth}></Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth * 3}>
-              <Typography variant="h6" gutterBottom>
-                Form of ordered primer
-              </Typography>
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Autocomplete
-                options={Constants.formulation}
-                renderInput={(params) => (
-                  <TextField                  
-                  {...params}
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <TextField
                     name="ncbiGenId"
                     variant="outlined"
                     required
                     fullWidth
                     label="NCBI gen ID"
                   />
-                )}
-                />
                 </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth}>
@@ -487,148 +445,179 @@ export default function AddOne() {
                   />
                 </Grid>
 
-            <Grid item xs={8} sm={2}>
-              <TextField
-                name="amountAvailable"
-                variant="outlined"
-                fullWidth
-                label="Amount avail."
-                value={state.amountAvailable}
-                onChange={handleNumbers}
-              />
-            </Grid>
-            <Grid item xs={3} sm={2}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                label="Unit"
-                value={
-                  state.amountAvailablePackType === "Plate" ? "wells" : "µl"
-                }
-              />
-            </Grid>
+                <Grid item xs={1} sm={1} />
 
-            <Grid item xs={8} sm={2}>
-              <TextField
-                name="concentrationOrdered"
-                variant="outlined"
-                fullWidth
-                label="Concentration"
-                value={state.concentrationOrdered}
-                onChange={handleNumbers}
-              />
-            </Grid>
-            <Grid item xs={4} sm={2}>
-              <TextField
-                name="concentrationOrderedUnit"
-                variant="outlined"
-                fullWidth
-                select
-                label="Unit"
-                value={state.concentrationOrderedUnit}
-                onChange={handleChange}
-              >
-                {Constants.concentrationOrderedUnit.map((value) => (
-                  <MenuItem key={value} value={value}>
-                    {value}
-                  </MenuItem>
-                ))}
-                />
-              </TextField>
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth * 3}>
-              <Typography variant="h6" gutterBottom>
-                Location of the primer in laboratory
-              </Typography>
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Autocomplete
-                freeSolo
-                options={Constants.freezer}
-                renderInput={(params) => (
+                <Grid item xs={8} sm={2}>
                   <TextField
                     name="concentrationOrdered"
                     variant="outlined"
-                    name="freezer"
-                    required
                     fullWidth
-                    label="Freezerd"
+                    label="Concentration"
+                    value={state.concentrationOrdered}
+                    onChange={handleNumbers}
                   />
-                )}
-              />
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Autocomplete
-                freeSolo
-                options={Constants.drawer}
-                renderInput={(params) => (
+                </Grid>
+                <Grid item xs={4} sm={2}>
                   <TextField
-                    {...params}
-                    name="drawer"
+                    name="concentrationOrderedUnit"
                     variant="outlined"
                     fullWidth
-                    label="Drawer"
-                  />
-                )}
-              />
-            </Grid>
+                    select
+                    label="Unit"
+                    value={state.concentrationOrderedUnit}
+                    onChange={handleChange}
+                  >
+                    {Constants.concentrationOrderedUnit.map((value) => (
+                      <MenuItem key={value} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                    />
+                  </TextField>
+                </Grid>
 
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Autocomplete
-                freeSolo
-                options={Constants.box}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
+                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                  <Typography variant="h6" gutterBottom>
+                    Location of the primer in laboratory
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <Autocomplete
+                    freeSolo
+                    options={Constants.freezer}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        name="freezer"
+                        required
+                        fullWidth
+                        label="Freezerd"
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <Autocomplete
+                    freeSolo
+                    options={Constants.drawer}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        required
+                        name="drawer"
+                        fullWidth
+                        label="Drawer"
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <Autocomplete
+                    freeSolo
+                    options={Constants.box}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        
                     name="box"
+                        label="Box"
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                  <Typography variant="h6" gutterBottom>
+                    Project information
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <Autocomplete
+                    freeSolo
+                    options={Constants.project}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        
+                    name="project"
+                        label="Project"
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <Autocomplete
+                    freeSolo
+                    options={Constants.projectApplication}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        required
+                        name="primerApplication"
+                        fullWidth
+                        label="Application"
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <TextField
+                    name="user"
                     variant="outlined"
                     value={Constants.currentUser}
                     fullWidth
-                    label="Box"
+                    label="User"
                   />
-                )}
-              />
-            </Grid>
+                </Grid>
 
-            <Grid item xs={xsWidth} sm={smWidth * 3}>
-              <Typography variant="h6" gutterBottom>
-                Project information
-              </Typography>
-            </Grid>
-
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Autocomplete
-                freeSolo
-                options={Constants.project}
-                renderInput={(params) => (
+                <Grid item xs={xsWidth} sm={smWidth * 3}>
                   <TextField
-                    {...params}
-                    name="project"
+                    name="applicationComment"
+                    label="Application comment"
+                    multiline
+                    fullWidth
+                    rows={2}
+                    variant="outlined"
+                  />
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                  <Typography variant="h6" gutterBottom>
+                    Designer information
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={xsWidth} sm={smWidth}>
+                  <TextField
+                    name="designerName"
                     variant="outlined"
                     fullWidth
-                    label="Project"
+                    label="Name & surname"
                   />
-                )}
-              />
-            </Grid>
+                </Grid>
 
-            <Grid item xs={xsWidth} sm={smWidth}>
-              <Autocomplete
-                freeSolo
-                options={Constants.primerApplication}
-                renderInput={(params) => (
+                <Grid item xs={xsWidth} sm={smWidth}>
                   <TextField
-                    {...params}
-                    name="primerApplication"
+                    name="designerPublication"
                     variant="outlined"
                     fullWidth
                     label="Publication"
                   />
-                )}
-                />
                 </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth}>
