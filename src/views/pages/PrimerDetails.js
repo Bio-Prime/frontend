@@ -10,6 +10,7 @@ import PrimersColumns from "../elements/PrimersColumns";
 import TextField from "@material-ui/core/TextField/TextField";
 import CustomToolbarEdit from "../elements/CustomToolbarEdit";
 import {Redirect} from "react-router-dom";
+import PrimersService from "../../services/PrimersService";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -131,7 +132,8 @@ export default function PrimerDetails(props) {
         e.preventDefault();
         data.amountAvailable = formData.amountAvailable;
 
-        console.log(data);
+        // console.log(data);
+        PrimersService.update(data);
     };
 
     const classes = useStyles();
