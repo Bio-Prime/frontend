@@ -11,6 +11,8 @@ import TextField from "@material-ui/core/TextField/TextField";
 import CustomToolbarEdit from "../elements/CustomToolbarEdit";
 import {Redirect} from "react-router-dom";
 import PrimersService from "../../services/PrimersService";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -94,8 +96,9 @@ export default function PrimerDetails(props) {
     });
 
     let primerColumns = PrimersColumns.getPrimersColumns();
-    let tableData = [];
     const formatSelectedPrimerData = () => {
+
+        let tableData = [];
 
         primerColumns.forEach((item, index) => {
             if (item.name !== 'id') {
@@ -105,8 +108,10 @@ export default function PrimerDetails(props) {
                 });
             }
         });
+
+        return tableData;
     };
-    formatSelectedPrimerData();
+    let tableData = formatSelectedPrimerData();
 
     const getLocationInLab = () => {
         let freezer = data.freezer;
@@ -132,8 +137,24 @@ export default function PrimerDetails(props) {
         e.preventDefault();
         data.amountAvailable = formData.amountAvailable;
 
-        // console.log(data);
-        PrimersService.update(data);
+        PrimersService.update(data).then(returnData => {
+            setFormData({
+                ...formData,
+                [formData.amountAvailable]: returnData.amountAvailable
+            });
+            setOpen(true);
+        });
+    };
+
+    // success alert
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
     };
 
     const classes = useStyles();
@@ -146,6 +167,11 @@ export default function PrimerDetails(props) {
     } else {
         return (
             <Grid container spacing={3}>
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                    <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+                        Primer successfully updated!
+                    </Alert>
+                </Snackbar>
                 <Grid item xs={12} md={6} lg={6}>
                     <DataTable title={data.generatedName} columns={columns} data={tableData}
                                options={options}/>
