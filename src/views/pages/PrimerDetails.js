@@ -80,9 +80,6 @@ export default function PrimerDetails(props) {
     const id = dataJson.id;
 
     const [data, setData] = React.useState(null);
-    const [formData, setFormData] = React.useState({
-        amountAvailable: 0
-    });
 
     useEffect(() => {
         PrimersService.getOne(id).then((data) => {
@@ -105,10 +102,6 @@ export default function PrimerDetails(props) {
 
         PrimersService.update(data).then(returnData => {
             if (returnData != null) {
-                setFormData({
-                    ...formData,
-                    [formData.amountAvailable]: returnData.amountAvailable
-                });
                 setSuccess(true);
             } else {
                 setSuccess(false);
@@ -173,10 +166,17 @@ export default function PrimerDetails(props) {
             let tableData = [];
 
             primerColumns.forEach((item, index) => {
-                if (item.name !== 'id') {
+                if (item.name !== 'id' && item.name !== 'pairs') {
+                    let dataName = data[item.name];
+
+                    // set false to "No" and true to "Yes" to avoid errors
+                    if (item.name === 'checkSpecifityInBlast') {
+                        dataName = (data[item.name] === false) ? "No" : "Yes";
+                    }
+
                     tableData.push({
                         "label": item.label,
-                        "value": data[item.name]
+                        "value": dataName
                     });
                 }
             });
@@ -246,8 +246,7 @@ export default function PrimerDetails(props) {
                                                     variant="outlined"
                                                     fullWidth
                                                     label="Amount Available"
-                                                    defaultValue={formData.amountAvailable}
-                                                    // onChange={handleNumbers}
+                                                    defaultValue={data.amountAvailable}
                                                 />
                                             </Grid>
                                             <Grid item xs={3} sm={3}>
