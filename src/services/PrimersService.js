@@ -3,9 +3,9 @@ import DataFetcher from "./DataFetcher";
 const path = "/primers";
 
 export default {
-  async getAll() {
+  async getAllReceived() {
     try {
-            const data = await DataFetcher.get(path);
+            const data = await DataFetcher.get(path+"/received");
             return data;
         }
         catch (error) {
@@ -22,7 +22,27 @@ export default {
         console.error("Error getting primer with id" + id + ": ", error);
         return null;
     }
-},
+  },
+  async getAllOrdered() {
+    try {
+        const data = await DataFetcher.get(path+"/ordered");
+        return data;
+    }
+    catch (error) {
+        console.error("Error getting primers:", error);
+        return null;
+    }
+  },
+  async getAllWanted() {
+    try {
+        const data = await DataFetcher.get(path+"/wanted");
+        return data;
+    }
+    catch (error) {
+        console.error("Error getting primers:", error);
+        return null;
+    }
+  },
   async add(primer) {
     const addPath = "/add"
     try {
