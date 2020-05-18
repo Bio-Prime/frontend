@@ -404,9 +404,9 @@ export default function AddOne() {
                     value={state.amountAvailablePackType}
                     onChange={handleChange}
                   >
-                    {Constants.amountAvailablePackType.map((value) => (
-                      <MenuItem key={value} value={value}>
-                        {value}
+                    {Constants.amountAvailablePackType.map((options) => (
+                      <MenuItem key={options.value} value={options.value}>
+                        {options.value}
                       </MenuItem>
                     ))}
                     />
@@ -467,9 +467,9 @@ export default function AddOne() {
                     value={state.concentrationOrderedUnit}
                     onChange={handleChange}
                   >
-                    {Constants.concentrationOrderedUnit.map((value) => (
-                      <MenuItem key={value} value={value}>
-                        {value}
+                    {Constants.concentrationOrderedUnit.map((options) => (
+                      <MenuItem key={options.value} value={options.value}>
+                        {options.label}
                       </MenuItem>
                     ))}
                     />

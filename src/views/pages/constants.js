@@ -200,8 +200,30 @@ export default {
   project: [],
   primerApplication: [],
   projectApplication:[],
-  concentrationOrderedUnit: ["nmol", "µM", "nM"],
-  amountAvailablePackType: ["Tube", "Plate"],
+  concentrationOrderedUnit: [
+    {
+      value: 'NANOMOL',
+      label: 'nmol',
+    },
+    {
+      value: 'MIKROM',
+      label: 'µM',
+    },
+    {
+      value: 'NANOM',
+      label: 'nM',
+    },
+  ],
+  amountAvailablePackType: [
+    {
+      value: 'TUBE',
+      label: 'Tube',
+    },
+    {
+      value: 'PLATE',
+      label: 'Plate',
+    },
+  ],
   amountAvailableVolume: ["µl", "number of wells"],
   checkSpecificityBlast: ["Yes", "No"],
   // list of designerNames must be acquired from database

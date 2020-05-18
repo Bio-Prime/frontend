@@ -46,17 +46,13 @@ export default function EditPrimer(props) {
     const setPrimersData = () => {
         if (typeof props.location.state !== 'undefined') {
             const primerData = props.location.state.data;
-            for (let key in Constants.defaultPrimerData) {
-                primerData[key] = (typeof props.location.state.data[key] !== 'undefined') ? props.location.state.data[key] : '';
-                if (primerData[key] == null) {
+
+            // clean object
+            for (let key in primerData) {
+                if (primerData[key] === null || primerData[key] === undefined) {
                     primerData[key] = '';
                 }
             }
-
-            // NEED TO FIX THIS
-            // this is only because dropdown doesnt allow to have different values as defined in Constants
-            primerData.amountAvailablePackType = lowerCaseAllWordsExceptFirstLetters(primerData.amountAvailablePackType);
-            primerData.concentrationOrderedUnit = 'nmol';
 
             return primerData;
         } else return Constants.defaultPrimerData;
@@ -89,27 +85,22 @@ export default function EditPrimer(props) {
 
     const classes = useStyles();
 
-    Object.size = function(obj) {
-        var size = 0, key;
-        for (key in obj) {
-            if (obj.hasOwnProperty(key)) size++;
-        }
-        return size;
-    };
-
     // success alert
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const submit = (e) => {
         e.preventDefault();
         let formdata = new FormData(formRef.current);
-        var object = {};
-        formdata.forEach((value, key) => {
-            object[key] = value;
-        });
-        object['id'] = props.location.state.data['id'];
+        // original data that was put into the component
+        let primerData = setPrimersData();
 
-        PrimersService.update(object).then(returnData => {
+        console.log(primerData);
+        formdata.forEach((value, key) => {
+            console.log("Key = " + key + "   , values =  " + primerData[key] + "      :      " + value);
+            primerData[key] = value;
+        });
+
+        PrimersService.update(primerData).then(returnData => {
             if (returnData != null) {
                 setSuccess(true);
             } else {
@@ -145,12 +136,6 @@ export default function EditPrimer(props) {
 
     const xsWidth = 12;
     const smWidth = 4;
-
-    function lowerCaseAllWordsExceptFirstLetters(string) {
-        return string.replace(/\w\S*/g, function (word) {
-            return word.charAt(0) + word.slice(1).toLowerCase();
-        });
-    }
 
     const renderRedirect = () => {
         if (typeof props.location.state === 'undefined') {
@@ -453,6 +438,7 @@ export default function EditPrimer(props) {
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
                                     defaultValue={state.storingT}
+                                    freeSolo
                                     options={Constants.storingT}
                                     renderInput={(params) => (
                                         <TextField
@@ -492,9 +478,9 @@ export default function EditPrimer(props) {
                                     value={state.amountAvailablePackType}
                                     onChange={handleChange}
                                 >
-                                    {Constants.amountAvailablePackType.map((value) => (
-                                        <MenuItem key={value} value={value}>
-                                            {value}
+                                    {Constants.amountAvailablePackType.map((options) => (
+                                        <MenuItem key={options.value} value={options.value}>
+                                            {options.label}
                                         </MenuItem>
                                     ))}
                                     />
@@ -556,9 +542,9 @@ export default function EditPrimer(props) {
                                     value={state.concentrationOrderedUnit}
                                     onChange={handleChange}
                                 >
-                                    {Constants.concentrationOrderedUnit.map((value) => (
-                                        <MenuItem key={value} value={value}>
-                                            {value}
+                                    {Constants.concentrationOrderedUnit.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
                                         </MenuItem>
                                     ))}
                                     />
@@ -653,9 +639,9 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
-                                    defaultValue={state.projectApplication}
+                                    defaultValue={state.primerApplication}
                                     freeSolo
-                                    options={Constants.projectApplication}
+                                    options={Constants.primerApplication}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -750,19 +736,6 @@ export default function EditPrimer(props) {
                                     variant="outlined"
                                     fullWidth
                                     label="Manufacturer"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="date"
-                                    label="Date of receipt"
-                                    type="date"
-                                    defaultValue={state.date}
-                                    fullWidth
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
                                 />
                             </Grid>
 
