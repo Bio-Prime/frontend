@@ -185,14 +185,6 @@ export default function PrimerDetails(props) {
         };
         let tableData = formatSelectedPrimerData();
 
-        const getLocationInLab = () => {
-            let freezer = data.freezer;
-            let drawer = data.drawer;
-            let box = data.box;
-
-            return freezer + ', ' + drawer + ', ' + box;
-        };
-
         const getSequence = () => {
             return data.sequence;
         };
@@ -223,7 +215,7 @@ export default function PrimerDetails(props) {
                         <Grid item xs={12} md={12} lg={12}>
                             <Paper className={fixedHeightPaper}>
                                 <Title>Location in the Lab</Title>
-                                {getLocationInLab()}
+                                {data.freezer} &mdash; {data.drawer} &mdash; {data.box}
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={12} lg={12}>
