@@ -32,6 +32,15 @@ export default class OrdersColumns {
                 name: "sequence",
                 label: "Sequence",
                 options: {
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "orientation",
+                label: "Orientation",
+                options: {
+                    display: false,
                     filter: true,
                     sort: true,
                 }
@@ -46,11 +55,38 @@ export default class OrdersColumns {
                 }
             },
             {
+                name: "freezer",
+                label: "Freezer",
+                options: {
+                    display: false,
+                    filter: true,
+                    sort: true,
+                }
+            },
+            {
+                name: "drawer",
+                label: "Drawer",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "box",
+                label: "Box",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
                 name: "positionInReference",
                 label: "Position in the reference",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -66,6 +102,42 @@ export default class OrdersColumns {
             {
                 name: "purificationMethod",
                 label: "Purification method",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "amountAvailable",
+                label: "Amount available",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "amountAvailablePackType",
+                label: "Amount available (Pack Type)",
+                options: {
+                    display: false,
+                    filter: true,
+                    sort: true,
+                }
+            },
+            {
+                name: "amountAvailablePacks",
+                label: "Amount available (Packs)",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "date",
+                label: "Date",
                 options: {
                     display: false,
                     filter: false,
@@ -149,7 +221,7 @@ export default class OrdersColumns {
                 label: "Sonda sequence",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -158,7 +230,7 @@ export default class OrdersColumns {
                 label: "Assay ID",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -167,7 +239,7 @@ export default class OrdersColumns {
                 label: "Size",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -185,7 +257,7 @@ export default class OrdersColumns {
                 label: "Application comment",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -194,7 +266,7 @@ export default class OrdersColumns {
                 label: "5' Modification",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -203,7 +275,7 @@ export default class OrdersColumns {
                 label: "3' Modification",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -212,7 +284,7 @@ export default class OrdersColumns {
                 label: "Concentration ordered",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -221,16 +293,16 @@ export default class OrdersColumns {
                 label: "Concentration ordered unit",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
             {
                 name: "checkSpecifityInBlast",
-                label: "Check specifity in blast",
+                label: "Check specificity in blast",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -238,8 +310,7 @@ export default class OrdersColumns {
                 name: "designerName",
                 label: "Designer name",
                 options: {
-                    display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -248,7 +319,7 @@ export default class OrdersColumns {
                 label: "Designer publication",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -257,14 +328,15 @@ export default class OrdersColumns {
                 label: "Designer database",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
             {
-                name: "orderedBy",
-                label: "Ordered by",
+                name: "project",
+                label: "Project",
                 options: {
+                    display: false,
                     filter: true,
                     sort: true,
                 }
@@ -290,7 +362,7 @@ export default class OrdersColumns {
                 label: "Comment",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -299,7 +371,7 @@ export default class OrdersColumns {
                 label: "Document",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -308,7 +380,7 @@ export default class OrdersColumns {
                 label: "Analysis",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -317,7 +389,25 @@ export default class OrdersColumns {
                 label: "Order status",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "threeQuencher",
+                label: "3' Quencher",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "fiveDye",
+                label: "5' Dye",
+                options: {
+                    display: false,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -325,7 +415,6 @@ export default class OrdersColumns {
                 name: "user",
                 label: "User",
                 options: {
-                    display: false,
                     filter: true,
                     sort: true,
                 }
@@ -335,7 +424,7 @@ export default class OrdersColumns {
                 label: "Pairs",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -353,7 +442,7 @@ export default class OrdersColumns {
                 label: "Gcpercent",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },

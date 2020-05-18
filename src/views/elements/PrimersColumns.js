@@ -32,7 +32,7 @@ export default class PrimersColumns {
                 name: "sequence",
                 label: "Sequence",
                 options: {
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -66,7 +66,7 @@ export default class PrimersColumns {
                 name: "drawer",
                 label: "Drawer",
                 options: {
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -74,7 +74,7 @@ export default class PrimersColumns {
                 name: "box",
                 label: "Box",
                 options: {
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -83,7 +83,7 @@ export default class PrimersColumns {
                 label: "Position in the reference",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -107,9 +107,9 @@ export default class PrimersColumns {
             },
             {
                 name: "amountAvailable",
-                label: "Amount available (µL)",
+                label: "Amount available",
                 options: {
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -127,7 +127,7 @@ export default class PrimersColumns {
                 label: "Amount available (Packs)",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -136,7 +136,7 @@ export default class PrimersColumns {
                 label: "Date",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -217,7 +217,7 @@ export default class PrimersColumns {
                 label: "Sonda sequence",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -226,7 +226,7 @@ export default class PrimersColumns {
                 label: "Assay ID",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -235,7 +235,7 @@ export default class PrimersColumns {
                 label: "Size",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -253,16 +253,7 @@ export default class PrimersColumns {
                 label: "Application comment",
                 options: {
                     display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "fiveDye",
-                label: "Five Dye",
-                options: {
-                    display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -271,7 +262,7 @@ export default class PrimersColumns {
                 label: "5' Modification",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -280,7 +271,7 @@ export default class PrimersColumns {
                 label: "3' Modification",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -289,7 +280,7 @@ export default class PrimersColumns {
                 label: "Concentration ordered",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -298,16 +289,16 @@ export default class PrimersColumns {
                 label: "Concentration ordered unit",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
             {
                 name: "checkSpecifityInBlast",
-                label: "Check specifity in blast",
+                label: "Check specificity in blast",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -316,7 +307,7 @@ export default class PrimersColumns {
                 label: "Designer name",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -325,7 +316,7 @@ export default class PrimersColumns {
                 label: "Designer publication",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -334,22 +325,13 @@ export default class PrimersColumns {
                 label: "Designer database",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
             {
                 name: "project",
                 label: "Project",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "orderedBy",
-                label: "Ordered by",
                 options: {
                     display: false,
                     filter: true,
@@ -379,7 +361,7 @@ export default class PrimersColumns {
                 label: "Comment",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -388,7 +370,7 @@ export default class PrimersColumns {
                 label: "Document",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -397,7 +379,7 @@ export default class PrimersColumns {
                 label: "Analysis",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -406,7 +388,25 @@ export default class PrimersColumns {
                 label: "Order status",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "threeQuencher",
+                label: "3' Quencher",
+                options: {
+                    display: false,
+                    filter: false,
+                    sort: true,
+                }
+            },
+            {
+                name: "fiveDye",
+                label: "5' Dye",
+                options: {
+                    display: false,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -424,7 +424,7 @@ export default class PrimersColumns {
                 label: "Pairs",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
@@ -442,7 +442,7 @@ export default class PrimersColumns {
                 label: "Gcpercent",
                 options: {
                     display: false,
-                    filter: true,
+                    filter: false,
                     sort: true,
                 }
             },
