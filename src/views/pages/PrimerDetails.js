@@ -13,7 +13,6 @@ import {Redirect} from "react-router-dom";
 import PrimersService from "../../services/PrimersService";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import UserService from "../../services/UserService";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
@@ -78,16 +77,18 @@ export default function PrimerDetails(props) {
     let dataJson = typeof props.location.state !== 'undefined' ? props.location.state.data : {};
     let pairsData = typeof props.location.state !== 'undefined' ? props.location.state.pairsData : {};
 
+    const id = dataJson.id;
+
     const [data, setData] = React.useState(null);
     const [formData, setFormData] = React.useState({
         amountAvailable: 0
     });
 
     useEffect(() => {
-        PrimersService.getOne(dataJson.id).then((data) => {
+        PrimersService.getOne(id).then((data) => {
             setData(data);
         });
-    }, []);
+    }, [id]);
 
     // success alert
     const [open, setOpen] = React.useState(false);
