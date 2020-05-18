@@ -10,17 +10,19 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import routes from '../views/index'
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import Copyright from "../components/Copyright";
 import { useLocation } from 'react-router-dom'
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import {ExitToApp} from "@material-ui/icons";
+import { useHistory } from 'react-router-dom';
+import AuthService from "../services/AuthService";
 
 const drawerWidth = 240;
 
@@ -96,6 +98,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function DashboardLayout({onClickDark}) {
     const location = useLocation();
+    const history = useHistory();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
@@ -106,12 +109,17 @@ export default function DashboardLayout({onClickDark}) {
     };
 
     const renderPageTitle = () => {
-        return capitalize(location.pathname.substr(1));
+        return capitalize(location.pathname.substr(1).replace(/-/g, ' '));
     };
 
     const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
+        if (typeof s !== 'string') return '';
         return s.charAt(0).toUpperCase() + s.slice(1)
+    };
+
+    const onClickLogout = () => {
+        AuthService.logout();
+        history.push('login');
     };
 
     return (
@@ -131,14 +139,16 @@ export default function DashboardLayout({onClickDark}) {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         {renderPageTitle()}
                     </Typography>
-                    <IconButton color="inherit" aria-label="delete" className={classes.margin} onClick={onClickDark}>
-                        <InvertColorsIcon />
-                    </IconButton>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={1} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
+                    <Tooltip title={"Switch theme"}>
+                        <IconButton color="inherit" aria-label="delete" className={classes.margin} onClick={onClickDark}>
+                            <InvertColorsIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title={"Logout"}>
+                        <IconButton color="inherit" onClick={onClickLogout}>
+                            <ExitToApp />
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
             <Drawer

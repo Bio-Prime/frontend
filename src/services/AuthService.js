@@ -40,6 +40,10 @@ export default {
       });
   },
 
+  logout() {
+    token = null;
+  },
+
   refreshToken() {
     const url = ADDRESS + "/auth/refresh";
     console.log(JSON.stringify(token));
