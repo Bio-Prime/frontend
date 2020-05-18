@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
@@ -74,6 +74,8 @@ export default function PrimerDetails(props) {
     let data = typeof props.location.state !== 'undefined' ? props.location.state.data : {};
     let pairsData = typeof props.location.state !== 'undefined' ? props.location.state.pairsData : {};
 
+    const formRef = useRef();
+
     const options = {
         filterType: 'checkbox',
         downloadOptions: {
@@ -125,29 +127,48 @@ export default function PrimerDetails(props) {
         return data.sequence;
     };
 
-    const handleNumbers = (event) => {
-        if (!isNaN(event.target.value))
-            setFormData({
-                ...formData,
-                [event.target.name]: event.target.value,
-            });
-    };
-
+    // success alert
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
     const submit = (e) => {
         e.preventDefault();
-        data.amountAvailable = formData.amountAvailable;
+        let formdata = new FormData(formRef.current);
+        var object = {};
+        formdata.forEach((value, key) => {
+            object[key] = value;
+        });
+
+        data.amountAvailable = object.amountAvailable;
 
         PrimersService.update(data).then(returnData => {
-            setFormData({
-                ...formData,
-                [formData.amountAvailable]: returnData.amountAvailable
-            });
+            if (returnData != null) {
+                setFormData({
+                    ...formData,
+                    [formData.amountAvailable]: returnData.amountAvailable
+                });
+                setSuccess(true);
+            } else {
+                setSuccess(false);
+            }
             setOpen(true);
         });
     };
 
-    // success alert
-    const [open, setOpen] = React.useState(false);
+    const showAlert = () => {
+        if (success) {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+                    Primer successfully updated!
+                </Alert>
+            )
+        } else {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
+                    There was an error updating primer. Primer was not updated!
+                </Alert>
+            )
+        }
+    };
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -168,9 +189,7 @@ export default function PrimerDetails(props) {
         return (
             <Grid container spacing={3}>
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-                    <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
-                        Primer successfully updated!
-                    </Alert>
+                    {showAlert()}
                 </Snackbar>
                 <Grid item xs={12} md={6} lg={6}>
                     <DataTable title={data.generatedName} columns={columns} data={tableData}
@@ -202,6 +221,7 @@ export default function PrimerDetails(props) {
                                     <Title>Amount Available</Title>
                                     <br></br>
                                     <form
+                                        ref={formRef}
                                         name="amountForm"
                                         className={classes.form}
                                         noValidate
@@ -210,12 +230,13 @@ export default function PrimerDetails(props) {
                                         <Grid container spacing={3}>
                                             <Grid item xs={9} sm={9}>
                                                 <TextField
+                                                    type={"number"}
                                                     name="amountAvailable"
                                                     variant="outlined"
                                                     fullWidth
                                                     label="Amount Available"
-                                                    value={formData.amountAvailable}
-                                                    onChange={handleNumbers}
+                                                    defaultValue={formData.amountAvailable}
+                                                    // onChange={handleNumbers}
                                                 />
                                             </Grid>
                                             <Grid item xs={3} sm={3}>
@@ -224,7 +245,7 @@ export default function PrimerDetails(props) {
                                                     fullWidth
                                                     label="Unit"
                                                     value={
-                                                        formData.amountAvailablePackType === "Plate" ? "wells" : "µl"
+                                                        data.amountAvailablePackType === "Plate" ? "wells" : "µl"
                                                     }
                                                 />
                                             </Grid>
