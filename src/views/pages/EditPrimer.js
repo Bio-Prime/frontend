@@ -15,6 +15,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
 import {Redirect} from "react-router-dom";
+import PrimersService from "../../services/PrimersService";
+import Alert from "@material-ui/lab/Alert/Alert";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -45,6 +48,9 @@ export default function EditPrimer(props) {
             const primerData = props.location.state.data;
             for (let key in Constants.defaultPrimerData) {
                 primerData[key] = (typeof props.location.state.data[key] !== 'undefined') ? props.location.state.data[key] : '';
+                if (primerData[key] == null) {
+                    primerData[key] = '';
+                }
             }
 
             // NEED TO FIX THIS
@@ -83,6 +89,17 @@ export default function EditPrimer(props) {
 
     const classes = useStyles();
 
+    Object.size = function(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
+
+    // success alert
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
     const submit = (e) => {
         e.preventDefault();
         let formdata = new FormData(formRef.current);
@@ -91,7 +108,39 @@ export default function EditPrimer(props) {
             object[key] = value;
         });
         object['id'] = props.location.state.data['id'];
-        console.log(object);
+
+        PrimersService.update(object).then(returnData => {
+            if (returnData != null) {
+                setSuccess(true);
+            } else {
+                setSuccess(false);
+            }
+            setOpen(true);
+        });
+    };
+
+    const showAlert = () => {
+        if (success) {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+                    Primer successfully updated!
+                </Alert>
+            )
+        } else {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
+                    There was an error updating primer. Primer was not updated!
+                </Alert>
+            )
+        }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
     };
 
     const xsWidth = 12;
@@ -111,6 +160,9 @@ export default function EditPrimer(props) {
 
     return (
         <div className={classes.paperCenter}>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                {showAlert()}
+            </Snackbar>
             <Paper className={classes.paper}>
                 {renderRedirect()}
                 <div className={classes.paperCenter}>
@@ -143,7 +195,7 @@ export default function EditPrimer(props) {
                                     required
                                     fullWidth
                                     label="Name of primer"
-                                    value={state.name}
+                                    defaultValue={state.name}
                                 />
                             </Grid>
 
@@ -205,8 +257,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.organism}
                                     freeSolo
-                                    value={state.organism}
                                     options={Constants.organism}
                                     renderInput={(params) => (
                                         <TextField
@@ -223,30 +275,30 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
+                                    defaultValue={state.gen}
                                     name="gen"
                                     variant="outlined"
                                     required
                                     fullWidth
                                     label="Gen"
-                                    value={state.gen}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
+                                    defaultValue={state.ncbiGenId}
                                     name="ncbiGenId"
                                     variant="outlined"
                                     required
                                     fullWidth
                                     label="NCBI gen ID"
-                                    value={state.ncbiGenId}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.humanGenomBuild}
                                     options={Constants.humanGenomBuild}
-                                    value={state.humanGenomBuild}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -261,8 +313,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.positionInReference}
                                     options={Constants.positionInReference}
-                                    value={state.positionInReference}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -278,19 +330,19 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    value={state.lengthOfAmplicone}
                                     name="lengthOfAmplicone"
                                     variant="outlined"
                                     fullWidth
                                     label="Length of amplicone"
+                                    value={state.lengthOfAmplicone}
                                     onChange={handleNumbers}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.typeOfPrimer}
                                     options={Constants.typeOfPrimer}
-                                    value={state.typeOfPrimer}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -306,8 +358,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.fiveModification}
                                     options={Constants.fiveModification}
-                                    value={state.fiveModification}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -323,8 +375,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.threeModification}
                                     options={Constants.threeModification}
-                                    value={state.threeModification}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -355,7 +407,7 @@ export default function EditPrimer(props) {
                                         row
                                         aria-label="checkSpecifityInBlast"
                                         name="checkSpecifityInBlast"
-                                        defaultValue="false"
+                                        defaultValue={String(state.checkSpecifityInBlast)}
                                     >
                                         <FormControlLabel
                                             value="true"
@@ -383,8 +435,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.formulation}
                                     options={Constants.formulation}
-                                    value={state.formulation}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -400,8 +452,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.storingT}
                                     options={Constants.storingT}
-                                    value={state.storingT}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -416,8 +468,8 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.purificationMethod}
                                     options={Constants.purificationMethod}
-                                    value={state.purificationMethod}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -451,10 +503,10 @@ export default function EditPrimer(props) {
                             <Grid item xs={3} sm={1}>
                                 <TextField
                                     name="amountAvailablePacks"
-                                    value={state.amountAvailablePacks}
                                     variant="outlined"
                                     fullWidth
                                     label="Num"
+                                    value={state.amountAvailablePacks}
                                     onChange={handleNumbers}
                                 />
                             </Grid>
@@ -521,17 +573,17 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.freezer}
                                     freeSolo
                                     options={Constants.freezer}
-                                    value={state.freezer}
-                                    name="freezer"
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             variant="outlined"
+                                            name="freezer"
                                             required
                                             fullWidth
-                                            label="Freezer"
+                                            label="Freezerd"
                                         />
                                     )}
                                 />
@@ -539,15 +591,15 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.drawer}
                                     freeSolo
                                     options={Constants.drawer}
-                                    value={state.drawer}
-                                    name="drawer"
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             variant="outlined"
                                             required
+                                            name="drawer"
                                             fullWidth
                                             label="Drawer"
                                         />
@@ -557,16 +609,17 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.box}
                                     freeSolo
                                     options={Constants.box}
-                                    value={state.box}
-                                    name="box"
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             variant="outlined"
                                             required
                                             fullWidth
+
+                                            name="box"
                                             label="Box"
                                         />
                                     )}
@@ -581,16 +634,17 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.project}
                                     freeSolo
                                     options={Constants.project}
-                                    value={state.project}
-                                    name="project"
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             variant="outlined"
                                             required
                                             fullWidth
+
+                                            name="project"
                                             label="Project"
                                         />
                                     )}
@@ -599,15 +653,15 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
+                                    defaultValue={state.projectApplication}
                                     freeSolo
                                     options={Constants.projectApplication}
-                                    value={state.projectApplication}
-                                    name="projectApplication"
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             variant="outlined"
                                             required
+                                            name="primerApplication"
                                             fullWidth
                                             label="Application"
                                         />
@@ -619,7 +673,7 @@ export default function EditPrimer(props) {
                                 <TextField
                                     name="user"
                                     variant="outlined"
-                                    value={Constants.currentUser}
+                                    value={state.user}
                                     fullWidth
                                     label="User"
                                 />
@@ -627,7 +681,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
                                 <TextField
-                                    value={state.applicationComment}
+                                    defaultValue={state.applicationComment}
                                     name="applicationComment"
                                     label="Application comment"
                                     multiline
@@ -645,7 +699,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    value={state.designerName}
+                                    defaultValue={state.designerName}
                                     name="designerName"
                                     variant="outlined"
                                     fullWidth
@@ -655,7 +709,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    value={state.designerPublication}
+                                    defaultValue={state.designerPublication}
                                     name="designerPublication"
                                     variant="outlined"
                                     fullWidth
@@ -665,7 +719,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    value={state.designerPublication}
+                                    defaultValue={state.designerPublication}
                                     name="designerPublication"
                                     variant="outlined"
                                     fullWidth
@@ -681,7 +735,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    value={state.supplier}
+                                    defaultValue={state.supplier}
                                     name="supplier"
                                     variant="outlined"
                                     fullWidth
@@ -691,7 +745,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    value={state.manufacturer}
+                                    defaultValue={state.manufacturer}
                                     name="manufacturer"
                                     variant="outlined"
                                     fullWidth
@@ -704,7 +758,7 @@ export default function EditPrimer(props) {
                                     name="date"
                                     label="Date of receipt"
                                     type="date"
-                                    defaultValue={Date.now.toString()}
+                                    defaultValue={state.date}
                                     fullWidth
                                     InputLabelProps={{
                                         shrink: true,
@@ -720,7 +774,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
                                 <TextField
-                                    value={state.document}
+                                    defaultValue={state.document}
                                     name="document"
                                     label="Documentation"
                                     multiline
@@ -732,7 +786,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
                                 <TextField
-                                    value={state.comment}
+                                    defaultValue={state.comment}
                                     name="comment"
                                     label="Comment"
                                     multiline
@@ -744,7 +798,7 @@ export default function EditPrimer(props) {
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
                                 <TextField
-                                    value={state.analysis}
+                                    defaultValue={state.analysis}
                                     name="analysis"
                                     label="Analysis"
                                     multiline
