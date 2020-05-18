@@ -17,20 +17,36 @@ const defaultToolbarSelectStyles = {
     },
 };
 
+const getSelectedPrimersIds = (props) => {
+    let selectedRows = [];
+    props.selectedRows.data.forEach((item, index) => {
+        selectedRows.push(item.index);
+    });
+
+    // find id in orders columns
+    const columns = OrdersColumns.getOrdersColumns();
+
+    // primers that was selected
+    let selectedPrimersArray = [];
+    for (let i = 0; i < selectedRows.length; i++) {
+        // the data of the row that was selected
+        let dataArray = props.displayData[selectedRows[i]].data;
+
+        // data json
+        let dataJson = {};
+        columns.forEach((item, index) => {
+            dataJson[item.name] = dataArray[index];
+        });
+
+        selectedPrimersArray.push(dataJson);
+    }
+
+    return selectedPrimersArray;
+};
+
 function CustomToolbarSelectWanted(props) {
 
-    // the row that was selected
-    let selectedRow = props.selectedRows.data[0].index;
-
-    // the data of the row that was selected
-    let dataArray = props.displayData[selectedRow].data;
-
-    // data json
-    let dataJson = {};
-    const columns = OrdersColumns.getOrdersColumns();
-    columns.forEach((item, index) => {
-        dataJson[item.name] = dataArray[index];
-    });
+    let selectedPrimersArray = getSelectedPrimersIds(props);
 
     const [open, setOpen] = React.useState(false);
 
@@ -39,7 +55,8 @@ function CustomToolbarSelectWanted(props) {
     };
 
     const handleClickDelete = () => {
-        console.log("Delete primer with id: ", + dataJson.id);
+        console.log("Delete primer with ids: ");
+        console.log(selectedPrimersArray);
     };
 
     const { classes } = props;
@@ -51,7 +68,7 @@ function CustomToolbarSelectWanted(props) {
                     <ArrowUpward className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <WantedMoveDialog open={open} setOpen={setOpen} />
+            <WantedMoveDialog open={open} setOpen={setOpen} primersToMove={selectedPrimersArray} />
             <Tooltip title={"Delete"}>
                 <IconButton className={classes.iconButton} onClick={handleClickDelete}>
                     <Delete className={classes.icon} />

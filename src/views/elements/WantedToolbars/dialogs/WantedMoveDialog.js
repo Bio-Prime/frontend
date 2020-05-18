@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
+import PrimersService from "../../../../services/PrimersService";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function WantedMoveDialog({open, setOpen}) {
+export default function WantedMoveDialog({open, setOpen, primersToMove}) {
 
     const handleClose = () => {
         setOpen(false);
@@ -24,7 +25,11 @@ export default function WantedMoveDialog({open, setOpen}) {
     const classes = useStyles();
 
     const handleClickMove = () => {
-        console.log("Clicked MOVE!");
+
+        primersToMove.forEach((item) => {
+            item.orderStatus = 'ORDERED';
+            PrimersService.update(item).then(() => {console.log("Successfully updated!")});
+        });
     };
 
     return (

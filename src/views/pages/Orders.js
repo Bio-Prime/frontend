@@ -127,7 +127,6 @@ export default function Orders() {
                     selectedRows={selectedRows}
                     displayData={displayData}
                     setSelectedRows={setSelectedRows}
-                    allData={dataOrdered}
                 />
             )
         };
