@@ -94,9 +94,7 @@ export default function EditPrimer(props) {
         // original data that was put into the component
         let primerData = setPrimersData();
 
-        console.log(primerData);
         formdata.forEach((value, key) => {
-            console.log("Key = " + key + "   , values =  " + primerData[key] + "      :      " + value);
             primerData[key] = value;
         });
 

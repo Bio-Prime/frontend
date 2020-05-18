@@ -13,6 +13,16 @@ export default {
             return null;
         }
   },
+  async getOne(id) {
+    try {
+        const data = await DataFetcher.get(path+"/get/"+id);
+        return data;
+    }
+    catch (error) {
+        console.error("Error getting primer with id" + id + ": ", error);
+        return null;
+    }
+},
   async add(primer) {
     const addPath = "/add"
     try {
@@ -32,7 +42,7 @@ export default {
         return returnPrimer;
     }
     catch (error) {
-        console.error("Error adding primer:", error);
+        console.error("Error updating primer:", error);
         return null;
     }
   },

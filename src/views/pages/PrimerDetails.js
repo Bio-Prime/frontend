@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
 import DataTable from "../../components/DataTable";
@@ -13,6 +13,8 @@ import {Redirect} from "react-router-dom";
 import PrimersService from "../../services/PrimersService";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import UserService from "../../services/UserService";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -71,61 +73,21 @@ const optionsRelated = {
 
 export default function PrimerDetails(props) {
 
-    let data = typeof props.location.state !== 'undefined' ? props.location.state.data : {};
-    let pairsData = typeof props.location.state !== 'undefined' ? props.location.state.pairsData : {};
-
     const formRef = useRef();
 
-    const options = {
-        filterType: 'checkbox',
-        downloadOptions: {
-            filename: "primers.csv",
-            separator: ","
-        },
-        selectableRows: "none",
-        pagination: false,
-        responsive: "scrollMaxHeight",
-        print: false,
-        download: false,
-        filter: false,
-        sort: false,
-        viewColumns: false,
-        customToolbar: () => <CustomToolbarEdit data={data}/>,
-    };
+    let dataJson = typeof props.location.state !== 'undefined' ? props.location.state.data : {};
+    let pairsData = typeof props.location.state !== 'undefined' ? props.location.state.pairsData : {};
 
+    const [data, setData] = React.useState(null);
     const [formData, setFormData] = React.useState({
-        amountAvailable: data.amountAvailable,
+        amountAvailable: 0
     });
 
-    let primerColumns = PrimersColumns.getPrimersColumns();
-    const formatSelectedPrimerData = () => {
-
-        let tableData = [];
-
-        primerColumns.forEach((item, index) => {
-            if (item.name !== 'id') {
-                tableData.push({
-                    "label": item.label,
-                    "value": data[item.name]
-                });
-            }
+    useEffect(() => {
+        PrimersService.getOne(dataJson.id).then((data) => {
+            setData(data);
         });
-
-        return tableData;
-    };
-    let tableData = formatSelectedPrimerData();
-
-    const getLocationInLab = () => {
-        let freezer = data.freezer;
-        let drawer = data.drawer;
-        let box = data.box;
-
-        return freezer + ', ' + drawer + ', ' + box;
-    };
-
-    const getSequence = () => {
-        return data.sequence;
-    };
+    }, []);
 
     // success alert
     const [open, setOpen] = React.useState(false);
@@ -185,7 +147,55 @@ export default function PrimerDetails(props) {
 
     if (typeof props.location.state === 'undefined') {
         return <Redirect to='/' />
-    } else {
+    } else if (data !== null) {
+
+        const options = {
+            filterType: 'checkbox',
+            downloadOptions: {
+                filename: "primers.csv",
+                separator: ","
+            },
+            selectableRows: "none",
+            pagination: false,
+            responsive: "scrollMaxHeight",
+            print: false,
+            download: false,
+            filter: false,
+            sort: false,
+            viewColumns: false,
+            customToolbar: () => <CustomToolbarEdit data={data}/>,
+        };
+
+        let primerColumns = PrimersColumns.getPrimersColumns();
+        const formatSelectedPrimerData = () => {
+
+            let tableData = [];
+
+            primerColumns.forEach((item, index) => {
+                if (item.name !== 'id') {
+                    tableData.push({
+                        "label": item.label,
+                        "value": data[item.name]
+                    });
+                }
+            });
+
+            return tableData;
+        };
+        let tableData = formatSelectedPrimerData();
+
+        const getLocationInLab = () => {
+            let freezer = data.freezer;
+            let drawer = data.drawer;
+            let box = data.box;
+
+            return freezer + ', ' + drawer + ', ' + box;
+        };
+
+        const getSequence = () => {
+            return data.sequence;
+        };
+
         return (
             <Grid container spacing={3}>
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
@@ -272,6 +282,19 @@ export default function PrimerDetails(props) {
                     <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={pairsData}
                                options={optionsRelated}/>
                 </Grid>
+            </Grid>
+        );
+    } else {
+        return (
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+                style={{ minHeight: "90vh" }}
+            >
+                <CircularProgress />
             </Grid>
         );
     }
