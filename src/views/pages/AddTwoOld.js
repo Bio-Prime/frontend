@@ -251,7 +251,7 @@ export default function AddOne() {
                   >
                       <option aria-label="None" value="" />
                     {Constants.typeOfPrimer.map((constant) => (
-                      <option value={constant}>{constant}</option>
+                      <option key={constant} value={constant}>{constant}</option>
                     ))}
                   </Select>
                 </FormControl>
