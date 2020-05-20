@@ -76,6 +76,7 @@ export default function AddOne() {
     formdata.forEach((value, key) => {
       primer[key] = value;
     });
+
     primer["orderStatus"] = "received";
     console.log(primer);
     PrimersService.add(primer);
@@ -90,7 +91,7 @@ export default function AddOne() {
         <Paper className={classes.paper}>
           <div className={classes.paperCenter}>
             <Typography variant="h5" gutterBottom>
-              Add one old oligonucleotide primer
+              Add one new oligonucleotide primer
             </Typography>
             <DialogContentText>
               The fields marked with a "*" are required.
@@ -402,6 +403,7 @@ export default function AddOne() {
                     name="amountAvailablePackType"
                     variant="outlined"
                     fullWidth
+                    required
                     select
                     label="Pack type"
                     value={state.amountAvailablePackType}
@@ -432,6 +434,7 @@ export default function AddOne() {
                     name="amountAvailable"
                     variant="outlined"
                     fullWidth
+                    required
                     label="Amount available"
                     value={state.amountAvailable}
                     onChange={handleNumbers}
@@ -455,6 +458,7 @@ export default function AddOne() {
                     name="concentrationOrdered"
                     variant="outlined"
                     fullWidth
+                    required
                     label="Concentration"
                     value={state.concentrationOrdered}
                     onChange={handleNumbers}
