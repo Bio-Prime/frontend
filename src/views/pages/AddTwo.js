@@ -16,6 +16,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
 import { useHistory } from "react-router-dom";
 import PrimersService from "../../services/PrimersService";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,6 +51,13 @@ export default function AddOne() {
   const revRef = useRef();
 
   const handleChange = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleType = (event) => {
     setState({
       ...state,
       [event.target.name]: event.target.value,
@@ -117,7 +126,6 @@ export default function AddOne() {
       rev[key] = value;
     });
 
-    
     forw["orderStatus"] = "received";
     forw["orientation"] = "forward";
     rev["orderStatus"] = "received";
@@ -229,19 +237,24 @@ export default function AddOne() {
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                  options={Constants.typeOfPrimer}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      name="typeOfPrimer"
-                      variant="outlined"
-                      required
-                      fullWidth
-                      label="Type of primer"
-                    />
-                  )}
-                />
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <InputLabel htmlFor="typeLabel">Type of primer</InputLabel>
+                  <Select
+                    native
+                    value={state.typeOfPrimer}
+                    onChange={handleType}
+                    label="Type of primer"
+                    inputProps={{
+                      name: "typeOfPrimer",
+                      id: "typeLabel",
+                    }}
+                  >
+                      <option aria-label="None" value="" />
+                    {Constants.typeOfPrimer.map((constant) => (
+                      <option value={constant}>{constant}</option>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
@@ -280,6 +293,84 @@ export default function AddOne() {
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}></Grid>
+
+              {state.typeOfPrimer === "TaqProbe" && (
+                <React.Fragment>
+                  <Grid item xs={xsWidth} sm={smWidth * 3}>
+                    <Typography variant="h6" gutterBottom>
+                    TaqProbe
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={xsWidth} sm={smWidth * 2}>
+                    <TextField
+                      name="sondaSequence"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="Sonda sequence"
+                    />
+                  </Grid>
+
+                  <Grid item xs={xsWidth} sm={smWidth}>
+                    <TextField
+                      name="assayId"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      label="Assay ID"
+                    />
+                  </Grid>
+
+                  
+
+              <Grid item xs={xsWidth} sm={smWidth}>
+                <Autocomplete
+                  options={Constants.size}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      required
+                      name="size"
+                      fullWidth
+                      label="Size"
+                    />
+                  )}
+                />
+              </Grid>
+
+                  <Grid item xs={xsWidth} sm={smWidth}>
+                    <Autocomplete
+                      options={Constants.threeQuencher}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          name="threeQuencher"
+                          variant="outlined"
+                          fullWidth
+                          label="3' Quencher"
+                        />
+                      )}
+                    />
+                  </Grid>
+
+                  <Grid item xs={xsWidth} sm={smWidth}>
+                    <Autocomplete
+                      options={Constants.fiveDye}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          name="fiveDye"
+                          variant="outlined"
+                          fullWidth
+                          label="5' Dye"
+                        />
+                      )}
+                    />
+                  </Grid>
+                </React.Fragment>
+              )}
 
               <Grid item xs={xsWidth} sm={smWidth * 3}>
                 <Typography variant="h6" gutterBottom>
@@ -413,63 +504,6 @@ export default function AddOne() {
                   ))}
                   />
                 </TextField>
-              </Grid>
-
-              <Grid item xs={xsWidth} sm={smWidth * 3}>
-                <Typography variant="h6" gutterBottom>
-                  Location of the primer in laboratory
-                </Typography>
-              </Grid>
-
-              <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                  freeSolo
-                  options={Constants.freezer}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      name="freezer"
-                      required
-                      fullWidth
-                      label="Freezerd"
-                    />
-                  )}
-                />
-              </Grid>
-
-              <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                  freeSolo
-                  options={Constants.drawer}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      required
-                      name="drawer"
-                      fullWidth
-                      label="Drawer"
-                    />
-                  )}
-                />
-              </Grid>
-
-              <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                  freeSolo
-                  options={Constants.box}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      name="box"
-                      label="Box"
-                    />
-                  )}
-                />
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth * 3}>

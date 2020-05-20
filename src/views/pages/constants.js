@@ -1,4 +1,3 @@
-
 export default {
   orientations: ["Forward", "Reverse"],
   organism: [
@@ -47,6 +46,8 @@ export default {
     "PAGE",
     "Other",
   ],
+  threeQuencher: ["MGBNFQ", "TAMRA", "QSY"],
+  fiveDye: ["GFAM", "VIC", "TET", "NED", "ABY"],
   typeOfPrimer: [
     "GAPDH primer",
     "M13 primer",
@@ -199,29 +200,29 @@ export default {
   ],
   project: [],
   primerApplication: [],
-  projectApplication:[],
+  projectApplication: [],
   concentrationOrderedUnit: [
     {
-      value: 'NANOMOL',
-      label: 'nmol',
+      value: "NANOMOL",
+      label: "nmol",
     },
     {
-      value: 'MIKROM',
-      label: 'µM',
+      value: "MIKROM",
+      label: "µM",
     },
     {
-      value: 'NANOM',
-      label: 'nM',
+      value: "NANOM",
+      label: "nM",
     },
   ],
   amountAvailablePackType: [
     {
-      value: 'TUBE',
-      label: 'Tube',
+      value: "TUBE",
+      label: "Tube",
     },
     {
-      value: 'PLATE',
-      label: 'Plate',
+      value: "PLATE",
+      label: "Plate",
     },
   ],
   amountAvailableVolume: ["µl", "number of wells"],
@@ -243,25 +244,26 @@ export default {
   ],
   currentUser: "test",
   // list of freezers, drawers, boxes must be acquired from database
-   freezer : [],
-   drawer : [],
-   box : [],
+  freezer: [],
+  drawer: [],
+  box: [],
   defaultPrimerData: {
-    sequence: '',
-    tm: '',
-    gcpercent: '',
-    optimalTOfAnnealing: '',
-    lengthOfAmplicone: '',
-    amountAvailablePackType: '',
-    amountAvailablePacks: '',
-    amountAvailable: '',
-    concentrationOrdered: '',
-    concentrationOrderedUnit: '',
+    sequence: "",
+    tm: "",
+    gcpercent: "",
+    optimalTOfAnnealing: "",
+    lengthOfAmplicone: "",
+    amountAvailablePackType: "",
+    amountAvailablePacks: "",
+    amountAvailable: "",
+    concentrationOrdered: "",
+    concentrationOrderedUnit: "",
+    typeOfPrimer: "",
   },
   defaultUserData: {
-    name: '',
-    username: '',
-    role: '',
-    password: '',
+    name: "",
+    username: "",
+    role: "",
+    password: "",
   },
 };
