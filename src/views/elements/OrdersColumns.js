@@ -55,33 +55,6 @@ export default class OrdersColumns {
                 }
             },
             {
-                name: "freezer",
-                label: "Freezer",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
-                name: "drawer",
-                label: "Drawer",
-                options: {
-                    display: false,
-                    filter: false,
-                    sort: true,
-                }
-            },
-            {
-                name: "box",
-                label: "Box",
-                options: {
-                    display: false,
-                    filter: false,
-                    sort: true,
-                }
-            },
-            {
                 name: "positionInReference",
                 label: "Position in the reference",
                 options: {
@@ -136,26 +109,8 @@ export default class OrdersColumns {
                 }
             },
             {
-                name: "date",
-                label: "Date",
-                options: {
-                    display: false,
-                    filter: false,
-                    sort: true,
-                }
-            },
-            {
                 name: "lengthOfAmplicone",
                 label: "Length of amplicone",
-                options: {
-                    display: false,
-                    filter: false,
-                    sort: true,
-                }
-            },
-            {
-                name: "storingT",
-                label: "Storing T (°C)",
                 options: {
                     display: false,
                     filter: false,
@@ -333,15 +288,6 @@ export default class OrdersColumns {
                 }
             },
             {
-                name: "project",
-                label: "Project",
-                options: {
-                    display: false,
-                    filter: true,
-                    sort: true,
-                }
-            },
-            {
                 name: "supplier",
                 label: "Supplier",
                 options: {
@@ -369,15 +315,6 @@ export default class OrdersColumns {
             {
                 name: "document",
                 label: "Document",
-                options: {
-                    display: false,
-                    filter: false,
-                    sort: true,
-                }
-            },
-            {
-                name: "analysis",
-                label: "Analysis",
                 options: {
                     display: false,
                     filter: false,

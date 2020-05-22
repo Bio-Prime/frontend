@@ -8,14 +8,14 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import Constants from "./constants";
+import Constants from "../../constants";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
 import { useHistory } from 'react-router-dom';
-import PrimersService from "../../services/PrimersService";
+import PrimersService from "../../../../services/PrimersService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

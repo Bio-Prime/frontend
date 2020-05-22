@@ -2,12 +2,12 @@ import Orders from "./pages/Orders";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import Admin from "./pages/Admin";
-import AddTwoNew from "./pages/AddTwoNew";
-import AddOneNew from "./pages/AddOneNew";
-import AddTwoOld from "./pages/AddTwoOld";
-import AddOneOld from "./pages/AddOneOld";
-import EditPrimer from "./pages/EditPrimer";
-import AddUser from "./pages/AddUser";
+import AddTwoNew from "./pages/adding/primers/AddTwoNew";
+import AddOneNew from "./pages/adding/primers/AddOneNew";
+import AddTwoOld from "./pages/adding/primers/AddTwoOld";
+import AddOneOld from "./pages/adding/primers/AddOneOld";
+import EditPrimer from "./pages/editing/EditPrimer";
+import AddUser from "./pages/adding/users/AddUser";
 import PrimerDetails from "./pages/PrimerDetails";
 
 const pageList = [
