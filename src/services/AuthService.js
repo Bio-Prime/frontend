@@ -1,7 +1,5 @@
 import ADDRESS from "./Address";
 
-let token = null;
-
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
@@ -11,7 +9,7 @@ function handleErrors(response) {
 
 export default {
   isAuthenticated() {
-    return token != null;
+    return localStorage.getItem('bioprime-token') != null;
   },
 
   login(data, onSuccess, onFail) {
@@ -31,7 +29,7 @@ export default {
       .then(handleErrors)
       .then((response) => response.text())
       .then((data) => {
-        token = data;
+        localStorage.setItem('bioprime-token', data);
         onSuccess();
       })
       .catch((error) => {
@@ -41,12 +39,12 @@ export default {
   },
 
   logout() {
-    token = null;
+    localStorage.removeItem('bioprime-token');
   },
 
   refreshToken() {
     const url = ADDRESS + "/auth/refresh";
-    console.log(JSON.stringify(token));
+    console.log(JSON.stringify(localStorage.getItem('bioprime-token')));
     const response = fetch(url, {
       method: "POST",
       mode: "cors",
@@ -55,13 +53,13 @@ export default {
       headers: { "Content-Type": "text/plain" },
       redirect: "error",
       referrerPolicy: "no-referrer",
-      body: token,
+      body: localStorage.getItem('bioprime-token'),
     });
     response
       .then(handleErrors)
       .then((response) => response.text())
       .then((data) => {
-        token = data;
+        localStorage.setItem('bioprime-token', data);
       });
   },
 
@@ -70,7 +68,7 @@ export default {
       ...parameters,
       headers: {
         ...parameters.headers,
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + localStorage.getItem('bioprime-token'),
       },
     };
   },

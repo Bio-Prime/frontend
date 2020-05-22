@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn(props) {
   const classes = useStyles();
 
+  // logout if user is signed in
+  AuthService.logout();
   
   let history = useHistory();
   let location = useLocation();
