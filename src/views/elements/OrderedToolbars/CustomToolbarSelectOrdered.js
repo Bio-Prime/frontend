@@ -51,7 +51,7 @@ function CustomToolbarSelectOrdered(props) {
                     <ArrowUpward className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <OrderedMoveDialog open={open} setOpen={setOpen} />
+            <OrderedMoveDialog open={open} setOpen={setOpen} data={dataJson} />
             <Tooltip title={"Delete"}>
                 <IconButton className={classes.iconButton} onClick={handleClickDelete}>
                     <Delete className={classes.icon} />
