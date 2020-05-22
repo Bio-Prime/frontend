@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {makeStyles} from "@material-ui/core/styles";
 import PrimersService from "../../../../services/PrimersService";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function WantedMoveDialog({open, setOpen, primersToMove}) {
+
+    const history = useHistory();
 
     const handleClose = () => {
         setOpen(false);
@@ -30,6 +33,8 @@ export default function WantedMoveDialog({open, setOpen, primersToMove}) {
             item.orderStatus = 'ORDERED';
             PrimersService.update(item).then(() => {console.log("Successfully updated!")});
         });
+
+        history.push('/dashboard');
     };
 
     return (
