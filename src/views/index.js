@@ -11,6 +11,8 @@ import AddUser from "./pages/adding/users/AddUser";
 import PrimerDetails from "./pages/PrimerDetails";
 import AddOneWanted from "./pages/adding/wanted/AddOneWanted";
 import AddTwoWanted from "./pages/adding/wanted/AddTwoWanted";
+import AddOneOrdered from "./pages/adding/ordered/AddOneOrdered";
+import AddTwoOrdered from "./pages/adding/ordered/AddTwoOrdered";
 
 const pageList = [
     {
@@ -77,6 +79,16 @@ const pageList = [
         name: 'AddTwoWanted',
         path: '/add-two-wanted',
         component: AddTwoWanted,
+    },
+    {
+        name: 'AddOneOrdered',
+        path: '/add-one-ordered',
+        component: AddOneOrdered,
+    },
+    {
+        name: 'AddTwoWanted',
+        path: '/add-two-ordered',
+        component: AddTwoOrdered,
     },
 ];
 
