@@ -51,28 +51,20 @@ export default function Orders() {
             <div className={classes.paperCenter}>
                 <Grid container alignItems={"center"} style={{width: '75%'}} spacing={3}>
                     <Grid item xs={12} md={12} lg={12}>
-                        <Paper className={fixedHeightPaper}>
-                            <Title>Šimen Ravnik ordered 16 primers</Title>
-                            <Typography color="textSecondary" className={classes.depositContext}>
-                                on {new Date().toDateString()}
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12}>
-                        <Paper className={fixedHeightPaper}>
-                            <Title>Šimen Ravnik updated primer with sequence TCTAAAAAGCATGTAAAAGAAA</Title>
-                            <Typography color="textSecondary" className={classes.depositContext}>
-                                on {new Date().toDateString()}
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12}>
-                        <Paper className={fixedHeightPaper}>
-                            <Title>Šimen Ravnik removed 4 primers from the database</Title>
-                            <Typography color="textSecondary" className={classes.depositContext}>
-                                on {new Date().toDateString()}
-                            </Typography>
-                        </Paper>
+                        { data.map((item, index) => {
+                            return (
+                                <div key={index}>
+                                    <Paper className={fixedHeightPaper}>
+                                        <Title>{item.primer}</Title>
+                                        <Typography>User {item.user} performed an action {item.action}.</Typography>
+                                        <br/>
+                                        <Typography color="textSecondary" className={classes.depositContext}>
+                                            on {new Date(item.timestamp).toDateString()}
+                                        </Typography>
+                                    </Paper>
+                                </div>
+                            )})
+                        }
                     </Grid>
                 </Grid>
             </div>
