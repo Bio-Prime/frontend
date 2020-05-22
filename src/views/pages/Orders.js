@@ -36,6 +36,38 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const formatChartData = (allData, attribute) => {
+
+    let names = [];
+    let values = [];
+
+    let data = [];
+
+    for (let i = 0; i < allData.length; i++) {
+        let name = allData[i][attribute];
+
+        let idx = names.indexOf(name);
+
+        if (idx === -1) {
+            names.push(name);
+            values.push(1);
+        } else {
+            values[idx] += 1;
+        }
+    }
+
+    for (let i = 0; i < names.length; i++) {
+        let element = {};
+
+        element.name = names[i];
+        element.value = values[i];
+
+        data.push(element);
+    }
+
+    return data;
+};
+
 export default function Orders() {
 
     const [dataOrdered, setDataOrdered] = React.useState(null);
@@ -52,47 +84,12 @@ export default function Orders() {
     const fixedHeightPaperTwo = clsx(classes.paper, classes.fixedHeightTwo);
     const fixedHeightPaperThree = clsx(classes.paper, classes.fixedHeightThree);
 
-    const dataOrderedBy = [
-        {
-            "name": "person1",
-            "value": 400
-        },
-        {
-            "name": "person2",
-            "value": 300
-        },
-        {
-            "name": "person3",
-            "value": 500
-        },
-        {
-            "name": "person4",
-            "value": 150
-        },
-        {
-            "name": "person5",
-            "value": 200
-        },
-    ];
-
-    const dataSupplier = [
-        {
-            "name": "Supplier1",
-            "value": 40,
-        },
-        {
-            "name": "Supplier2",
-            "value": 20,
-        },
-        {
-            "name": "Supplier3",
-            "value": 120,
-        },
-    ];
-
     const theme = useTheme();
 
     if (dataOrdered !== null && dataWanted !== null) {
+
+        const dataOrderedBy = formatChartData(dataOrdered, "user");
+        const dataSupplier = formatChartData(dataOrdered, "supplier");
 
         const columns = OrdersColumns.getOrdersColumns();
 
