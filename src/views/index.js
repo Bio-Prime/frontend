@@ -9,6 +9,8 @@ import AddOneOld from "./pages/adding/primers/AddOneOld";
 import EditPrimer from "./pages/editing/EditPrimer";
 import AddUser from "./pages/adding/users/AddUser";
 import PrimerDetails from "./pages/PrimerDetails";
+import AddOneWanted from "./pages/adding/wanted/AddOneWanted";
+import AddTwoWanted from "./pages/adding/wanted/AddTwoWanted";
 
 const pageList = [
     {
@@ -65,6 +67,16 @@ const pageList = [
         name: 'PrimerDetails',
         path: '/primer-details',
         component: PrimerDetails,
+    },
+    {
+        name: 'AddOneWanted',
+        path: '/add-one-wanted',
+        component: AddOneWanted,
+    },
+    {
+        name: 'AddTwoWanted',
+        path: '/add-two-wanted',
+        component: AddTwoWanted,
     },
 ];
 
