@@ -32,7 +32,7 @@ export default function Admin() {
     const options = {
         filterType: "checkbox",
         downloadOptions: {
-            filename: "primers.csv",
+            filename: "users.csv",
             separator: ",",
         },
         selectableRows: "single",

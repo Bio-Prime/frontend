@@ -67,9 +67,9 @@ export default {
     }
   },
   async delete(id) {
-    const addPath = "/delete"
+    const deletePath = "/delete"
     try {
-            await DataFetcher.post(path+addPath, id);
+            await DataFetcher.post(path+deletePath, id);
             return true;
         }
         catch (error) {
@@ -78,9 +78,9 @@ export default {
         }
   },
   async addPair(id1,id2) {
-    const addPath = "/pair"
+    const addPairPath = "/pair"
     try {
-            await DataFetcher.post(path+addPath, [id1,id2]);
+            await DataFetcher.post(path+addPairPath, [id1,id2]);
             return true;
         }
         catch (error) {

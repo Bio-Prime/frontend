@@ -1,20 +1,25 @@
 import ADDRESS from "./Address";
 
+
 function handleErrors(response) {
   if (!response.ok) {
+    if(response.status === 401){
+      localStorage.removeItem("bioprime-token");
+    }
     throw Error(response.statusText);
   }
   return response;
 }
 
+
 export default {
   isAuthenticated() {
-    return localStorage.getItem('bioprime-token') != null;
+    let token = localStorage.getItem("bioprime-token");
+    return token != null;
   },
 
   login(data, onSuccess, onFail) {
     const url = ADDRESS + "/auth/login";
-    console.log(JSON.stringify(data));
     const response = fetch(url, {
       method: "POST",
       mode: "cors",
@@ -29,7 +34,7 @@ export default {
       .then(handleErrors)
       .then((response) => response.text())
       .then((data) => {
-        localStorage.setItem('bioprime-token', data);
+        localStorage.setItem("bioprime-token", data);
         onSuccess();
       })
       .catch((error) => {
@@ -39,12 +44,12 @@ export default {
   },
 
   logout() {
-    localStorage.removeItem('bioprime-token');
+    localStorage.removeItem("bioprime-token");
   },
 
   refreshToken() {
     const url = ADDRESS + "/auth/refresh";
-    console.log(JSON.stringify(localStorage.getItem('bioprime-token')));
+    console.log(JSON.stringify(localStorage.getItem("bioprime-token")));
     const response = fetch(url, {
       method: "POST",
       mode: "cors",
@@ -53,13 +58,13 @@ export default {
       headers: { "Content-Type": "text/plain" },
       redirect: "error",
       referrerPolicy: "no-referrer",
-      body: localStorage.getItem('bioprime-token'),
+      body: localStorage.getItem("bioprime-token"),
     });
     response
       .then(handleErrors)
       .then((response) => response.text())
       .then((data) => {
-        localStorage.setItem('bioprime-token', data);
+        localStorage.setItem("bioprime-token", data);
       });
   },
 
@@ -68,7 +73,7 @@ export default {
       ...parameters,
       headers: {
         ...parameters.headers,
-        Authorization: "Bearer " + localStorage.getItem('bioprime-token'),
+        Authorization: "Bearer " + localStorage.getItem("bioprime-token"),
       },
     };
   },

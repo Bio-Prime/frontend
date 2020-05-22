@@ -3,6 +3,9 @@ import AuthService from "./AuthService";
 
 function handleErrors(response) {
   if (!response.ok) {
+    if(response.status === 401){
+      localStorage.removeItem("bioprime-token");
+    }
     throw Error(response.statusText);
   }
   return response;
@@ -47,5 +50,25 @@ export default {
     const response = await fetch(url, AuthService.addTokenToParameters(params));
     const response_1 = await handleErrors(response);
     return response_1.json();
+  },
+  async postNoReturn(path,data) {
+    const url = ADDRESS + path;
+
+    let params = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "error",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    };
+
+    const response = await fetch(url, AuthService.addTokenToParameters(params));
+    const response_1 = await handleErrors(response);
+    return response_1;
   },
 };

@@ -232,6 +232,7 @@ export default {
   // list of project names must be acquired from database
   //  projects : [],
   supplier: ["Kemomed", "MikroPolo", "Omega", "Other"],
+  roles: ["ADMIN","TECHNICIAN","RESEARCHER","GUEST"],
   manufacturer: [
     "Biocompare",
     "BioSearch",
@@ -265,5 +266,7 @@ export default {
     username: "",
     role: "",
     password: "",
+    workTitle: "",
+    usernames: "s",
   },
 };

@@ -23,7 +23,6 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import {ExitToApp} from "@material-ui/icons";
 import { useHistory } from 'react-router-dom';
 import AuthService from "../services/AuthService";
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -173,8 +172,9 @@ export default function DashboardLayout({onClickDark}) {
                 <Container maxWidth="lg" className={classes.container}>
                     <Switch>
                         {routes.map((page, key) => (
-                            <Route path={page.path} component={page.component} key={key} />
+                                <Route path={page.path} component={page.component} key={key} />
                         ))}
+                        
                         <Redirect from="/" to="/dashboard" />
                     </Switch>
                     <Box pt={4}>
