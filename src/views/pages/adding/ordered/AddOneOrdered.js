@@ -72,10 +72,21 @@ export default function AddOneOrdered() {
     const submit = (e) => {
         e.preventDefault();
         let formdata = new FormData(formRef.current);
-        var primer = Constants.defaultPrimerData;
+        var primer = {};
         formdata.forEach((value, key) => {
             primer[key] = value;
         });
+
+        // set to empty strings
+        primer["storingT"] = "";
+        primer["amountAvailablePackType"] = "";
+        primer["amountAvailablePacks"] = "";
+        primer["amountAvailable"] = "";
+        primer["freezer"] = "";
+        primer["drawer"] = "";
+        primer["box"] = "";
+        primer["project"] = "";
+        primer["analysis"] = "";
 
         primer["orderStatus"] = "ordered";
         console.log(primer);

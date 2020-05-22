@@ -109,8 +109,8 @@ export default function AddTwoWanted() {
         let commonData = new FormData(formRef.current);
         let forwData = new FormData(forwRef.current);
         let revData = new FormData(revRef.current);
-        var forw = Constants.defaultPrimerData;
-        var rev = Constants.defaultPrimerData;
+        var forw = {};
+        var rev = {};
 
         commonData.forEach((value, key) => {
             forw[key] = value;
@@ -126,6 +126,29 @@ export default function AddTwoWanted() {
             rev[key] = value;
         });
 
+        // set to empty strings
+        forw["storingT"] = "";
+        forw["amountAvailablePackType"] = "";
+        forw["amountAvailablePacks"] = "";
+        forw["amountAvailable"] = "";
+        forw["freezer"] = "";
+        forw["drawer"] = "";
+        forw["box"] = "";
+        forw["project"] = "";
+        forw["analysis"] = "";
+
+        // reverse
+        rev["storingT"] = "";
+        rev["amountAvailablePackType"] = "";
+        rev["amountAvailablePacks"] = "";
+        rev["amountAvailable"] = "";
+        rev["freezer"] = "";
+        rev["drawer"] = "";
+        rev["box"] = "";
+        rev["project"] = "";
+        rev["analysis"] = "";
+
+        // order status to wanted
         forw["orderStatus"] = "wanted";
         forw["orientation"] = "forward";
         rev["orderStatus"] = "wanted";

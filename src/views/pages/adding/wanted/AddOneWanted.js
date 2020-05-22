@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddOneWanted() {
+export default function AddOne() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
 
     const formRef = useRef();
@@ -72,11 +72,23 @@ export default function AddOneWanted() {
     const submit = (e) => {
         e.preventDefault();
         let formdata = new FormData(formRef.current);
-        var primer = Constants.defaultPrimerData;
+        var primer = {};
         formdata.forEach((value, key) => {
             primer[key] = value;
         });
 
+        // set to empty strings
+        primer["storingT"] = "";
+        primer["amountAvailablePackType"] = "";
+        primer["amountAvailablePacks"] = "";
+        primer["amountAvailable"] = "";
+        primer["freezer"] = "";
+        primer["drawer"] = "";
+        primer["box"] = "";
+        primer["project"] = "";
+        primer["analysis"] = "";
+
+        // set order status to wanted
         primer["orderStatus"] = "wanted";
         console.log(primer);
         PrimersService.add(primer);
