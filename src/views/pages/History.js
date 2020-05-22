@@ -50,22 +50,20 @@ export default function Orders() {
         return (
             <div className={classes.paperCenter}>
                 <Grid container alignItems={"center"} style={{width: '75%'}} spacing={3}>
-                    <Grid item xs={12} md={12} lg={12}>
-                        { data.map((item, index) => {
-                            return (
-                                <div key={index}>
-                                    <Paper className={fixedHeightPaper}>
-                                        <Title>{item.primer}</Title>
-                                        <Typography>User {item.user} performed an action {item.action}.</Typography>
-                                        <br/>
-                                        <Typography color="textSecondary" className={classes.depositContext}>
-                                            on {new Date(item.timestamp).toDateString()}
-                                        </Typography>
-                                    </Paper>
-                                </div>
-                            )})
-                        }
-                    </Grid>
+                    { data.map((item, index) => {
+                        return (
+                            <Grid item xs={12} md={12} lg={12} key={index}>
+                                <Paper className={fixedHeightPaper}>
+                                    <Title>{item.primer}</Title>
+                                    <Typography>User {item.user} performed an action {item.action}.</Typography>
+                                    <br/>
+                                    <Typography color="textSecondary" className={classes.depositContext}>
+                                        on {new Date(item.timestamp).toDateString()}
+                                    </Typography>
+                                </Paper>
+                            </Grid>
+                        )})
+                    }
                 </Grid>
             </div>
         );
