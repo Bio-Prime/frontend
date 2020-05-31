@@ -174,7 +174,6 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  freeSolo
                   autoFocus
                   options={Constants.organism}
                   renderInput={(params) => (
@@ -520,7 +519,6 @@ export default function AddOne() {
                     <TextField
                       {...params}
                       variant="outlined"
-                      required
                       fullWidth
                       name="project"
                       label="Project"
@@ -530,21 +528,21 @@ export default function AddOne() {
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                  freeSolo
-                  options={Constants.projectApplication}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      required
-                      name="primerApplication"
-                      fullWidth
-                      label="Application"
-                    />
-                  )}
-                />
-              </Grid>
+                  <Autocomplete
+                    freeSolo
+                    options={Constants.primerApplication}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        required
+                        name="primerApplication"
+                        fullWidth
+                        label="Application"
+                      />
+                    )}
+                  />
+                </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
@@ -607,22 +605,36 @@ export default function AddOne() {
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
-                <TextField
-                  name="supplier"
-                  variant="outlined"
-                  fullWidth
-                  label="Supplier"
-                />
-              </Grid>
+                <Autocomplete
+                    freeSolo
+                    options={Constants.supplier}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        name="supplier"
+                        variant="outlined"
+                        fullWidth
+                        label="Supplier"
+                      />
+                    )}
+                  />
+                </Grid>
 
-              <Grid item xs={xsWidth} sm={smWidth}>
-                <TextField
-                  name="manufacturer"
-                  variant="outlined"
-                  fullWidth
-                  label="Manufacturer"
-                />
-              </Grid>
+                <Grid item xs={xsWidth} sm={smWidth}>
+                <Autocomplete
+                    freeSolo
+                    options={Constants.manufacturer}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        name="manufacturer"
+                        variant="outlined"
+                        fullWidth
+                        label="Manufacturer"
+                      />
+                    )}
+                  />
+                </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
@@ -678,6 +690,8 @@ export default function AddOne() {
             </Grid>
           </form>
 
+          <p></p>
+          <p></p>
           <form
             ref={forwRef}
             name="forwardForm"
@@ -751,7 +765,6 @@ export default function AddOne() {
                 <TextField
                   name="optimalTOfAnnealing"
                   variant="outlined"
-                  required
                   fullWidth
                   label="Optimal T of annealing (°C)"
                   value={forwState.optimalTOfAnnealing}
@@ -824,7 +837,7 @@ export default function AddOne() {
                       name="freezer"
                       required
                       fullWidth
-                      label="Freezerd"
+                      label="Freezer"
                     />
                   )}
                 />
@@ -883,6 +896,8 @@ export default function AddOne() {
             </Grid>
           </form>
 
+          <p></p>
+          <p></p>
           <form
             ref={revRef}
             name="reverseForm"
@@ -956,7 +971,6 @@ export default function AddOne() {
                 <TextField
                   name="optimalTOfAnnealing"
                   variant="outlined"
-                  required
                   fullWidth
                   label="Optimal T of annealing (°C)"
                   value={revState.optimalTOfAnnealing}
@@ -1029,7 +1043,7 @@ export default function AddOne() {
                       name="freezer"
                       required
                       fullWidth
-                      label="Freezerd"
+                      label="Freezer"
                     />
                   )}
                 />

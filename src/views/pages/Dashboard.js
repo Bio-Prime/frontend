@@ -43,6 +43,7 @@ export default function Dashboard() {
         displayData={displayData}
         setSelectedRows={setSelectedRows}
         allData={data}
+        afterDelete={reloadData}
       />
     ),
   };
@@ -51,8 +52,12 @@ export default function Dashboard() {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  useEffect(() => {
+  const reloadData = () => {
     PrimersService.getAllReceived().then(setData);
+  };
+
+  useEffect(() => {
+    reloadData();
   }, []);
 
   if (data != null) {

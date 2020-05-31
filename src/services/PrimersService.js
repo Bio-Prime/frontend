@@ -69,7 +69,7 @@ export default {
   async delete(id) {
     const deletePath = "/delete"
     try {
-            await DataFetcher.post(path+deletePath, id);
+            await DataFetcher.postNoReturn(path+deletePath, id);
             return true;
         }
         catch (error) {

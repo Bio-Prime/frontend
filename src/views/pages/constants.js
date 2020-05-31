@@ -6,7 +6,7 @@ export default {
     "Homo sapiens",
     "Mus musculus",
     "Rattus norvegicus domestica",
-    "Other",
+    
   ],
   humanGenomBuild: [
     "NCBI Build 34",
@@ -35,16 +35,16 @@ export default {
     "Resuspended in TRIS",
     "Resuspended in 1x TE",
     "Resuspended in 0.1 X TE",
-    "Other",
+    
   ],
-  storingT: ["Room temperature", "+4", "-20", "-80", "Other"],
+  storingT: ["Room temperature", "+4", "-20", "-80"],
   purificationMethod: [
     "Cartridge",
     "Desalted",
     "HPLC",
     "HPLC X",
     "PAGE",
-    "Other",
+    
   ],
   threeQuencher: ["MGBNFQ", "TAMRA", "QSY"],
   fiveDye: ["GFAM", "VIC", "TET", "NED", "ABY"],
@@ -69,24 +69,6 @@ export default {
     "Chromosome Control primer",
   ],
   size: ["XS", "S", "M", "L"],
-  application: [
-    "Genotyping",
-    "Cloning",
-    "NGS",
-    "Sanger Sequencing",
-    "Bisulfite converted",
-    "cDNA synthesis",
-    "RT-qPCR-SYBR",
-    "RT-qPCR-TaqMan",
-    "PCR",
-    "ddPCR",
-    "Methylation-specific PCR",
-    "In situ hybridisation",
-    "FISH",
-    "ChIP",
-    "Flow Cytometry",
-    "Other",
-  ],
   fiveModification: [
     "FAM",
     "HEX",
@@ -158,7 +140,7 @@ export default {
     "Texas Red-X",
     "Thiol",
     "None",
-    "Other",
+    
   ],
   threeModification: [
     "Amino Linker C7",
@@ -196,11 +178,27 @@ export default {
     "TAMRA",
     "Thiol C6 SS",
     "None",
-    "Other",
+    
   ],
   project: [],
-  primerApplication: [],
-  projectApplication: [],
+  primerApplication: [
+    "Genotyping",
+    "Cloning",
+    "NGS",
+    "Sanger Sequencing",
+    "Bisulfite converted",
+    "cDNA synthesis",
+    "RT-qPCR-SYBR",
+    "RT-qPCR-TaqMan",
+    "PCR",
+    "ddPCR",
+    "Methylation-specific PCR",
+    "In situ hybridisation",
+    "FISH",
+    "ChIP",
+    "Flow Cytometry",
+    
+  ],
   concentrationOrderedUnit: [
     {
       value: "NANOMOL",
@@ -231,7 +229,7 @@ export default {
   //  designerName : [],
   // list of project names must be acquired from database
   //  projects : [],
-  supplier: ["Kemomed", "MikroPolo", "Omega", "Other"],
+  supplier: ["Kemomed", "MikroPolo", "Omega"],
   roles: ["ADMIN","TECHNICIAN","RESEARCHER","GUEST"],
   manufacturer: [
     "Biocompare",
@@ -241,7 +239,7 @@ export default {
     "Integrated DNA Technologies",
     "Sigma-Aldrich",
     "ThermoFisher Scientific",
-    "Other",
+    
   ],
   currentUser: "test",
   // list of freezers, drawers, boxes must be acquired from database

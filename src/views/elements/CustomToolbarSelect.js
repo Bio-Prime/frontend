@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import PrimersColumns from "./PrimersColumns";
 import {Delete} from "@material-ui/icons";
 import { useHistory } from 'react-router-dom';
+import PrimerService from "./../../services/PrimersService";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -57,6 +58,13 @@ function CustomToolbarSelect(props) {
     };
 
     const handleClickDelete = () => {
+        PrimerService.delete(dataJson.id).then((data) => {
+            if(data){
+                props.afterDelete();
+            } else {
+                alert("Error deleting primer!");
+            }
+        });
         console.log("Delete primer with id: ", + dataJson.id);
     };
 

@@ -174,7 +174,6 @@ export default function AddOne() {
                   <TextField
                     name="optimalTOfAnnealing"
                     variant="outlined"
-                    required
                     fullWidth
                     label="Optimal T of annealing (°C)"
                     value={state.optimalTOfAnnealing}
@@ -184,7 +183,6 @@ export default function AddOne() {
 
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <Autocomplete
-                    freeSolo
                     options={Constants.organism}
                     renderInput={(params) => (
                       <TextField
@@ -500,7 +498,7 @@ export default function AddOne() {
                         name="freezer"
                         required
                         fullWidth
-                        label="Freezerd"
+                        label="Freezer"
                       />
                     )}
                   />
@@ -555,7 +553,6 @@ export default function AddOne() {
                       <TextField
                         {...params}
                         variant="outlined"
-                        required
                         fullWidth
                         
                     name="project"
@@ -568,7 +565,7 @@ export default function AddOne() {
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <Autocomplete
                     freeSolo
-                    options={Constants.projectApplication}
+                    options={Constants.primerApplication}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -643,20 +640,34 @@ export default function AddOne() {
                 </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth}>
-                  <TextField
-                    name="supplier"
-                    variant="outlined"
-                    fullWidth
-                    label="Supplier"
+                <Autocomplete
+                    freeSolo
+                    options={Constants.supplier}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        name="supplier"
+                        variant="outlined"
+                        fullWidth
+                        label="Supplier"
+                      />
+                    )}
                   />
                 </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth}>
-                  <TextField
-                    name="manufacturer"
-                    variant="outlined"
-                    fullWidth
-                    label="Manufacturer"
+                <Autocomplete
+                    freeSolo
+                    options={Constants.manufacturer}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        name="manufacturer"
+                        variant="outlined"
+                        fullWidth
+                        label="Manufacturer"
+                      />
+                    )}
                   />
                 </Grid>
 
