@@ -18,6 +18,8 @@ import { useHistory } from "react-router-dom";
 import PrimersService from "../../../../services/PrimersService";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,6 +47,7 @@ export default function AddOne() {
   const [state, setState] = React.useState(Constants.defaultPrimerData);
   const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
   const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
+  const [date, setDate] = React.useState(Date.now().toString());
 
   const formRef = useRef();
   const forwRef = useRef();
@@ -112,34 +115,43 @@ export default function AddOne() {
     var forw = {};
     var rev = {};
 
-    commonData.forEach((value, key) => {
-      forw[key] = value;
-    });
-    forwData.forEach((value, key) => {
-      forw[key] = value;
-    });
-
-    commonData.forEach((value, key) => {
-      rev[key] = value;
-    });
-    revData.forEach((value, key) => {
-      rev[key] = value;
-    });
-
-    forw["orderStatus"] = "received";
-    forw["orientation"] = "forward";
-    rev["orderStatus"] = "received";
-    rev["orientation"] = "reverse";
-
-    console.log(forw);
-    console.log(rev);
-
-    PrimersService.add(forw).then((forwPrimer) => {
-      PrimersService.add(rev).then((revPrimer) => {
-        PrimersService.addPair(forwPrimer.id, revPrimer.id);
+    PrimersService.getPrimerJsonExample().then((primer) => {
+      commonData.forEach((value, key) => {
+        forw[key] = value;
       });
+      forwData.forEach((value, key) => {
+        forw[key] = value;
+      });
+      commonData.forEach((value, key) => {
+        rev[key] = value;
+      });
+      revData.forEach((value, key) => {
+        rev[key] = value;
+      });
+
+      if (Constants.requiredNew.every((el) => primer[el] !== "")) {
+        forw["orderStatus"] = "received";
+        forw["orientation"] = "forward";
+        forw["date"] = date;
+        rev["orderStatus"] = "received";
+        rev["orientation"] = "reverse";
+        forw["date"] = date;
+
+        console.log(forw);
+        console.log(rev);
+
+        PrimersService.add(forw)
+          .then((forwPrimer) => {
+            PrimersService.add(rev).then((revPrimer) => {
+              PrimersService.addPair(forwPrimer.id, revPrimer.id);
+            });
+          })
+          .then(history.push("/dashboard"))
+          .catch((err) => alert("Error adding primer:", err));
+      } else {
+        alert("Required field missing.");
+      }
     });
-    history.push("/dashboard");
   };
 
   const xsWidth = 12;
@@ -164,6 +176,7 @@ export default function AddOne() {
             name="commonForm"
             className={classes.form}
             noValidate
+            onSubmit={e => { e.preventDefault(); }}
           >
             <Grid container spacing={2}>
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -546,7 +559,6 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
-                  name="user"
                   variant="outlined"
                   value={Constants.currentUser}
                   fullWidth
@@ -636,17 +648,16 @@ export default function AddOne() {
                   />
                 </Grid>
 
-              <Grid item xs={xsWidth} sm={smWidth}>
-                <TextField
-                  name="date"
-                  label="Date of receipt"
-                  type="date"
-                  defaultValue={Date.now.toString()}
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
+                <Grid item xs={xsWidth} sm={smWidth}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
+                    name="date"
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    label="Date of receipt"                    
+                    onAccept={setDate}
+                  />
+                </MuiPickersUtilsProvider>
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -697,6 +708,7 @@ export default function AddOne() {
             name="forwardForm"
             className={classes.form}
             noValidate
+            onSubmit={e => { e.preventDefault(); }}
           >
             <Grid container spacing={2}>
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -731,7 +743,6 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
-                  name="length"
                   variant="outlined"
                   fullWidth
                   label="Length"
@@ -903,6 +914,7 @@ export default function AddOne() {
             name="reverseForm"
             className={classes.form}
             noValidate
+            onSubmit={e => { e.preventDefault(); }}
           >
             <Grid container spacing={2}>
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -937,7 +949,6 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
-                  name="length"
                   variant="outlined"
                   fullWidth
                   label="Length"
@@ -1101,7 +1112,6 @@ export default function AddOne() {
               </Grid>
             </Grid>
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"

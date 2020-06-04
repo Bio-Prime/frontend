@@ -16,6 +16,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
 import { useHistory } from 'react-router-dom';
 import PrimersService from "../../../../services/PrimersService";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddOne() {
   const [state, setState] = React.useState(Constants.defaultPrimerData);
+  const [date, setDate] = React.useState(Date.now().toString());
 
   const formRef = useRef();
 
@@ -72,14 +76,23 @@ export default function AddOne() {
   const submit = (e) => {
     e.preventDefault();
     let formdata = new FormData(formRef.current);
-    var primer = {};
-    formdata.forEach((value, key) => {
-      primer[key] = value;
+
+    PrimersService.getPrimerJsonExample().then((primer) => {
+      formdata.forEach((value, key) => {
+        primer[key] = value;
+      });
+
+      if (Constants.requiredNew.every((el) => primer[el] !== "")) {
+        primer["orderStatus"] = "received";
+        primer["date"] = date;
+        console.log(primer);
+        PrimersService.add(primer)
+          .then(history.push("/dashboard"))
+          .catch((err) => alert("Error adding primer:", err));
+      } else {
+        alert("Required field missing.");
+      }
     });
-    primer["orderStatus"] = "received";
-    console.log(primer);
-    PrimersService.add(primer);
-    history.push('/dashboard');
   };
 
   const xsWidth = 12;
@@ -104,6 +117,7 @@ export default function AddOne() {
               name="primerForm"
               className={classes.form}
               noValidate
+              onSubmit={e => { e.preventDefault(); }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -139,7 +153,6 @@ export default function AddOne() {
 
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <TextField
-                    name="length"
                     variant="outlined"
                     fullWidth
                     label="Length"
@@ -527,8 +540,7 @@ export default function AddOne() {
                         variant="outlined"
                         required
                         fullWidth
-
-                    name="box"
+                        name="box"
                         label="Box"
                       />
                     )}
@@ -577,7 +589,6 @@ export default function AddOne() {
 
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <TextField
-                    name="user"
                     variant="outlined"
                     value={Constants.currentUser}
                     fullWidth
@@ -666,20 +677,17 @@ export default function AddOne() {
                     )}
                   />
                 </Grid>
-
                 <Grid item xs={xsWidth} sm={smWidth}>
-                  <TextField
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
                     name="date"
+                    variant="inline"
+                    format="dd/MM/yyyy"
                     label="Date of receipt"
-                    type="date"
-                    defaultValue={Date.now.toString()}
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    onAccept={setDate}
                   />
-                </Grid>
-
+                </MuiPickersUtilsProvider>
+              </Grid>
                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                   <Typography variant="h6" gutterBottom>
                     Additional information
@@ -720,7 +728,6 @@ export default function AddOne() {
                 </Grid>
               </Grid>
               <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"

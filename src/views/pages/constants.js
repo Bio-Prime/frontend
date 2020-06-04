@@ -267,4 +267,6 @@ export default {
     workTitle: "",
     usernames: "s",
   },
+  requiredOld: ["name","sequence","organism","gen","ncbiGenId","positionInReference","typeOfPrimer","fiveModification","threeModification","formulation","freezer","drawer","box","primerApplication"],
+  requiredNew: ["name","sequence","organism","gen","ncbiGenId","positionInReference","typeOfPrimer","fiveModification","threeModification","formulation","freezer","drawer","box","primerApplication","concentrationOrdered","amountAvailable","amountAvailablePackType"],
 };

@@ -23,6 +23,16 @@ export default {
         return null;
     }
   },
+  async getPrimerJsonExample() {
+    try {
+        const data = await DataFetcher.get(path+"/primerjson-example");
+        return data;
+    }
+    catch (error) {
+        console.error("Error getting primer json example", error);
+        return null;
+    }
+  },
   async getAllOrdered() {
     try {
         const data = await DataFetcher.get(path+"/ordered");

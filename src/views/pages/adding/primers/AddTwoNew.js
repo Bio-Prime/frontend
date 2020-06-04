@@ -18,6 +18,8 @@ import { useHistory } from "react-router-dom";
 import PrimersService from "../../../../services/PrimersService";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,6 +47,7 @@ export default function AddOne() {
   const [state, setState] = React.useState(Constants.defaultPrimerData);
   const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
   const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
+  const [date, setDate] = React.useState(Date.now().toString());
 
   const formRef = useRef();
   const forwRef = useRef();
@@ -112,34 +115,43 @@ export default function AddOne() {
     var forw = {};
     var rev = {};
 
-    commonData.forEach((value, key) => {
-      forw[key] = value;
-    });
-    forwData.forEach((value, key) => {
-      forw[key] = value;
-    });
-
-    commonData.forEach((value, key) => {
-      rev[key] = value;
-    });
-    revData.forEach((value, key) => {
-      rev[key] = value;
-    });
-
-    forw["orderStatus"] = "received";
-    forw["orientation"] = "forward";
-    rev["orderStatus"] = "received";
-    rev["orientation"] = "reverse";
-
-    console.log(forw);
-    console.log(rev);
-
-    PrimersService.add(forw).then((forwPrimer) => {
-      PrimersService.add(rev).then((revPrimer) => {
-        PrimersService.addPair(forwPrimer.id, revPrimer.id);
+    PrimersService.getPrimerJsonExample().then((primer) => {
+      commonData.forEach((value, key) => {
+        forw[key] = value;
       });
+      forwData.forEach((value, key) => {
+        forw[key] = value;
+      });
+      commonData.forEach((value, key) => {
+        rev[key] = value;
+      });
+      revData.forEach((value, key) => {
+        rev[key] = value;
+      });
+
+      if (Constants.requiredNew.every((el) => primer[el] !== "")) {
+        forw["orderStatus"] = "received";
+        forw["orientation"] = "forward";
+        forw["date"] = date;
+        rev["orderStatus"] = "received";
+        rev["orientation"] = "reverse";
+        forw["date"] = date;
+
+        console.log(forw);
+        console.log(rev);
+
+        PrimersService.add(forw)
+          .then((forwPrimer) => {
+            PrimersService.add(rev).then((revPrimer) => {
+              PrimersService.addPair(forwPrimer.id, revPrimer.id);
+            });
+          })
+          .then(history.push("/dashboard"))
+          .catch((err) => alert("Error adding primer:", err));
+      } else {
+        alert("Required field missing.");
+      }
     });
-    history.push("/dashboard");
   };
 
   const xsWidth = 12;
@@ -164,6 +176,9 @@ export default function AddOne() {
             name="commonForm"
             className={classes.form}
             noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
           >
             <Grid container spacing={2}>
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -248,9 +263,11 @@ export default function AddOne() {
                       id: "typeLabel",
                     }}
                   >
-                      <option aria-label="None" value="" />
+                    <option aria-label="None" value="" />
                     {Constants.typeOfPrimer.map((constant) => (
-                      <option key={constant} value={constant}>{constant}</option>
+                      <option key={constant} value={constant}>
+                        {constant}
+                      </option>
                     ))}
                   </Select>
                 </FormControl>
@@ -297,7 +314,7 @@ export default function AddOne() {
                 <React.Fragment>
                   <Grid item xs={xsWidth} sm={smWidth * 3}>
                     <Typography variant="h6" gutterBottom>
-                    TaqProbe
+                      TaqProbe
                     </Typography>
                   </Grid>
 
@@ -321,23 +338,21 @@ export default function AddOne() {
                     />
                   </Grid>
 
-                  
-
-              <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                  options={Constants.size}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      required
-                      name="size"
-                      fullWidth
-                      label="Size"
+                  <Grid item xs={xsWidth} sm={smWidth}>
+                    <Autocomplete
+                      options={Constants.size}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          required
+                          name="size"
+                          fullWidth
+                          label="Size"
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Grid>
+                  </Grid>
 
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
@@ -531,25 +546,24 @@ export default function AddOne() {
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
-                  <Autocomplete
-                    freeSolo
-                    options={Constants.primerApplication}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        required
-                        name="primerApplication"
-                        fullWidth
-                        label="Application"
-                      />
-                    )}
-                  />
-                </Grid>
+                <Autocomplete
+                  freeSolo
+                  options={Constants.primerApplication}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      required
+                      name="primerApplication"
+                      fullWidth
+                      label="Application"
+                    />
+                  )}
+                />
+              </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
-                  name="user"
                   variant="outlined"
                   value={Constants.currentUser}
                   fullWidth
@@ -609,47 +623,45 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                    freeSolo
-                    options={Constants.supplier}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        name="supplier"
-                        variant="outlined"
-                        fullWidth
-                        label="Supplier"
-                      />
-                    )}
-                  />
-                </Grid>
-
-                <Grid item xs={xsWidth} sm={smWidth}>
-                <Autocomplete
-                    freeSolo
-                    options={Constants.manufacturer}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        name="manufacturer"
-                        variant="outlined"
-                        fullWidth
-                        label="Manufacturer"
-                      />
-                    )}
-                  />
-                </Grid>
+                  freeSolo
+                  options={Constants.supplier}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      name="supplier"
+                      variant="outlined"
+                      fullWidth
+                      label="Supplier"
+                    />
+                  )}
+                />
+              </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
-                <TextField
-                  name="date"
-                  label="Date of receipt"
-                  type="date"
-                  defaultValue={Date.now.toString()}
-                  fullWidth
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                <Autocomplete
+                  freeSolo
+                  options={Constants.manufacturer}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      name="manufacturer"
+                      variant="outlined"
+                      fullWidth
+                      label="Manufacturer"
+                    />
+                  )}
                 />
+              </Grid>
+              <Grid item xs={xsWidth} sm={smWidth}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
+                    name="date"
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    label="Date of receipt"                    
+                    onAccept={setDate}
+                  />
+                </MuiPickersUtilsProvider>
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -700,6 +712,9 @@ export default function AddOne() {
             name="forwardForm"
             className={classes.form}
             noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
           >
             <Grid container spacing={2}>
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -734,7 +749,6 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
-                  name="length"
                   variant="outlined"
                   fullWidth
                   label="Length"
@@ -905,6 +919,9 @@ export default function AddOne() {
             name="reverseForm"
             className={classes.form}
             noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
           >
             <Grid container spacing={2}>
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -939,7 +956,6 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <TextField
-                  name="length"
                   variant="outlined"
                   fullWidth
                   label="Length"
@@ -1103,7 +1119,6 @@ export default function AddOne() {
               </Grid>
             </Grid>
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
