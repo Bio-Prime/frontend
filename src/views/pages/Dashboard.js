@@ -36,7 +36,7 @@ export default function Dashboard() {
       separator: ",",
     },
     selectableRows: "single",
-    customToolbar: () => <CustomToolbar />,
+    customToolbar: () => <CustomToolbar reloadData={reloadData} />,
     customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
       <CustomToolbarSelect
         selectedRows={selectedRows}

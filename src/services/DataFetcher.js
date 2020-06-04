@@ -71,4 +71,24 @@ export default {
     const response_1 = await handleErrors(response);
     return response_1;
   },
+  async postRawDataNoReturn(path,data) {
+    const url = ADDRESS + path;
+
+    let params = {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      redirect: "error",
+      referrerPolicy: "no-referrer",
+      body: data,
+    };
+
+    const response = await fetch(url, AuthService.addTokenToParameters(params));
+    const response_1 = await handleErrors(response);
+    return response_1;
+  },
 };

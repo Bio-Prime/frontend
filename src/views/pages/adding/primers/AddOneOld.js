@@ -82,7 +82,7 @@ export default function AddOne() {
         primer[key] = value;
       });
 
-      if (Constants.requiredNew.every((el) => primer[el] !== "")) {
+      if (Constants.requiredOld.every((el) => primer[el] !== "")) {
         primer["orderStatus"] = "received";
         primer["date"] = date;
         console.log(primer);

@@ -112,10 +112,12 @@ export default function AddOne() {
     let commonData = new FormData(formRef.current);
     let forwData = new FormData(forwRef.current);
     let revData = new FormData(revRef.current);
-    var forw = {};
-    var rev = {};
+    
 
     PrimersService.getPrimerJsonExample().then((primer) => {
+      let forw = {...primer};
+      let rev = {...primer};
+
       commonData.forEach((value, key) => {
         forw[key] = value;
       });
@@ -129,7 +131,7 @@ export default function AddOne() {
         rev[key] = value;
       });
 
-      if (Constants.requiredNew.every((el) => primer[el] !== "")) {
+      if (Constants.requiredOld.every((el) => primer[el] !== "")) {
         forw["orderStatus"] = "received";
         forw["orientation"] = "forward";
         forw["date"] = date;
@@ -318,7 +320,6 @@ export default function AddOne() {
                     <TextField
                       name="sondaSequence"
                       variant="outlined"
-                      required
                       fullWidth
                       label="Sonda sequence"
                     />
