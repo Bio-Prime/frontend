@@ -53,7 +53,7 @@ export default function AddUser() {
         usernames: usernames,
       })
     );
-  }, []);
+  }, [state]);
 
   const handleChange = (event) => {
     setState({

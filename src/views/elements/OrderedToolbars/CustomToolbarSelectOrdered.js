@@ -46,7 +46,7 @@ function CustomToolbarSelectOrdered(props) {
 
     return (
         <div className={classes.iconContainer}>
-            <Tooltip title={"Move to ordered primers"}>
+            <Tooltip title={"Move to received primers"}>
                 <IconButton className={classes.iconButton} onClick={handleClickOpen}>
                     <ArrowUpward className={classes.icon} />
                 </IconButton>

@@ -59,10 +59,17 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
             primer[key] = value;
         });
 
-        // set order status to wanted
-        primer["orderStatus"] = "received";
+        if (Constants.requiredOrderedToReceived.every((el) => primer[el] !== "")) {
+            // set order status to wanted
+            primer["orderStatus"] = "received";
 
-        PrimersService.update(primer).then(() => history.push('/dashboard'));
+            PrimersService.update(primer)
+                .then(() => history.push('/dashboard'))
+                .catch((err) => alert("Error adding primer:", err));
+        } else {
+            alert("Required field missing.");
+        }
+
     };
 
     return (
