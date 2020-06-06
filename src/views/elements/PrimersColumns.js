@@ -83,7 +83,7 @@ export default class PrimersColumns {
                 label: "Position in the reference",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -92,7 +92,7 @@ export default class PrimersColumns {
                 label: "Optimal T of annealing (°C)",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -101,7 +101,7 @@ export default class PrimersColumns {
                 label: "Purification method",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -154,7 +154,7 @@ export default class PrimersColumns {
                 label: "Storing T (°C)",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -163,7 +163,7 @@ export default class PrimersColumns {
                 label: "Organism",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -172,7 +172,7 @@ export default class PrimersColumns {
                 label: "Gen",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -181,7 +181,7 @@ export default class PrimersColumns {
                 label: "NCBI gen ID",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -190,7 +190,7 @@ export default class PrimersColumns {
                 label: "Human genom build",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -199,7 +199,7 @@ export default class PrimersColumns {
                 label: "Formulation",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -217,7 +217,7 @@ export default class PrimersColumns {
                 label: "Sonda sequence",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -226,7 +226,7 @@ export default class PrimersColumns {
                 label: "Assay ID",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -262,7 +262,7 @@ export default class PrimersColumns {
                 label: "5' Modification",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -271,7 +271,7 @@ export default class PrimersColumns {
                 label: "3' Modification",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -298,7 +298,7 @@ export default class PrimersColumns {
                 label: "Check specificity in blast",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -307,7 +307,7 @@ export default class PrimersColumns {
                 label: "Designer name",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -397,7 +397,7 @@ export default class PrimersColumns {
                 label: "3' Quencher",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -406,7 +406,7 @@ export default class PrimersColumns {
                 label: "5' Dye",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -433,7 +433,7 @@ export default class PrimersColumns {
                 label: "Tm (°C)",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
@@ -442,7 +442,7 @@ export default class PrimersColumns {
                 label: "Gcpercent",
                 options: {
                     display: false,
-                    filter: false,
+                    filter: true,
                     sort: true,
                 }
             },
