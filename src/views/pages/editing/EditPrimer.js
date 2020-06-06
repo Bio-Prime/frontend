@@ -98,14 +98,18 @@ export default function EditPrimer(props) {
             primerData[key] = value;
         });
 
-        PrimersService.update(primerData).then(returnData => {
-            if (returnData != null) {
-                setSuccess(true);
-            } else {
-                setSuccess(false);
-            }
-            setOpen(true);
-        });
+        if (Constants.requiredOld.every((el) => primerData[el] !== "")) {
+            PrimersService.update(primerData).then(returnData => {
+                if (returnData != null) {
+                    setSuccess(true);
+                } else {
+                    setSuccess(false);
+                }
+                setOpen(true);
+            });
+        } else {
+            alert("Required field missing.");
+        }
     };
 
     const showAlert = () => {
@@ -567,7 +571,7 @@ export default function EditPrimer(props) {
                                             name="freezer"
                                             required
                                             fullWidth
-                                            label="Freezerd"
+                                            label="Freezer"
                                         />
                                     )}
                                 />
@@ -595,6 +599,7 @@ export default function EditPrimer(props) {
                                 <Autocomplete
                                     defaultValue={state.box}
                                     freeSolo
+                                    required
                                     options={Constants.box}
                                     renderInput={(params) => (
                                         <TextField
@@ -602,7 +607,6 @@ export default function EditPrimer(props) {
                                             variant="outlined"
                                             required
                                             fullWidth
-
                                             name="box"
                                             label="Box"
                                         />
@@ -718,22 +722,36 @@ export default function EditPrimer(props) {
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
+                                <Autocomplete
+                                    freeSolo
+                                    options={Constants.supplier}
                                     defaultValue={state.supplier}
-                                    name="supplier"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Supplier"
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            name="supplier"
+                                            variant="outlined"
+                                            fullWidth
+                                            label="Supplier"
+                                        />
+                                    )}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
+                                <Autocomplete
+                                    freeSolo
+                                    options={Constants.manufacturer}
                                     defaultValue={state.manufacturer}
-                                    name="manufacturer"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Manufacturer"
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            name="manufacturer"
+                                            variant="outlined"
+                                            fullWidth
+                                            label="Manufacturer"
+                                        />
+                                    )}
                                 />
                             </Grid>
 
