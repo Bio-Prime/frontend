@@ -109,7 +109,7 @@ export default function AddOne() {
             <Paper className={classes.paper}>
                 <div className={classes.paperCenter}>
                     <Typography variant="h5" gutterBottom>
-                        Add one wanted oligonucleotide primer
+                        Add one ordered oligonucleotide primer
                     </Typography>
                     <DialogContentText>
                         The fields marked with a "*" are required.
