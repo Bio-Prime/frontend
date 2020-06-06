@@ -18,6 +18,8 @@ import { useHistory } from "react-router-dom";
 import PrimersService from "../../../../services/PrimersService";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
+import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -45,6 +47,7 @@ export default function AddTwoWanted() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
     const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
     const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
+    const [date, setDate] = React.useState(Date.now().toString());
 
     const formRef = useRef();
     const forwRef = useRef();
@@ -109,60 +112,66 @@ export default function AddTwoWanted() {
         let commonData = new FormData(formRef.current);
         let forwData = new FormData(forwRef.current);
         let revData = new FormData(revRef.current);
-        var forw = {};
-        var rev = {};
 
-        commonData.forEach((value, key) => {
-            forw[key] = value;
-        });
-        forwData.forEach((value, key) => {
-            forw[key] = value;
-        });
+        PrimersService.getPrimerJsonExample().then((primer) => {
+            let forw = {...primer};
+            let rev = {...primer};
 
-        commonData.forEach((value, key) => {
-            rev[key] = value;
-        });
-        revData.forEach((value, key) => {
-            rev[key] = value;
-        });
-
-        // set to empty strings
-        forw["storingT"] = "";
-        forw["amountAvailablePackType"] = "";
-        forw["amountAvailablePacks"] = "";
-        forw["amountAvailable"] = "";
-        forw["freezer"] = "";
-        forw["drawer"] = "";
-        forw["box"] = "";
-        forw["project"] = "";
-        forw["analysis"] = "";
-
-        // reverse
-        rev["storingT"] = "";
-        rev["amountAvailablePackType"] = "";
-        rev["amountAvailablePacks"] = "";
-        rev["amountAvailable"] = "";
-        rev["freezer"] = "";
-        rev["drawer"] = "";
-        rev["box"] = "";
-        rev["project"] = "";
-        rev["analysis"] = "";
-
-        // order status to wanted
-        forw["orderStatus"] = "wanted";
-        forw["orientation"] = "forward";
-        rev["orderStatus"] = "wanted";
-        rev["orientation"] = "reverse";
-
-        console.log(forw);
-        console.log(rev);
-
-        PrimersService.add(forw).then((forwPrimer) => {
-            PrimersService.add(rev).then((revPrimer) => {
-                PrimersService.addPair(forwPrimer.id, revPrimer.id);
+            commonData.forEach((value, key) => {
+                forw[key] = value;
             });
+            forwData.forEach((value, key) => {
+                forw[key] = value;
+            });
+
+            commonData.forEach((value, key) => {
+                rev[key] = value;
+            });
+            revData.forEach((value, key) => {
+                rev[key] = value;
+            });
+
+            // set to empty strings
+            forw["storingT"] = "";
+            forw["amountAvailablePackType"] = "";
+            forw["amountAvailablePacks"] = "";
+            forw["amountAvailable"] = "";
+            forw["freezer"] = "";
+            forw["drawer"] = "";
+            forw["box"] = "";
+            forw["project"] = "";
+            forw["analysis"] = "";
+
+            // reverse
+            rev["storingT"] = "";
+            rev["amountAvailablePackType"] = "";
+            rev["amountAvailablePacks"] = "";
+            rev["amountAvailable"] = "";
+            rev["freezer"] = "";
+            rev["drawer"] = "";
+            rev["box"] = "";
+            rev["project"] = "";
+            rev["analysis"] = "";
+
+            if (Constants.requiredWanted.every((el) => primer[el] !== "")) {
+                // order status to wanted
+                forw["orderStatus"] = "wanted";
+                forw["orientation"] = "forward";
+                rev["orderStatus"] = "wanted";
+                rev["orientation"] = "reverse";
+
+                PrimersService.add(forw)
+                    .then((forwPrimer) => {
+                        PrimersService.add(rev).then((revPrimer) => {
+                            PrimersService.addPair(forwPrimer.id, revPrimer.id);
+                        });
+                    })
+                    .then(history.push("/dashboard"))
+                    .catch((err) => alert("Error adding primer:", err));
+            } else {
+                alert("Required field missing.");
+            }
         });
-        history.push("/dashboard");
     };
 
     const xsWidth = 12;
@@ -187,6 +196,9 @@ export default function AddTwoWanted() {
                         name="commonForm"
                         className={classes.form}
                         noValidate
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                        }}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -197,7 +209,6 @@ export default function AddTwoWanted() {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
-                                    freeSolo
                                     autoFocus
                                     options={Constants.organism}
                                     renderInput={(params) => (
@@ -274,7 +285,9 @@ export default function AddTwoWanted() {
                                     >
                                         <option aria-label="None" value="" />
                                         {Constants.typeOfPrimer.map((constant) => (
-                                            <option key={constant} value={constant}>{constant}</option>
+                                            <option key={constant} value={constant}>
+                                                {constant}
+                                            </option>
                                         ))}
                                     </Select>
                                 </FormControl>
@@ -329,7 +342,6 @@ export default function AddTwoWanted() {
                                         <TextField
                                             name="sondaSequence"
                                             variant="outlined"
-                                            required
                                             fullWidth
                                             label="Sonda sequence"
                                         />
@@ -344,8 +356,6 @@ export default function AddTwoWanted() {
                                             label="Assay ID"
                                         />
                                     </Grid>
-
-
 
                                     <Grid item xs={xsWidth} sm={smWidth}>
                                         <Autocomplete
@@ -467,7 +477,7 @@ export default function AddTwoWanted() {
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
                                     freeSolo
-                                    options={Constants.projectApplication}
+                                    options={Constants.primerApplication}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -542,34 +552,46 @@ export default function AddTwoWanted() {
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="supplier"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Supplier"
+                                <Autocomplete
+                                    freeSolo
+                                    options={Constants.supplier}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            name="supplier"
+                                            variant="outlined"
+                                            fullWidth
+                                            label="Supplier"
+                                        />
+                                    )}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="manufacturer"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Manufacturer"
+                                <Autocomplete
+                                    freeSolo
+                                    options={Constants.manufacturer}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            name="manufacturer"
+                                            variant="outlined"
+                                            fullWidth
+                                            label="Manufacturer"
+                                        />
+                                    )}
                                 />
                             </Grid>
-
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="date"
-                                    label="Date of receipt"
-                                    type="date"
-                                    defaultValue={Date.now.toString()}
-                                    fullWidth
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <DatePicker
+                                        name="date"
+                                        variant="inline"
+                                        format="dd/MM/yyyy"
+                                        label="Date of receipt"
+                                        onAccept={setDate}
+                                    />
+                                </MuiPickersUtilsProvider>
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -603,11 +625,16 @@ export default function AddTwoWanted() {
                         </Grid>
                     </form>
 
+                    <p></p>
+                    <p></p>
                     <form
                         ref={forwRef}
                         name="forwardForm"
                         className={classes.form}
                         noValidate
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                        }}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -642,7 +669,6 @@ export default function AddTwoWanted() {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    name="length"
                                     variant="outlined"
                                     fullWidth
                                     label="Length"
@@ -676,7 +702,6 @@ export default function AddTwoWanted() {
                                 <TextField
                                     name="optimalTOfAnnealing"
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     label="Optimal T of annealing (°C)"
                                     value={forwState.optimalTOfAnnealing}
@@ -750,12 +775,16 @@ export default function AddTwoWanted() {
                             </Grid>
                         </Grid>
                     </form>
-
+                    <p></p>
+                    <p></p>
                     <form
                         ref={revRef}
                         name="reverseForm"
                         className={classes.form}
                         noValidate
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                        }}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -790,7 +819,6 @@ export default function AddTwoWanted() {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    name="length"
                                     variant="outlined"
                                     fullWidth
                                     label="Length"
@@ -824,7 +852,6 @@ export default function AddTwoWanted() {
                                 <TextField
                                     name="optimalTOfAnnealing"
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     label="Optimal T of annealing (°C)"
                                     value={revState.optimalTOfAnnealing}
@@ -898,7 +925,6 @@ export default function AddTwoWanted() {
                             </Grid>
                         </Grid>
                         <Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
