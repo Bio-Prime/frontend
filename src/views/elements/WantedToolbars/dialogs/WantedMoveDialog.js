@@ -31,10 +31,8 @@ export default function WantedMoveDialog({open, setOpen, primersToMove}) {
 
         primersToMove.forEach((item) => {
             item.orderStatus = 'ORDERED';
-            PrimersService.update(item).then(() => {console.log("Successfully updated!")});
+            PrimersService.update(item).then(() => {history.push('/dashboard');});
         });
-
-        history.push('/dashboard');
     };
 
     return (

@@ -18,6 +18,7 @@ import {Redirect} from "react-router-dom";
 import PrimersService from "../../../services/PrimersService";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditPrimer(props) {
+
+    const history = useHistory();
 
     const setPrimersData = () => {
         if (typeof props.location.state !== 'undefined') {
@@ -102,6 +105,12 @@ export default function EditPrimer(props) {
             PrimersService.update(primerData).then(returnData => {
                 if (returnData != null) {
                     setSuccess(true);
+                    setTimeout(
+                        function() {
+                            history.goBack();
+                        },
+                        1000
+                    );
                 } else {
                     setSuccess(false);
                 }
