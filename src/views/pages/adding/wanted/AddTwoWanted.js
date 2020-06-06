@@ -157,8 +157,10 @@ export default function AddTwoWanted() {
                 // order status to wanted
                 forw["orderStatus"] = "wanted";
                 forw["orientation"] = "forward";
+                forw["date"] = date;
                 rev["orderStatus"] = "wanted";
                 rev["orientation"] = "reverse";
+                rev["date"] = date;
 
                 PrimersService.add(forw)
                     .then((forwPrimer) => {

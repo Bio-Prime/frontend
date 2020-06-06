@@ -16,6 +16,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
 import { useHistory } from 'react-router-dom';
 import PrimersService from "../../../../services/PrimersService";
+import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddOneOrdered() {
+export default function AddOne() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
+    const [date, setDate] = React.useState(Date.now().toString());
 
     const formRef = useRef();
 
@@ -77,21 +80,25 @@ export default function AddOneOrdered() {
             primer[key] = value;
         });
 
-        // set to empty strings
-        primer["storingT"] = "";
-        primer["amountAvailablePackType"] = "";
-        primer["amountAvailablePacks"] = "";
-        primer["amountAvailable"] = "";
-        primer["freezer"] = "";
-        primer["drawer"] = "";
-        primer["box"] = "";
-        primer["project"] = "";
-        primer["analysis"] = "";
+        if (Constants.requiredWanted.every((el) => primer[el] !== "")) {
+            // set to empty strings
+            primer["storingT"] = "";
+            primer["amountAvailablePackType"] = "";
+            primer["amountAvailablePacks"] = "";
+            primer["amountAvailable"] = "";
+            primer["freezer"] = "";
+            primer["drawer"] = "";
+            primer["box"] = "";
+            primer["project"] = "";
+            primer["analysis"] = "";
+            primer["date"] = date;
 
-        primer["orderStatus"] = "ordered";
-        console.log(primer);
-        PrimersService.add(primer);
-        history.push('/orders');
+            // set order status to wanted
+            primer["orderStatus"] = "ordered";
+            PrimersService.add(primer).then(history.push('/orders')).catch((err) => alert("Error adding primer:", err));
+        } else {
+            alert("Required field missing.");
+        }
     };
 
     const xsWidth = 12;
@@ -102,7 +109,7 @@ export default function AddOneOrdered() {
             <Paper className={classes.paper}>
                 <div className={classes.paperCenter}>
                     <Typography variant="h5" gutterBottom>
-                        Add one ordered oligonucleotide primer
+                        Add one wanted oligonucleotide primer
                     </Typography>
                     <DialogContentText>
                         The fields marked with a "*" are required.
@@ -116,6 +123,9 @@ export default function AddOneOrdered() {
                         name="primerForm"
                         className={classes.form}
                         noValidate
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                        }}
                     >
                         <Grid container spacing={2}>
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -185,7 +195,6 @@ export default function AddOneOrdered() {
                                 <TextField
                                     name="optimalTOfAnnealing"
                                     variant="outlined"
-                                    required
                                     fullWidth
                                     label="Optimal T of annealing (°C)"
                                     value={state.optimalTOfAnnealing}
@@ -195,7 +204,6 @@ export default function AddOneOrdered() {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
-                                    freeSolo
                                     options={Constants.organism}
                                     renderInput={(params) => (
                                         <TextField
@@ -355,7 +363,7 @@ export default function AddOneOrdered() {
                                 </FormControl>
                             </Grid>
 
-                            <Grid item xs={xsWidth} sm={smWidth}></Grid>
+                            <Grid item xs={xsWidth} sm={smWidth}/>
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>
                                 <Typography variant="h6" gutterBottom>
@@ -427,7 +435,7 @@ export default function AddOneOrdered() {
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <Autocomplete
                                     freeSolo
-                                    options={Constants.projectApplication}
+                                    options={Constants.primerApplication}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -443,7 +451,6 @@ export default function AddOneOrdered() {
 
                             <Grid item xs={xsWidth} sm={smWidth}>
                                 <TextField
-                                    name="user"
                                     variant="outlined"
                                     value={Constants.currentUser}
                                     fullWidth
@@ -502,34 +509,48 @@ export default function AddOneOrdered() {
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="supplier"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Supplier"
+                                <Autocomplete
+                                    freeSolo
+                                    options={Constants.supplier}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            name="supplier"
+                                            variant="outlined"
+                                            fullWidth
+                                            label="Supplier"
+                                        />
+                                    )}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="manufacturer"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Manufacturer"
+                                <Autocomplete
+                                    freeSolo
+                                    options={Constants.manufacturer}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            name="manufacturer"
+                                            variant="outlined"
+                                            fullWidth
+                                            label="Manufacturer"
+                                        />
+                                    )}
                                 />
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="date"
-                                    label="Date of receipt"
-                                    type="date"
-                                    defaultValue={Date.now.toString()}
-                                    fullWidth
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <DatePicker
+                                        name="date"
+                                        variant="inline"
+                                        format="dd/MM/yyyy"
+                                        label="Date of receipt"
+                                        onAccept={setDate}
+
+                                    />
+                                </MuiPickersUtilsProvider>
                             </Grid>
 
                             <Grid item xs={xsWidth} sm={smWidth * 3}>

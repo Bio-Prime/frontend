@@ -91,6 +91,7 @@ export default function AddOne() {
             primer["box"] = "";
             primer["project"] = "";
             primer["analysis"] = "";
+            primer["date"] = date;
 
             // set order status to wanted
             primer["orderStatus"] = "wanted";
