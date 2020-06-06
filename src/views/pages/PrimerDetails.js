@@ -148,14 +148,13 @@ export default function PrimerDetails(props) {
         const options = {
             filterType: 'checkbox',
             downloadOptions: {
-                filename: "primers.csv",
-                separator: ","
+                filename: "primer.csv",
+                separator: ",",
             },
             selectableRows: "none",
             pagination: false,
             responsive: "scrollMaxHeight",
             print: false,
-            download: false,
             filter: false,
             sort: false,
             viewColumns: false,
