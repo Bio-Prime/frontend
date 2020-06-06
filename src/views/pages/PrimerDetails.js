@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         height: 140,
     },
     fixedHeightTimesTwo: {
-        height: 250,
+        height: 407,
     },
     form: {
         width: "100%", // Fix IE 11 issue.
@@ -99,6 +99,8 @@ export default function PrimerDetails(props) {
         });
 
         data.amountAvailable = object.amountAvailable;
+        data.analysis = object.analysis;
+        data.comment = object.comment;
 
         PrimersService.update(data).then(returnData => {
             if (returnData != null) {
@@ -185,10 +187,6 @@ export default function PrimerDetails(props) {
         };
         let tableData = formatSelectedPrimerData();
 
-        const getSequence = () => {
-            return data.sequence;
-        };
-
         return (
             <Grid container spacing={3}>
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
@@ -207,12 +205,6 @@ export default function PrimerDetails(props) {
                             </Paper>
                         </Grid>
                         <Grid item xs={12} md={6} lg={6}>
-                            <Paper className={fixedHeightPaper}>
-                                <Title>Sequence</Title>
-                                {getSequence()}
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
                             <Paper className={fixedHeightPaper}>
                                 <Title>Location in the Lab</Title>
                                 {data.freezer} &mdash; {data.drawer} &mdash; {data.box}
@@ -249,6 +241,27 @@ export default function PrimerDetails(props) {
                                                     value={
                                                         data.amountAvailablePackType === "Plate" ? "wells" : "µl"
                                                     }
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={12}>
+                                                <TextField
+                                                    name="analysis"
+                                                    label="Analysis"
+                                                    multiline
+                                                    fullWidth
+                                                    variant="outlined"
+                                                    defaultValue={data.analysis}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={12}>
+                                                <TextField
+                                                    name="comment"
+                                                    label="Comment"
+                                                    multiline
+                                                    fullWidth
+                                                    rows={2}
+                                                    variant="outlined"
+                                                    defaultValue={data.comment}
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={12}>
