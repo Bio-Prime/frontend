@@ -98,4 +98,14 @@ export default {
             return null;
         }
   },
+  async getAllForeignTables() {
+    try {
+            const data = await DataFetcher.get(path+"/get-all-foreign-tables");
+            return data;
+        }
+        catch (error) {
+            console.error("Error getting foreign tables:", error);
+            return null;
+        }
+  },
 };

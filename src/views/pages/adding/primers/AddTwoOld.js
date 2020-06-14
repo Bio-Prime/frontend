@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -20,6 +20,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,10 +49,20 @@ export default function AddOne() {
   const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
   const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
   const [date, setDate] = React.useState(Date.now().toString());
+  const [foreignTables, setForeignTables] = React.useState({ isLoaded: false });
 
   const formRef = useRef();
   const forwRef = useRef();
   const revRef = useRef();
+
+  
+  useEffect(() => {
+    PrimersService.getAllForeignTables()
+      .then((tables) => {
+        return { ...Constants.foreignTables, ...tables, isLoaded: true };
+      })
+      .then(setForeignTables);
+  }, []);
 
   const handleChange = (event) => {
     setState({
@@ -159,6 +170,20 @@ export default function AddOne() {
   const xsWidth = 12;
   const smWidth = 4;
 
+  if (!foreignTables.isLoaded) {
+    return (
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: "90vh" }}
+      >
+        <CircularProgress />
+      </Grid>
+    );
+  } else {
   return (
     <div className={classes.paperCenter}>
       <Paper className={classes.paper}>
@@ -189,8 +214,9 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
+                freeSolo
                   autoFocus
-                  options={Constants.organism}
+                  options={foreignTables.organism}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -218,7 +244,6 @@ export default function AddOne() {
                 <TextField
                   name="ncbiGenId"
                   variant="outlined"
-                  required
                   fullWidth
                   label="NCBI gen ID"
                 />
@@ -226,7 +251,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.humanGenomBuild}
+                  options={foreignTables.humanGenomBuild}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -264,7 +289,7 @@ export default function AddOne() {
                     }}
                   >
                       <option aria-label="None" value="" />
-                    {Constants.typeOfPrimer.map((constant) => (
+                    {foreignTables.typeOfPrimer.map((constant) => (
                       <option key={constant} value={constant}>{constant}</option>
                     ))}
                   </Select>
@@ -278,7 +303,7 @@ export default function AddOne() {
                   dispaly="block"
                   style={useStyles.verticalCenter}
                 >
-                  Did you chech specificity in Blast?
+                  Did you check specificity in Blast?
                 </Typography>
               </Grid>
 
@@ -355,7 +380,7 @@ export default function AddOne() {
 
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
-                      options={Constants.threeQuencher}
+                      options={foreignTables.threeQuencher}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -370,7 +395,7 @@ export default function AddOne() {
 
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
-                      options={Constants.fiveDye}
+                      options={foreignTables.fiveDye}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -393,7 +418,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.formulation}
+                  options={foreignTables.formulation}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -409,7 +434,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.storingT}
+                  options={foreignTables.storingT}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -424,7 +449,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.purificationMethod}
+                  options={foreignTables.purificationMethod}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -528,7 +553,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.project}
+                  options={foreignTables.project}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -544,7 +569,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                   <Autocomplete
                     freeSolo
-                    options={Constants.primerApplication}
+                    options={foreignTables.primerApplication}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -559,12 +584,14 @@ export default function AddOne() {
                 </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth}>
-                <TextField
-                  variant="outlined"
-                  value={Constants.currentUser}
-                  fullWidth
-                  label="User"
-                />
+                  {/* user is added automatically in backend so no reason to have the field,
+                      leaving it for now, if we'll have to add it later */}
+                  {/* <TextField
+                    variant="outlined"
+                    value={foreignTables.currentUser}
+                    fullWidth
+                    label="User"
+                  /> */}
               </Grid>
 
               <Grid item xs={xsWidth} sm={smWidth * 3}>
@@ -620,7 +647,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                     freeSolo
-                    options={Constants.supplier}
+                    options={foreignTables.supplier}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -636,7 +663,7 @@ export default function AddOne() {
                 <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                     freeSolo
-                    options={Constants.manufacturer}
+                    options={foreignTables.manufacturer}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -786,7 +813,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.positionInReference}
+                  options={foreignTables.positionInReference}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -802,7 +829,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.fiveModification}
+                  options={foreignTables.fiveModification}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -818,7 +845,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.threeModification}
+                  options={foreignTables.threeModification}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -841,7 +868,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.freezer}
+                  options={foreignTables.freezer}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -858,7 +885,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.drawer}
+                  options={foreignTables.drawer}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -875,7 +902,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.box}
+                  options={foreignTables.box}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -992,7 +1019,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.positionInReference}
+                  options={foreignTables.positionInReference}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -1008,7 +1035,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.fiveModification}
+                  options={foreignTables.fiveModification}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -1024,7 +1051,7 @@ export default function AddOne() {
 
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
-                  options={Constants.threeModification}
+                  options={foreignTables.threeModification}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -1047,7 +1074,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.freezer}
+                  options={foreignTables.freezer}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -1064,7 +1091,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.drawer}
+                  options={foreignTables.drawer}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -1081,7 +1108,7 @@ export default function AddOne() {
               <Grid item xs={xsWidth} sm={smWidth}>
                 <Autocomplete
                   freeSolo
-                  options={Constants.box}
+                  options={foreignTables.box}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -1126,4 +1153,4 @@ export default function AddOne() {
       </Paper>
     </div>
   );
-}
+}}

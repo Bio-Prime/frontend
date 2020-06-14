@@ -1,12 +1,10 @@
-export default {
-  orientations: ["Forward", "Reverse"],
+let foreignTablesDefaults = {
   organism: [
     "Escherichia coli TG1",
     "Escherichia coli WK6",
     "Homo sapiens",
     "Mus musculus",
     "Rattus norvegicus domestica",
-    
   ],
   humanGenomBuild: [
     "NCBI Build 34",
@@ -35,17 +33,9 @@ export default {
     "Resuspended in TRIS",
     "Resuspended in 1x TE",
     "Resuspended in 0.1 X TE",
-    
   ],
   storingT: ["Room temperature", "+4", "-20", "-80"],
-  purificationMethod: [
-    "Cartridge",
-    "Desalted",
-    "HPLC",
-    "HPLC X",
-    "PAGE",
-    
-  ],
+  purificationMethod: ["Cartridge", "Desalted", "HPLC", "HPLC X", "PAGE"],
   threeQuencher: ["MGBNFQ", "TAMRA", "QSY"],
   fiveDye: ["GFAM", "VIC", "TET", "NED", "ABY"],
   typeOfPrimer: [
@@ -68,7 +58,6 @@ export default {
     "Break Apart primer",
     "Chromosome Control primer",
   ],
-  size: ["XS", "S", "M", "L"],
   fiveModification: [
     "FAM",
     "HEX",
@@ -140,7 +129,6 @@ export default {
     "Texas Red-X",
     "Thiol",
     "None",
-    
   ],
   threeModification: [
     "Amino Linker C7",
@@ -178,7 +166,6 @@ export default {
     "TAMRA",
     "Thiol C6 SS",
     "None",
-    
   ],
   project: [],
   primerApplication: [
@@ -197,7 +184,107 @@ export default {
     "FISH",
     "ChIP",
     "Flow Cytometry",
-    
+  ],
+  amountAvailableVolume: ["µl", "number of wells"],
+  checkSpecificityBlast: ["Yes", "No"],
+  // list of designerNames must be acquired from database
+  //  designerName : [],
+  // list of project names must be acquired from database
+  //  projects : [],
+  supplier: ["Kemomed", "MikroPolo", "Omega"],
+  roles: ["ADMIN", "TECHNICIAN", "RESEARCHER", "GUEST"],
+  manufacturer: [
+    "Biocompare",
+    "BioSearch",
+    "CustomArray",
+    "Genewiz",
+    "Integrated DNA Technologies",
+    "Sigma-Aldrich",
+    "ThermoFisher Scientific",
+  ],
+  currentUser: "test",
+  // list of freezers, drawers, boxes must be acquired from database
+  freezer: [],
+  drawer: [],
+  box: [],
+};
+
+
+export default {
+  foreignTables: foreignTablesDefaults,
+  defaultPrimerData: {
+    sequence: "",
+    tm: "",
+    gcpercent: "",
+    optimalTOfAnnealing: "",
+    lengthOfAmplicone: "",
+    amountAvailablePackType: "",
+    amountAvailablePacks: "",
+    amountAvailable: "",
+    concentrationOrdered: "",
+    concentrationOrderedUnit: "",
+    typeOfPrimer: "",
+  },
+  defaultUserData: {
+    name: "",
+    username: "",
+    role: "",
+    password: "",
+    workTitle: "",
+    usernames: "s",
+  },
+  requiredOld: [
+    "name",
+    "sequence",
+    "organism",
+    "gen",
+    "positionInReference",
+    "typeOfPrimer",
+    "fiveModification",
+    "threeModification",
+    "formulation",
+    "freezer",
+    "drawer",
+    "box",
+    "primerApplication",
+  ],
+  requiredNew: [
+    "name",
+    "sequence",
+    "organism",
+    "gen",
+    "positionInReference",
+    "typeOfPrimer",
+    "fiveModification",
+    "threeModification",
+    "formulation",
+    "freezer",
+    "drawer",
+    "box",
+    "primerApplication",
+    "concentrationOrdered",
+    "amountAvailable",
+    "amountAvailablePackType",
+  ],
+  requiredOrderedToReceived: [
+    "packType",
+    "amountAvailable",
+    "freezer",
+    "drawer",
+    "box",
+    "project",
+  ],
+  requiredWanted: [
+    "name",
+    "sequence",
+    "organism",
+    "gen",
+    "positionInReference",
+    "typeOfPrimer",
+    "fiveModification",
+    "threeModification",
+    "formulation",
+    "primerApplication",
   ],
   concentrationOrderedUnit: [
     {
@@ -223,52 +310,6 @@ export default {
       label: "Plate",
     },
   ],
-  amountAvailableVolume: ["µl", "number of wells"],
-  checkSpecificityBlast: ["Yes", "No"],
-  // list of designerNames must be acquired from database
-  //  designerName : [],
-  // list of project names must be acquired from database
-  //  projects : [],
-  supplier: ["Kemomed", "MikroPolo", "Omega"],
-  roles: ["ADMIN","TECHNICIAN","RESEARCHER","GUEST"],
-  manufacturer: [
-    "Biocompare",
-    "BioSearch",
-    "CustomArray",
-    "Genewiz",
-    "Integrated DNA Technologies",
-    "Sigma-Aldrich",
-    "ThermoFisher Scientific",
-    
-  ],
-  currentUser: "test",
-  // list of freezers, drawers, boxes must be acquired from database
-  freezer: [],
-  drawer: [],
-  box: [],
-  defaultPrimerData: {
-    sequence: "",
-    tm: "",
-    gcpercent: "",
-    optimalTOfAnnealing: "",
-    lengthOfAmplicone: "",
-    amountAvailablePackType: "",
-    amountAvailablePacks: "",
-    amountAvailable: "",
-    concentrationOrdered: "",
-    concentrationOrderedUnit: "",
-    typeOfPrimer: "",
-  },
-  defaultUserData: {
-    name: "",
-    username: "",
-    role: "",
-    password: "",
-    workTitle: "",
-    usernames: "s",
-  },
-  requiredOld: ["name","sequence","organism","gen","ncbiGenId","positionInReference","typeOfPrimer","fiveModification","threeModification","formulation","freezer","drawer","box","primerApplication"],
-  requiredNew: ["name","sequence","organism","gen","ncbiGenId","positionInReference","typeOfPrimer","fiveModification","threeModification","formulation","freezer","drawer","box","primerApplication","concentrationOrdered","amountAvailable","amountAvailablePackType"],
-  requiredOrderedToReceived: ["packType","amountAvailable","freezer","drawer","box","project"],
-  requiredWanted: ["name","sequence","organism","gen","ncbiGenId","positionInReference","typeOfPrimer","fiveModification","threeModification","formulation","primerApplication"],
+  orientations: ["Forward", "Reverse"],
+  size: ["XS", "S", "M", "L"],
 };

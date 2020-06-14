@@ -7,7 +7,11 @@
 - CPU: 4 cores
 - Storage: 100Gb
 
-## Frontend application
+## Prerequisites
+
+The frontend application needs to access a running instance of the [backend application](https://github.com/Bio-Prime/backend) to work. So first make sure that you have that set up.
+
+## Frontend application installation
 
 The frontend is a React single page application being served by Apache HTTP Server.
 Everything is packaged into a docker image, so make sure you have docker installed.
