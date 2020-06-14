@@ -7,24 +7,44 @@
 - CPU: 4 cores
 - Storage: 100Gb
 
-## Prerequisites
+## Installation
 
-The frontend application needs to access a running instance of the [backend application](https://github.com/Bio-Prime/backend) to work. So first make sure that you have that set up.
+Make sure you have the latest version of Docker and Docker Compose installed.
 
-## Frontend application installation
+Then create a `docker-compose.yml` file and copy the below configuration. Change the username, password and optionally ports. 
+Do not change the name of the services.
 
-The frontend is a React single page application being served by Apache HTTP Server.
-Everything is packaged into a docker image, so make sure you have docker installed.
-
-If you are running frontend and backend on the same server we recommend installing Docker Compose and running the `docker-compose.yml` file from the BioPrime/backedn repository. Otherwise, run this command:
-
-```$xslt
-sudo docker run -d -p 80:80 bioprime/frontend:latest
+```yaml
+version: '3'
+services:
+  frontend:
+    image: "bioprime/frontend:latest"
+    ports:
+      - "80:80"
+  backend:
+    image: "bioprime/backend:latest"
+    environment:
+      - DB_USER=postgres
+      - DB_PW=postgres
+      - JDBC_URL=jdbc:postgresql://db/bioprime
+    ports:
+      - "8080:8080"
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=bioprime
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
 ```
 
-It runs the docker container `bioprime/frontend:latest` in detached mode `-d` on port 80 `-p 80:80`.
-
-To test that the frontend application is working correctly, go to <http://localhost/>
+To check if backend is running go to http://localhost:8081/healthcheck
+To check if frontend is running go to http://localhost:80/
 
 ## DEV Installation
 
