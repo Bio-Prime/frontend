@@ -137,6 +137,12 @@ export default class PrimersColumns {
           display: true,
           filter: false,
           sort: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+
+            const date = new Date(value);
+
+            return date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear();
+          }
         },
       },
       {

@@ -11,8 +11,8 @@
 
 Make sure you have the latest version of Docker and Docker Compose installed.
 
-Then create a `docker-compose.yml` file and copy the below configuration. Change the username, password and optionally ports. 
-Do not change the name of the services.
+Then create a `docker-compose.yml` file and copy the below configuration. Change the username, password.
+Do not change the name of the services or external ports.
 
 ```yaml
 version: '3'
@@ -45,6 +45,18 @@ volumes:
 
 To check if backend is running go to http://localhost:8081/healthcheck
 To check if frontend is running go to http://localhost:80/
+
+## Updating the application
+
+To update the containers run the following commands.
+
+```shell script
+sudo docker-compose stop
+sudo docker-compose rm -f
+sudo docker-compose pull
+sudo docker-compose up -d
+```
+
 
 ## DEV Installation
 
