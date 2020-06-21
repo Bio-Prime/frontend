@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, {useEffect, useRef} from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -20,6 +20,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -48,10 +49,19 @@ export default function AddTwoWanted() {
     const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
     const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
     const [date, setDate] = React.useState(Date.now().toString());
+    const [foreignTables, setForeignTables] = React.useState({ isLoaded: false });
 
     const formRef = useRef();
     const forwRef = useRef();
     const revRef = useRef();
+
+    useEffect(() => {
+        PrimersService.getAllForeignTables()
+            .then((tables) => {
+                return { ...Constants.foreignTables, ...tables, isLoaded: true };
+            })
+            .then(setForeignTables);
+    }, []);
 
     const handleChange = (event) => {
         setState({
@@ -179,765 +189,782 @@ export default function AddTwoWanted() {
     const xsWidth = 12;
     const smWidth = 4;
 
-    return (
-        <div className={classes.paperCenter}>
-            <Paper className={classes.paper}>
-                <div className={classes.paperCenter}>
-                    <Typography variant="h4" gutterBottom>
-                        Add a pair of ordered oligonucleotide primers
-                    </Typography>
-                    <DialogContentText>
-                        The fields marked with a "*" are required.
-                    </DialogContentText>
-                    <DialogContentText>
-                        Enter decimal numbers with "." and not ",".
-                    </DialogContentText>
+    if (!foreignTables.isLoaded) {
+        return (
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+                style={{ minHeight: "90vh" }}
+            >
+                <CircularProgress />
+            </Grid>
+        );
+    } else {
+        return (
+            <div className={classes.paperCenter}>
+                <Paper className={classes.paper}>
+                    <div className={classes.paperCenter}>
+                        <Typography variant="h4" gutterBottom>
+                            Add a pair of ordered oligonucleotide primers
+                        </Typography>
+                        <DialogContentText>
+                            The fields marked with a "*" are required.
+                        </DialogContentText>
+                        <DialogContentText>
+                            Enter decimal numbers with "." and not ",".
+                        </DialogContentText>
 
-                    <form
-                        ref={formRef}
-                        name="commonForm"
-                        className={classes.form}
-                        noValidate
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography gutterBottom variant="h5">
-                                    Common features
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    autoFocus
-                                    options={Constants.organism}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="organism"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="Organism"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="gen"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Gen"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="ncbiGenId"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="NCBI gen ID"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.humanGenomBuild}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="humanGenomBuild"
-                                            variant="outlined"
-                                            fullWidth
-                                            label="Human genom build"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="lengthOfAmplicone"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Length of amplicone"
-                                    value={state.lengthOfAmplicone}
-                                    onChange={handleNumbers}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <FormControl variant="outlined" className={classes.formControl}>
-                                    <InputLabel htmlFor="typeLabel">Type of primer</InputLabel>
-                                    <Select
-                                        native
-                                        value={state.typeOfPrimer}
-                                        onChange={handleType}
-                                        label="Type of primer"
-                                        inputProps={{
-                                            name: "typeOfPrimer",
-                                            id: "typeLabel",
-                                        }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        {Constants.typeOfPrimer.map((constant) => (
-                                            <option key={constant} value={constant}>
-                                                {constant}
-                                            </option>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Typography
-                                    variant="subtitle1"
-                                    align="center"
-                                    dispaly="block"
-                                    style={useStyles.verticalCenter}
-                                >
-                                    Did you chech specificity in Blast?
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <FormControl component="fieldset">
-                                    <RadioGroup
-                                        row
-                                        aria-label="checkSpecifityInBlast"
-                                        name="checkSpecifityInBlast"
-                                        defaultValue="false"
-                                    >
-                                        <FormControlLabel
-                                            value="true"
-                                            control={<Radio color="primary" />}
-                                            label="Yes"
-                                            labelPlacement="top"
-                                        />
-                                        <FormControlLabel
-                                            value="false"
-                                            control={<Radio color="primary" />}
-                                            label="No"
-                                            labelPlacement="top"
-                                        />
-                                    </RadioGroup>
-                                </FormControl>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}></Grid>
-
-                            {state.typeOfPrimer === "TaqProbe" && (
-                                <React.Fragment>
-                                    <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                        <Typography variant="h6" gutterBottom>
-                                            TaqProbe
-                                        </Typography>
-                                    </Grid>
-
-                                    <Grid item xs={xsWidth} sm={smWidth * 2}>
-                                        <TextField
-                                            name="sondaSequence"
-                                            variant="outlined"
-                                            fullWidth
-                                            label="Sonda sequence"
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={xsWidth} sm={smWidth}>
-                                        <TextField
-                                            name="assayId"
-                                            variant="outlined"
-                                            fullWidth
-                                            required
-                                            label="Assay ID"
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={xsWidth} sm={smWidth}>
-                                        <Autocomplete
-                                            options={Constants.size}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    variant="outlined"
-                                                    required
-                                                    name="size"
-                                                    fullWidth
-                                                    label="Size"
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={xsWidth} sm={smWidth}>
-                                        <Autocomplete
-                                            options={Constants.threeQuencher}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    name="threeQuencher"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    label="3' Quencher"
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-
-                                    <Grid item xs={xsWidth} sm={smWidth}>
-                                        <Autocomplete
-                                            options={Constants.fiveDye}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    name="fiveDye"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                    label="5' Dye"
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                </React.Fragment>
-                            )}
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography variant="h6" gutterBottom>
-                                    Form of ordered primer
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.formulation}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="formulation"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="Formulation"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.purificationMethod}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="purificationMethod"
-                                            variant="outlined"
-                                            fullWidth
-                                            label="Purification method"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={1} sm={1} />
-
-                            <Grid item xs={8} sm={2}>
-                                <TextField
-                                    name="concentrationOrdered"
-                                    variant="outlined"
-                                    fullWidth
-                                    required
-                                    label="Concentration"
-                                    value={state.concentrationOrdered}
-                                    onChange={handleNumbers}
-                                />
-                            </Grid>
-                            <Grid item xs={4} sm={2}>
-                                <TextField
-                                    name="concentrationOrderedUnit"
-                                    variant="outlined"
-                                    fullWidth
-                                    select
-                                    label="Unit"
-                                    value={state.concentrationOrderedUnit}
-                                    onChange={handleChange}
-                                >
-                                    {Constants.concentrationOrderedUnit.map((options) => (
-                                        <MenuItem key={options.value} value={options.value}>
-                                            {options.label}
-                                        </MenuItem>
-                                    ))}
-                                    />
-                                </TextField>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    freeSolo
-                                    options={Constants.primerApplication}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            variant="outlined"
-                                            required
-                                            name="primerApplication"
-                                            fullWidth
-                                            label="Application"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="user"
-                                    variant="outlined"
-                                    value={Constants.currentUser}
-                                    fullWidth
-                                    label="User"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="applicationComment"
-                                    label="Application comment"
-                                    multiline
-                                    fullWidth
-                                    rows={2}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography variant="h6" gutterBottom>
-                                    Designer information
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="designerName"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Name & surname"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="designerPublication"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Publication"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="designerPublication"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Link to database"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography variant="h6" gutterBottom>
-                                    Supplier information
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    freeSolo
-                                    options={Constants.supplier}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="supplier"
-                                            variant="outlined"
-                                            fullWidth
-                                            label="Supplier"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    freeSolo
-                                    options={Constants.manufacturer}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="manufacturer"
-                                            variant="outlined"
-                                            fullWidth
-                                            label="Manufacturer"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                    <DatePicker
-                                        name="date"
-                                        variant="inline"
-                                        format="dd/MM/yyyy"
-                                        label="Date of receipt"
-                                        onAccept={setDate}
-                                    />
-                                </MuiPickersUtilsProvider>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography variant="h6" gutterBottom>
-                                    Additional information
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="document"
-                                    label="Documentation"
-                                    multiline
-                                    fullWidth
-                                    rows={2}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="comment"
-                                    label="Comment"
-                                    multiline
-                                    fullWidth
-                                    rows={2}
-                                    variant="outlined"
-                                />
-                            </Grid>
-
-                        </Grid>
-                    </form>
-
-                    <p></p>
-                    <p></p>
-                    <form
-                        ref={forwRef}
-                        name="forwardForm"
-                        className={classes.form}
-                        noValidate
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography gutterBottom variant="h5">
-                                    Forward primer
-                                </Typography>
-                            </Grid>
-
-                            <Divider variant="middle" />
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="name"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Name of primer"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 2}>
-                                <TextField
-                                    name="sequence"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Sequence"
-                                    value={forwState.sequence}
-                                    onChange={handleLettersForw}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Length"
-                                    value={forwState.sequence ? forwState.sequence.length : 0}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="tm"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Tm (°C)"
-                                    value={forwState.tm}
-                                    onChange={handleNumbersForw}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="gcpercent"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="GC (%)"
-                                    value={forwState.gcpercent}
-                                    onChange={handleNumbersForw}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="optimalTOfAnnealing"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Optimal T of annealing (°C)"
-                                    value={forwState.optimalTOfAnnealing}
-                                    onChange={handleNumbersForw}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.positionInReference}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="positionInReference"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="Position in the reference"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.fiveModification}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="fiveModification"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="5' Modification"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.threeModification}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="threeModification"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="3' Modification"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography variant="h6" gutterBottom>
-                                    Additional information
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="comment"
-                                    label="Comment"
-                                    multiline
-                                    fullWidth
-                                    rows={2}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                        </Grid>
-                    </form>
-                    <p></p>
-                    <p></p>
-                    <form
-                        ref={revRef}
-                        name="reverseForm"
-                        className={classes.form}
-                        noValidate
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography gutterBottom variant="h5">
-                                    Reverse primer
-                                </Typography>
-                            </Grid>
-
-                            <Divider variant="middle" />
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="name"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Name of primer"
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 2}>
-                                <TextField
-                                    name="sequence"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    label="Sequence"
-                                    value={revState.sequence}
-                                    onChange={handleLettersRev}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Length"
-                                    value={revState.sequence ? revState.sequence.length : 0}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="tm"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Tm (°C)"
-                                    value={revState.tm}
-                                    onChange={handleNumbersRev}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="gcpercent"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="GC (%)"
-                                    value={revState.gcpercent}
-                                    onChange={handleNumbersRev}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <TextField
-                                    name="optimalTOfAnnealing"
-                                    variant="outlined"
-                                    fullWidth
-                                    label="Optimal T of annealing (°C)"
-                                    value={revState.optimalTOfAnnealing}
-                                    onChange={handleNumbersRev}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.positionInReference}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="positionInReference"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="Position in the reference"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.fiveModification}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="fiveModification"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="5' Modification"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth}>
-                                <Autocomplete
-                                    options={Constants.threeModification}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            name="threeModification"
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            label="3' Modification"
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <Typography variant="h6" gutterBottom>
-                                    Additional information
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={xsWidth} sm={smWidth * 3}>
-                                <TextField
-                                    name="comment"
-                                    label="Comment"
-                                    multiline
-                                    fullWidth
-                                    rows={2}
-                                    variant="outlined"
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={submit}
+                        <form
+                            ref={formRef}
+                            name="commonForm"
+                            className={classes.form}
+                            noValidate
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                            }}
                         >
-                            Submit
-                        </Button>
-                    </form>
-                </div>
-            </Paper>
-        </div>
-    );
+                            <Grid container spacing={2}>
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography gutterBottom variant="h5">
+                                        Common features
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        freeSolo
+                                        autoFocus
+                                        options={foreignTables.organism}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="organism"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Organism"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="gen"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Gen"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="ncbiGenId"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="NCBI gen ID"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.humanGenomBuild}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="humanGenomBuild"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Human genom build"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="lengthOfAmplicone"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Length of amplicone"
+                                        value={state.lengthOfAmplicone}
+                                        onChange={handleNumbers}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <FormControl variant="outlined" className={classes.formControl}>
+                                        <InputLabel htmlFor="typeLabel">Type of primer</InputLabel>
+                                        <Select
+                                            native
+                                            value={state.typeOfPrimer}
+                                            onChange={handleType}
+                                            label="Type of primer"
+                                            inputProps={{
+                                                name: "typeOfPrimer",
+                                                id: "typeLabel",
+                                            }}
+                                        >
+                                            <option aria-label="None" value=""/>
+                                            {foreignTables.typeOfPrimer.map((constant) => (
+                                                <option key={constant} value={constant}>
+                                                    {constant}
+                                                </option>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Typography
+                                        variant="subtitle1"
+                                        align="center"
+                                        dispaly="block"
+                                        style={useStyles.verticalCenter}
+                                    >
+                                        Did you check specificity in Blast?
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <FormControl component="fieldset">
+                                        <RadioGroup
+                                            row
+                                            aria-label="checkSpecifityInBlast"
+                                            name="checkSpecifityInBlast"
+                                            defaultValue="false"
+                                        >
+                                            <FormControlLabel
+                                                value="true"
+                                                control={<Radio color="primary"/>}
+                                                label="Yes"
+                                                labelPlacement="top"
+                                            />
+                                            <FormControlLabel
+                                                value="false"
+                                                control={<Radio color="primary"/>}
+                                                label="No"
+                                                labelPlacement="top"
+                                            />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}></Grid>
+
+                                {state.typeOfPrimer === "TaqProbe" && (
+                                    <React.Fragment>
+                                        <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                            <Typography variant="h6" gutterBottom>
+                                                TaqProbe
+                                            </Typography>
+                                        </Grid>
+
+                                        <Grid item xs={xsWidth} sm={smWidth * 2}>
+                                            <TextField
+                                                name="sondaSequence"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Sonda sequence"
+                                            />
+                                        </Grid>
+
+                                        <Grid item xs={xsWidth} sm={smWidth}>
+                                            <TextField
+                                                name="assayId"
+                                                variant="outlined"
+                                                fullWidth
+                                                required
+                                                label="Assay ID"
+                                            />
+                                        </Grid>
+
+                                        <Grid item xs={xsWidth} sm={smWidth}>
+                                            <Autocomplete
+                                                options={Constants.size}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        variant="outlined"
+                                                        required
+                                                        name="size"
+                                                        fullWidth
+                                                        label="Size"
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+
+                                        <Grid item xs={xsWidth} sm={smWidth}>
+                                            <Autocomplete
+                                                options={foreignTables.threeQuencher}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        name="threeQuencher"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        label="3' Quencher"
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+
+                                        <Grid item xs={xsWidth} sm={smWidth}>
+                                            <Autocomplete
+                                                options={foreignTables.fiveDye}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        name="fiveDye"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        label="5' Dye"
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+                                    </React.Fragment>
+                                )}
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Form of ordered primer
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.formulation}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="formulation"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Formulation"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.purificationMethod}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="purificationMethod"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Purification method"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={1} sm={1}/>
+
+                                <Grid item xs={8} sm={2}>
+                                    <TextField
+                                        name="concentrationOrdered"
+                                        variant="outlined"
+                                        fullWidth
+                                        required
+                                        label="Concentration"
+                                        value={state.concentrationOrdered}
+                                        onChange={handleNumbers}
+                                    />
+                                </Grid>
+                                <Grid item xs={4} sm={2}>
+                                    <TextField
+                                        name="concentrationOrderedUnit"
+                                        variant="outlined"
+                                        fullWidth
+                                        select
+                                        label="Unit"
+                                        value={state.concentrationOrderedUnit}
+                                        onChange={handleChange}
+                                    >
+                                        {Constants.concentrationOrderedUnit.map((options) => (
+                                            <MenuItem key={options.value} value={options.value}>
+                                                {options.label}
+                                            </MenuItem>
+                                        ))}
+                                        />
+                                    </TextField>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        freeSolo
+                                        options={foreignTables.primerApplication}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                variant="outlined"
+                                                required
+                                                name="primerApplication"
+                                                fullWidth
+                                                label="Application"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    {/* user is added automatically in backend so no reason to have the field,
+                                          leaving it for now, if we'll have to add it later */}
+                                    {/* <TextField
+                                        variant="outlined"
+                                        value={foreignTables.currentUser}
+                                        fullWidth
+                                        label="User"
+                                      /> */}
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="applicationComment"
+                                        label="Application comment"
+                                        multiline
+                                        fullWidth
+                                        rows={2}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Designer information
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="designerName"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Name & surname"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="designerPublication"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Publication"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="designerPublication"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Link to database"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Supplier information
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        freeSolo
+                                        options={foreignTables.supplier}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="supplier"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Supplier"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        freeSolo
+                                        options={foreignTables.manufacturer}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="manufacturer"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Manufacturer"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DatePicker
+                                            name="date"
+                                            variant="inline"
+                                            format="dd/MM/yyyy"
+                                            label="Date of receipt"
+                                            onAccept={setDate}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Additional information
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="document"
+                                        label="Documentation"
+                                        multiline
+                                        fullWidth
+                                        rows={2}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="comment"
+                                        label="Comment"
+                                        multiline
+                                        fullWidth
+                                        rows={2}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+
+                            </Grid>
+                        </form>
+
+                        <p></p>
+                        <p></p>
+                        <form
+                            ref={forwRef}
+                            name="forwardForm"
+                            className={classes.form}
+                            noValidate
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                            }}
+                        >
+                            <Grid container spacing={2}>
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography gutterBottom variant="h5">
+                                        Forward primer
+                                    </Typography>
+                                </Grid>
+
+                                <Divider variant="middle"/>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="name"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Name of primer"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 2}>
+                                    <TextField
+                                        name="sequence"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Sequence"
+                                        value={forwState.sequence}
+                                        onChange={handleLettersForw}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Length"
+                                        value={forwState.sequence ? forwState.sequence.length : 0}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="tm"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Tm (°C)"
+                                        value={forwState.tm}
+                                        onChange={handleNumbersForw}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="gcpercent"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="GC (%)"
+                                        value={forwState.gcpercent}
+                                        onChange={handleNumbersForw}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="optimalTOfAnnealing"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Optimal T of annealing (°C)"
+                                        value={forwState.optimalTOfAnnealing}
+                                        onChange={handleNumbersForw}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.positionInReference}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="positionInReference"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Position in the reference"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.fiveModification}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="fiveModification"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="5' Modification"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.threeModification}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="threeModification"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="3' Modification"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Additional information
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="comment"
+                                        label="Comment"
+                                        multiline
+                                        fullWidth
+                                        rows={2}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </form>
+                        <p></p>
+                        <p></p>
+                        <form
+                            ref={revRef}
+                            name="reverseForm"
+                            className={classes.form}
+                            noValidate
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                            }}
+                        >
+                            <Grid container spacing={2}>
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography gutterBottom variant="h5">
+                                        Reverse primer
+                                    </Typography>
+                                </Grid>
+
+                                <Divider variant="middle"/>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="name"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Name of primer"
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 2}>
+                                    <TextField
+                                        name="sequence"
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Sequence"
+                                        value={revState.sequence}
+                                        onChange={handleLettersRev}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Length"
+                                        value={revState.sequence ? revState.sequence.length : 0}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="tm"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Tm (°C)"
+                                        value={revState.tm}
+                                        onChange={handleNumbersRev}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="gcpercent"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="GC (%)"
+                                        value={revState.gcpercent}
+                                        onChange={handleNumbersRev}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <TextField
+                                        name="optimalTOfAnnealing"
+                                        variant="outlined"
+                                        fullWidth
+                                        label="Optimal T of annealing (°C)"
+                                        value={revState.optimalTOfAnnealing}
+                                        onChange={handleNumbersRev}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.positionInReference}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="positionInReference"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Position in the reference"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.fiveModification}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="fiveModification"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="5' Modification"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={foreignTables.threeModification}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="threeModification"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="3' Modification"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <Typography variant="h6" gutterBottom>
+                                        Additional information
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth * 3}>
+                                    <TextField
+                                        name="comment"
+                                        label="Comment"
+                                        multiline
+                                        fullWidth
+                                        rows={2}
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={submit}
+                            >
+                                Submit
+                            </Button>
+                        </form>
+                    </div>
+                </Paper>
+            </div>
+        );
+    }
 }
