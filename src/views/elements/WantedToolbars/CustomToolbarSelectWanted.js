@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import {ArrowUpward, Delete} from "@material-ui/icons";
 import OrdersColumns from "../OrdersColumns";
 import WantedMoveDialog from "./dialogs/WantedMoveDialog";
+import PrimerService from "../../../services/PrimersService";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -55,8 +56,17 @@ function CustomToolbarSelectWanted(props) {
     };
 
     const handleClickDelete = () => {
-        console.log("Delete primer with ids: ");
-        console.log(selectedPrimersArray);
+
+        selectedPrimersArray.forEach(item => {
+            console.log(item.id);
+            PrimerService.delete(item.id).then((data) => {
+                if(data){
+                    props.afterDelete();
+                } else {
+                    alert("Error deleting primer!");
+                }
+            });
+        });
     };
 
     const { classes } = props;

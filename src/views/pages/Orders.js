@@ -17,6 +17,8 @@ import ResponsiveContainer from "recharts/lib/component/ResponsiveContainer";
 import {Bar, BarChart, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import PrimersService from "../../services/PrimersService";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import Alert from "@material-ui/lab/Alert/Alert";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -86,6 +88,42 @@ export default function Orders() {
 
     const theme = useTheme();
 
+    // success alert
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+
+    const reloadDataAfterDelete = () => {
+        PrimersService.getAllOrdered().then(setDataOrdered);
+        PrimersService.getAllWanted().then(setDataWanted);
+
+        setSuccess(true);
+        setOpen(true);
+    };
+
+    const showAlert = () => {
+        if (success) {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+                    Successfully deleted!
+                </Alert>
+            )
+        } else {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
+                    There was an error deleting primer. Primer was not deleted!
+                </Alert>
+            )
+        }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     if (dataOrdered !== null && dataWanted !== null) {
 
         const dataOrderedBy = formatChartData(dataOrdered, "user");
@@ -107,6 +145,7 @@ export default function Orders() {
                     displayData={displayData}
                     setSelectedRows={setSelectedRows}
                     allData={dataOrdered}
+                    afterDelete={reloadDataAfterDelete}
                 />
             )
         };
@@ -124,11 +163,16 @@ export default function Orders() {
                     selectedRows={selectedRows}
                     displayData={displayData}
                     setSelectedRows={setSelectedRows}
+                    afterDelete={reloadDataAfterDelete}
                 />
             )
         };
 
         return (
+            <div>
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                    {showAlert()}
+                </Snackbar>
             <Grid container spacing={3}>
                 {/* Recent Orders */}
                 <Grid item xs={12} md={6} lg={6}>
@@ -185,6 +229,7 @@ export default function Orders() {
                                options={optionsWanted}/>
                 </Grid>
             </Grid>
+            </div>
         );
     } else {
         return (
