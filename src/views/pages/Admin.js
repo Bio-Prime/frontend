@@ -11,6 +11,9 @@ import CustomToolbarAdmin from "../elements/CustomToolbarAdmin";
 import CustomToolbarSelectAdmin from "../elements/CustomToolbarSelectAdmin";
 import UserService from "../../services/UserService";
 import UsersChart from "../../components/UsersChart";
+import PrimersService from "../../services/PrimersService";
+import Alert from "@material-ui/lab/Alert/Alert";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,6 +32,43 @@ export default function Admin() {
 
     const columns = UsersColumns.getUsersColumns();
 
+    // success alert
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+
+    const reloadDataAfterDelete = () => {
+        UserService.getAll().then((data) => {
+            setData(data);
+        });
+
+        setSuccess(true);
+        setOpen(true);
+    };
+
+    const showAlert = () => {
+        if (success) {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+                    Successfully deleted!
+                </Alert>
+            )
+        } else {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
+                    There was an error deleting primer. Primer was not deleted!
+                </Alert>
+            )
+        }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     const options = {
         filterType: "checkbox",
         downloadOptions: {
@@ -43,6 +83,7 @@ export default function Admin() {
                 displayData={displayData}
                 setSelectedRows={setSelectedRows}
                 allData={data}
+                afterDelete={reloadDataAfterDelete}
             />
         ),
     };
@@ -59,6 +100,10 @@ export default function Admin() {
 
     if (data != null) {
         return (
+            <div>
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                    {showAlert()}
+                </Snackbar>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8} lg={9}>
                     <Paper className={fixedHeightPaper}>
@@ -79,6 +124,7 @@ export default function Admin() {
                     />
                 </Grid>
             </Grid>
+            </div>
         );
     } else {
         return (
