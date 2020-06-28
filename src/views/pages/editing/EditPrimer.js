@@ -20,6 +20,7 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import { useHistory } from 'react-router-dom';
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import AuthService from "../../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -162,7 +163,11 @@ export default function EditPrimer(props) {
         }
     };
 
-    if (!foreignTables.isLoaded) {
+    if (AuthService.getUserRole() === 'GUEST') {
+        return (
+            <Redirect to='/dashboard' />
+            )
+    } else if (!foreignTables.isLoaded) {
         return (
             <Grid
                 container

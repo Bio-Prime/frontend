@@ -7,6 +7,7 @@ import PrimersColumns from "./PrimersColumns";
 import {Delete} from "@material-ui/icons";
 import { useHistory } from 'react-router-dom';
 import PrimerService from "./../../services/PrimersService";
+import AuthService from "../../services/AuthService";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -77,11 +78,14 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            <Tooltip title={"Delete"}>
-                <IconButton className={classes.iconButton} onClick={handleClickDelete}>
-                    <Delete className={classes.icon} />
-                </IconButton>
-            </Tooltip>
+            {AuthService.getUserRole() !== 'GUEST'
+                ? <Tooltip title={"Delete"}>
+                    <IconButton className={classes.iconButton} onClick={handleClickDelete}>
+                        <Delete className={classes.icon}/>
+                    </IconButton>
+                </Tooltip>
+                : <div></div>
+            }
         </div>
     );
 }

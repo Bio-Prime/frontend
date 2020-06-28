@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import AddIcon from "@material-ui/icons/Add";
 import OrderedAddDialog from "./dialogs/OrderedAddDialog";
+import AuthService from "../../../services/AuthService";
 
 export default function CustomToolbarOrdered() {
 
@@ -14,12 +15,15 @@ export default function CustomToolbarOrdered() {
 
     return (
         <React.Fragment>
-            <Tooltip title={"Add"}>
-                <IconButton onClick={handleClickOpen}>
-                    <AddIcon />
-                </IconButton>
-            </Tooltip>
-            <OrderedAddDialog open={open} setOpen={setOpen}/>
+            {AuthService.getUserRole() !== 'GUEST'
+                ? <Tooltip title={"Add"}>
+                    <IconButton onClick={handleClickOpen}>
+                        <AddIcon/>
+                    </IconButton>
+                </Tooltip>
+                : <div></div>
+            }
+            <OrderedAddDialog open = {open} setOpen={setOpen}/>
         </React.Fragment>
     );
 }

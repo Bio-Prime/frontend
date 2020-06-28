@@ -8,6 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import HistoryService from "../../services/HistoryService";
 import Pagination from "@material-ui/lab/Pagination";
+import AuthService from "../../services/AuthService";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -54,7 +56,11 @@ export default function Orders() {
         setPaginationData(data.slice((value-1) * 5, value * 5));
     };
 
-    if (paginationData != null) {
+    if (AuthService.getUserRole() === 'GUEST') {
+        return (
+            <Redirect to='/dashboard' />
+        )
+    } else if (paginationData != null) {
         return (
             <div className={classes.paperCenter}>
                 <Grid container alignItems={"center"} style={{width: '75%'}} spacing={3}>

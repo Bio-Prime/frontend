@@ -19,6 +19,7 @@ import PrimersService from "../../services/PrimersService";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import AuthService from "../../services/AuthService";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -131,42 +132,69 @@ export default function Orders() {
 
         const columns = OrdersColumns.getOrdersColumns();
 
-        const optionsOrdered = {
-            filterType: 'checkbox',
-            download: false,
-            print: false,
-            selectableRows: "single",
-            rowsPerPage: 5,
-            rowsPerPageOptions: [5, 10, 15],
-            customToolbar: () => <CustomToolbarOrdered />,
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelectOrdered
-                    selectedRows={selectedRows}
-                    displayData={displayData}
-                    setSelectedRows={setSelectedRows}
-                    allData={dataOrdered}
-                    afterDelete={reloadDataAfterDelete}
-                />
-            )
-        };
+        let optionsOrdered = {};
+        let optionsWanted = {};
 
-        const optionsWanted = {
-            filterType: 'checkbox',
-            download: false,
-            print: false,
-            selectableRows: "multiple",
-            rowsPerPage: 5,
-            rowsPerPageOptions: [5, 10, 15],
-            customToolbar: () => <CustomToolbarWanted />,
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelectWanted
-                    selectedRows={selectedRows}
-                    displayData={displayData}
-                    setSelectedRows={setSelectedRows}
-                    afterDelete={reloadDataAfterDelete}
-                />
-            )
-        };
+        if (AuthService.getUserRole() !== 'GUEST') {
+            optionsOrdered = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "single",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarOrdered/>,
+                customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+                    <CustomToolbarSelectOrdered
+                        selectedRows={selectedRows}
+                        displayData={displayData}
+                        setSelectedRows={setSelectedRows}
+                        allData={dataOrdered}
+                        afterDelete={reloadDataAfterDelete}
+                    />
+                )
+            };
+        } else {
+            optionsOrdered = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "none",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarOrdered/>,
+            };
+        }
+
+        if (AuthService.getUserRole() !== 'GUEST') {
+            optionsWanted = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "multiple",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarWanted/>,
+                customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+                    <CustomToolbarSelectWanted
+                        selectedRows={selectedRows}
+                        displayData={displayData}
+                        setSelectedRows={setSelectedRows}
+                        afterDelete={reloadDataAfterDelete}
+                    />
+                )
+            };
+        } else {
+            optionsWanted = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "none",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarWanted/>,
+            };
+        }
 
         return (
             <div>
