@@ -11,9 +11,10 @@ import CustomToolbarAdmin from "../elements/CustomToolbarAdmin";
 import CustomToolbarSelectAdmin from "../elements/CustomToolbarSelectAdmin";
 import UserService from "../../services/UserService";
 import UsersChart from "../../components/UsersChart";
-import PrimersService from "../../services/PrimersService";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import AuthService from "../../services/AuthService";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -98,7 +99,12 @@ export default function Admin() {
         });
     }, []);
 
-    if (data != null) {
+    if (AuthService.getUserRole() !== 'ADMIN') {
+        return (
+            <Redirect to="/dashboard" />
+        )
+    }
+    else if (data != null) {
         return (
             <div>
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>

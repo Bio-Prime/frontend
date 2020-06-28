@@ -162,10 +162,11 @@ export default function DashboardLayout({onClickDark}) {
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>
-                <Divider />
                 <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
+                {AuthService.getUserRole() === 'ADMIN'
+                    ? <div><Divider /><List>{secondaryListItems}</List></div>
+                    : <div></div>
+                }
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
