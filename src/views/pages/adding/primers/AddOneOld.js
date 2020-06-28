@@ -14,7 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
-import { useHistory } from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 import PrimersService from "../../../../services/PrimersService";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
