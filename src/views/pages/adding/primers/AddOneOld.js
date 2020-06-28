@@ -19,6 +19,7 @@ import PrimersService from "../../../../services/PrimersService";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import AuthService from "../../../../services/AuthService";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -106,7 +107,9 @@ export default function AddOne() {
   const xsWidth = 12;
   const smWidth = 4;
 
-  if (!foreignTables.isLoaded) {
+  if (AuthService.getUserRole() !== 'ADMIN' && AuthService.getUserRole() !== 'RESEARCHER') {
+    return <Redirect to='/dashboard' />
+  } else if (!foreignTables.isLoaded) {
     return (
       <Grid
         container
