@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import UserService from "../../../../services/UserService";
-import { useHistory } from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -53,7 +53,7 @@ export default function AddUser() {
         usernames: usernames,
       })
     );
-  }, [state]);
+  }, []);
 
   const handleChange = (event) => {
     setState({
@@ -90,7 +90,11 @@ export default function AddUser() {
     });
   };
 
-  return (
+  if (AuthService.getUserRole() !== 'ADMIN') {
+    return (
+        <Redirect to='/dashboard' />
+    )
+  } else return (
     <Paper className={classes.paper}>
       <Dialog
         open={open}

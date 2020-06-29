@@ -312,4 +312,5 @@ export default {
   ],
   orientations: ["Forward", "Reverse"],
   size: ["XS", "S", "M", "L"],
+  roles: ["ADMIN", "TECHNICIAN", "RESEARCHER", "GUEST"],
 };

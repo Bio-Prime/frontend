@@ -14,13 +14,14 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
-import { useHistory } from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import PrimersService from "../../../../services/PrimersService";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import AuthService from "../../../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -170,7 +171,9 @@ export default function AddOne() {
   const xsWidth = 12;
   const smWidth = 4;
 
-  if (!foreignTables.isLoaded) {
+  if (AuthService.getUserRole() !== 'ADMIN' && AuthService.getUserRole() !== 'RESEARCHER') {
+    return <Redirect to='/dashboard' />
+  } else if (!foreignTables.isLoaded) {
     return (
       <Grid
         container

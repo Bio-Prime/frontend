@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems, mainListItemsGUEST, secondaryListItems } from './listItems';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import routes from '../views/index'
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
@@ -162,10 +162,14 @@ export default function DashboardLayout({onClickDark}) {
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>
-                <Divider />
-                <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
+                {AuthService.getUserRole() === 'GUEST'
+                    ? <List>{mainListItemsGUEST}</List>
+                    : <List>{mainListItems}</List>
+                }
+                {AuthService.getUserRole() === 'ADMIN'
+                    ? <div><Divider /><List>{secondaryListItems}</List></div>
+                    : <div></div>
+                }
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />

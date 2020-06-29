@@ -145,11 +145,16 @@ export default function PrimerDetails(props) {
         return <Redirect to='/' />
     } else if (data !== null) {
 
+        let primerColumns = PrimersColumns.getPrimersColumns();
+
         const options = {
             filterType: 'checkbox',
             downloadOptions: {
                 filename: "primer.csv",
                 separator: ",",
+            },
+            onDownload: () => {
+                return formatDownloadPrimerData();
             },
             selectableRows: "none",
             pagination: false,
@@ -161,7 +166,31 @@ export default function PrimerDetails(props) {
             customToolbar: () => <CustomToolbarEdit data={data}/>,
         };
 
-        let primerColumns = PrimersColumns.getPrimersColumns();
+        const formatDownloadPrimerData = () => {
+
+            let downloadData = [];
+            let downloadDataString = "\"";
+
+            primerColumns.forEach((item, index) => {
+                downloadData.push(item.label);
+            });
+
+            downloadDataString += downloadData.join("\",\"");
+            downloadDataString += "\"\n\"";
+
+            downloadData = [];
+
+            primerColumns.forEach((item, index) => {
+                let dataName = data[item.name];
+                downloadData.push(dataName);
+            });
+
+            downloadDataString += downloadData.join("\",\"");
+
+            return downloadDataString;
+        };
+
+
         const formatSelectedPrimerData = () => {
 
             let tableData = [];

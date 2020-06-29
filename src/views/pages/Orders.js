@@ -17,6 +17,9 @@ import ResponsiveContainer from "recharts/lib/component/ResponsiveContainer";
 import {Bar, BarChart, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import PrimersService from "../../services/PrimersService";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import Alert from "@material-ui/lab/Alert/Alert";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import AuthService from "../../services/AuthService";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -86,6 +89,42 @@ export default function Orders() {
 
     const theme = useTheme();
 
+    // success alert
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+
+    const reloadDataAfterDelete = () => {
+        PrimersService.getAllOrdered().then(setDataOrdered);
+        PrimersService.getAllWanted().then(setDataWanted);
+
+        setSuccess(true);
+        setOpen(true);
+    };
+
+    const showAlert = () => {
+        if (success) {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+                    Successfully deleted!
+                </Alert>
+            )
+        } else {
+            return (
+                <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
+                    There was an error deleting primer. Primer was not deleted!
+                </Alert>
+            )
+        }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     if (dataOrdered !== null && dataWanted !== null) {
 
         const dataOrderedBy = formatChartData(dataOrdered, "user");
@@ -93,42 +132,75 @@ export default function Orders() {
 
         const columns = OrdersColumns.getOrdersColumns();
 
-        const optionsOrdered = {
-            filterType: 'checkbox',
-            download: false,
-            print: false,
-            selectableRows: "single",
-            rowsPerPage: 5,
-            rowsPerPageOptions: [5, 10, 15],
-            customToolbar: () => <CustomToolbarOrdered />,
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelectOrdered
-                    selectedRows={selectedRows}
-                    displayData={displayData}
-                    setSelectedRows={setSelectedRows}
-                    allData={dataOrdered}
-                />
-            )
-        };
+        let optionsOrdered = {};
+        let optionsWanted = {};
 
-        const optionsWanted = {
-            filterType: 'checkbox',
-            download: false,
-            print: false,
-            selectableRows: "multiple",
-            rowsPerPage: 5,
-            rowsPerPageOptions: [5, 10, 15],
-            customToolbar: () => <CustomToolbarWanted />,
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelectWanted
-                    selectedRows={selectedRows}
-                    displayData={displayData}
-                    setSelectedRows={setSelectedRows}
-                />
-            )
-        };
+        if (AuthService.getUserRole() !== 'GUEST') {
+            optionsOrdered = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "single",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarOrdered/>,
+                customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+                    <CustomToolbarSelectOrdered
+                        selectedRows={selectedRows}
+                        displayData={displayData}
+                        setSelectedRows={setSelectedRows}
+                        allData={dataOrdered}
+                        afterDelete={reloadDataAfterDelete}
+                    />
+                )
+            };
+        } else {
+            optionsOrdered = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "none",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarOrdered/>,
+            };
+        }
+
+        if (AuthService.getUserRole() !== 'GUEST') {
+            optionsWanted = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "multiple",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarWanted/>,
+                customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+                    <CustomToolbarSelectWanted
+                        selectedRows={selectedRows}
+                        displayData={displayData}
+                        setSelectedRows={setSelectedRows}
+                        afterDelete={reloadDataAfterDelete}
+                    />
+                )
+            };
+        } else {
+            optionsWanted = {
+                filterType: 'checkbox',
+                download: false,
+                print: false,
+                selectableRows: "none",
+                rowsPerPage: 5,
+                rowsPerPageOptions: [5, 10, 15],
+                customToolbar: () => <CustomToolbarWanted/>,
+            };
+        }
 
         return (
+            <div>
+                <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                    {showAlert()}
+                </Snackbar>
             <Grid container spacing={3}>
                 {/* Recent Orders */}
                 <Grid item xs={12} md={6} lg={6}>
@@ -185,6 +257,7 @@ export default function Orders() {
                                options={optionsWanted}/>
                 </Grid>
             </Grid>
+            </div>
         );
     } else {
         return (

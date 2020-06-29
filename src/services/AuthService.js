@@ -5,17 +5,28 @@ function handleErrors(response) {
   if (!response.ok) {
     if(response.status === 401){
       localStorage.removeItem("bioprime-token");
+      window.location.reload();
     }
     throw Error(response.statusText);
   }
   return response;
 }
 
+function parseJwt(token) {
+  if (!token) { return; }
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  return JSON.parse(window.atob(base64));
+}
 
 export default {
   isAuthenticated() {
     let token = localStorage.getItem("bioprime-token");
     return token != null;
+  },
+
+  getUserRole() {
+    return parseJwt(localStorage.getItem("bioprime-token")).role;
   },
 
   login(data, onSuccess, onFail) {

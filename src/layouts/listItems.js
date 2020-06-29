@@ -30,6 +30,23 @@ export const mainListItems = (
     </div>
 );
 
+export const mainListItemsGUEST = (
+    <div>
+        <ListItem button component={Link} to="/dashboard">
+            <ListItemIcon>
+                <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+        </ListItem>
+        <ListItem button component={Link} to="/orders">
+            <ListItemIcon>
+                <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Orders" />
+        </ListItem>
+    </div>
+);
+
 export const secondaryListItems = (
     <div>
         <ListItem button component={Link} to="/admin">

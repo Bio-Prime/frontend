@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,6 +13,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
 import MenuItem from "@material-ui/core/MenuItem";
 import PrimersService from "../../../../services/PrimersService";
 import {useHistory} from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,8 +28,15 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
     const history = useHistory();
 
     const [state, setState] = React.useState(Constants.defaultPrimerData);
+    const [foreignTables, setForeignTables] = React.useState({isLoaded:false});
 
     const formRef = useRef();
+
+    useEffect(() => {
+        PrimersService.getAllForeignTables().then((tables) => {
+            return {...Constants.foreignTables, ...tables, isLoaded:true };
+        }).then(setForeignTables);
+    }, []);
 
     const handleChange = (event) => {
         setState({
@@ -72,6 +80,20 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
 
     };
 
+    if (open === true && !foreignTables.isLoaded) {
+        return (
+            <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+                style={{ minHeight: "90vh" }}
+            >
+                <CircularProgress />
+            </Grid>
+        );
+    } else {
     return (
         <Dialog fullWidth={true} maxWidth={"sm"} open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">Move to Primers</DialogTitle>
@@ -146,7 +168,7 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
 
                             <Grid item xs={12} sm={12}>
                                 <Autocomplete
-                                    options={Constants.storingT}
+                                    options={foreignTables.storingT}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -169,7 +191,7 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
                             <Grid item xs={12} sm={4}>
                                 <Autocomplete
                                     freeSolo
-                                    options={Constants.freezer}
+                                    options={foreignTables.freezer}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -186,7 +208,7 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
                             <Grid item xs={12} sm={4}>
                                 <Autocomplete
                                     freeSolo
-                                    options={Constants.drawer}
+                                    options={foreignTables.drawer}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -203,7 +225,7 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
                             <Grid item xs={12} sm={4}>
                                 <Autocomplete
                                     freeSolo
-                                    options={Constants.box}
+                                    options={foreignTables.box}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -227,7 +249,7 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
                             <Grid item xs={12} sm={12}>
                                 <Autocomplete
                                     freeSolo
-                                    options={Constants.project}
+                                    options={foreignTables.project}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
@@ -243,13 +265,14 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
                             </Grid>
 
                             <Grid item xs={12} sm={12}>
-                                <TextField
-                                    name="user"
+                                {/* user is added automatically in backend so no reason to have the field,
+                                      leaving it for now, if we'll have to add it later */}
+                                {/* <TextField
                                     variant="outlined"
-                                    value={Constants.currentUser}
+                                    value={foreignTables.currentUser}
                                     fullWidth
                                     label="User"
-                                />
+                                  /> */}
                             </Grid>
 
                             <Grid item xs={12} sm={12}>
@@ -290,5 +313,5 @@ export default function OrderedMoveDialog({open, setOpen, data}) {
                 </Button>
             </DialogActions>
         </Dialog>
-    );
+    );}
 }

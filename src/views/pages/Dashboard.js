@@ -11,6 +11,8 @@ import CustomToolbarSelect from "../elements/CustomToolbarSelect";
 import PrimersService from "../../services/PrimersService";
 import PrimersColumns from "../elements/PrimersColumns";
 import React, { useState, useEffect } from "react";
+import Alert from "@material-ui/lab/Alert/Alert";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -52,16 +54,51 @@ export default function Dashboard() {
 
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  // success alert
+  const [open, setOpen] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
   const reloadData = () => {
     PrimersService.getAllReceived().then(setData);
+
+    setSuccess(true);
+    setOpen(true);
+  };
+
+  const showAlert = () => {
+    if (success) {
+      return (
+          <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
+            Successfully deleted!
+          </Alert>
+      )
+    } else {
+      return (
+          <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
+            There was an error deleting primer. Primer was not deleted!
+          </Alert>
+      )
+    }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   };
 
   useEffect(() => {
-    reloadData();
+    PrimersService.getAllReceived().then(setData);
   }, []);
 
   if (data != null) {
     return (
+        <div>
+          <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+            {showAlert()}
+          </Snackbar>
       <Grid container spacing={3}>
         <Grid item xs={12} md={8} lg={9}>
           <Paper className={fixedHeightPaper}>
@@ -82,6 +119,7 @@ export default function Dashboard() {
           />
         </Grid>
       </Grid>
+        </div>
     );
   } else {
     return (
