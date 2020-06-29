@@ -447,7 +447,6 @@ export default function AddOne() {
                         {options.value}
                       </MenuItem>
                     ))}
-                    />
                   </TextField>
                 </Grid>
                 <Grid item xs={3} sm={1}>
@@ -508,12 +507,11 @@ export default function AddOne() {
                     value={state.concentrationOrderedUnit}
                     onChange={handleChange}
                   >
-                    {Constants.concentrationOrderedUnit.map((options) => (
+                    {foreignTables.concentrationOrderedUnit.map((options) => (
                       <MenuItem key={options.value} value={options.value}>
                         {options.label}
                       </MenuItem>
                     ))}
-                    />
                   </TextField>
                 </Grid>
 
