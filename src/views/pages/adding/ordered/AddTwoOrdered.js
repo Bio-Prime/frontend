@@ -502,7 +502,6 @@ export default function AddTwoWanted() {
                                                 {options.label}
                                             </MenuItem>
                                         ))}
-                                        />
                                     </TextField>
                                 </Grid>
 

@@ -456,7 +456,6 @@ export default function AddOne() {
                                                 {options.label}
                                             </MenuItem>
                                         ))}
-                                        />
                                     </TextField>
                                 </Grid>
 
