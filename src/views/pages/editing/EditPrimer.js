@@ -19,10 +19,8 @@ import PrimersService from "../../../services/PrimersService";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import { useHistory } from "react-router-dom";
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import AuthService from "../../../../services/AuthService";
+import AuthService from "../../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,7 +63,6 @@ export default function EditPrimer(props) {
   };
 
   const [state, setState] = React.useState(setPrimersData);
-  const [date, setDate] = React.useState(Date.now().toString());
   const [foreignTables, setForeignTables] = React.useState({ isLoaded: false });
 
   const formRef = useRef();
@@ -800,19 +797,6 @@ export default function EditPrimer(props) {
                   />
                 </Grid>
 
-                
-
-                <Grid item xs={xsWidth} sm={smWidth}>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                      name="date"
-                      variant="inline"
-                      format="dd/MM/yyyy"
-                      label="Date of receipt"
-                      onAccept={setDate}
-                    />
-                  </MuiPickersUtilsProvider>
-                </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                   <Typography variant="h6" gutterBottom>
