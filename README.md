@@ -46,6 +46,13 @@ volumes:
 To check if backend is running go to http://localhost:8081/healthcheck
 To check if frontend is running go to http://localhost:80/
 
+Docker Compose:
+ - https://docs.docker.com/compose/
+ - https://docs.docker.com/compose/gettingstarted/
+
+Docker:
+ - https://docs.docker.com/get-started/
+
 ## Updating the application
 
 To update the containers run the following commands.
@@ -57,8 +64,7 @@ sudo docker-compose pull
 sudo docker-compose up -d
 ```
 
-
-## DEV Installation
+## Installation for developers
 
 ```$xslt
 npm install
