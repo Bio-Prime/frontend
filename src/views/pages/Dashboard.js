@@ -13,6 +13,7 @@ import PrimersColumns from "../elements/PrimersColumns";
 import React, { useState, useEffect } from "react";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
+import AuthService from "../../services/AuthService";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,24 +32,38 @@ export default function Dashboard() {
 
   const columns = PrimersColumns.getPrimersColumns();
 
-  const options = {
-    filterType: "checkbox",
-    downloadOptions: {
-      filename: "primers.csv",
-      separator: ",",
-    },
-    selectableRows: "single",
-    customToolbar: () => <CustomToolbar reloadData={reloadData} />,
-    customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-      <CustomToolbarSelect
-        selectedRows={selectedRows}
-        displayData={displayData}
-        setSelectedRows={setSelectedRows}
-        allData={data}
-        afterDelete={reloadData}
-      />
-    ),
-  };
+  let options = {};
+
+  if (AuthService.getUserRole() !== 'GUEST') {
+    options = {
+      filterType: "checkbox",
+      downloadOptions: {
+        filename: "primers.csv",
+        separator: ",",
+      },
+      selectableRows: "single",
+      customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
+      customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
+          <CustomToolbarSelect
+              selectedRows={selectedRows}
+              displayData={displayData}
+              setSelectedRows={setSelectedRows}
+              allData={data}
+              afterDelete={reloadData}
+          />
+      ),
+    };
+  } else {
+    options = {
+      filterType: "checkbox",
+      downloadOptions: {
+        filename: "primers.csv",
+        separator: ",",
+      },
+      selectableRows: "none",
+      customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
+    };
+  }
 
   const classes = useStyles();
 
