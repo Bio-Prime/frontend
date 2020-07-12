@@ -52,6 +52,7 @@ export default function AddOne() {
 
     useEffect(() => {
         PrimersService.getAllForeignTables().then((tables) => {
+            tables.typeOfPrimer.filter(el => el !== "typeOfPrimer")
             return {...Constants.foreignTables, ...tables, isLoaded:true };
         }).then(setForeignTables);
     }, []);

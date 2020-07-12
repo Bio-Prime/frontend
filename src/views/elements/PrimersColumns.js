@@ -444,7 +444,7 @@ export default class PrimersColumns {
       },
       {
         name: "gcpercent",
-        label: "Gcpercent",
+        label: "GC (%)",
         options: {
           display: false,
           filter: true,
