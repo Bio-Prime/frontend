@@ -46,6 +46,7 @@ export default function AddUser() {
     setOpen(false);
   };
 
+
   useEffect(() => {
     UserService.getAllUsernames().then((usernames) =>
       setState({
@@ -53,6 +54,7 @@ export default function AddUser() {
         usernames: usernames,
       })
     );
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (event) => {
