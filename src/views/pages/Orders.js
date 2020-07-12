@@ -135,7 +135,7 @@ export default function Orders() {
         let optionsOrdered = {};
         let optionsWanted = {};
 
-        if (AuthService.getUserRole() !== 'GUEST') {
+        if (AuthService.getUserRole() !== 'GUEST' && AuthService.getUserRole() !== 'STUDENT') {
             optionsOrdered = {
                 filterType: 'checkbox',
                 download: false,
@@ -166,7 +166,7 @@ export default function Orders() {
             };
         }
 
-        if (AuthService.getUserRole() !== 'GUEST') {
+        if (AuthService.getUserRole() !== 'GUEST' && AuthService.getUserRole() !== 'STUDENT') {
             optionsWanted = {
                 filterType: 'checkbox',
                 download: false,

@@ -78,7 +78,7 @@ function CustomToolbarSelect(props) {
                     <OpenInNewIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
-            {AuthService.getUserRole() !== 'GUEST'
+            {AuthService.getUserRole() !== 'GUEST' && AuthService.getUserRole() !== 'STUDENT'
                 ? <Tooltip title={"Delete"}>
                     <IconButton className={classes.iconButton} onClick={handleClickDelete}>
                         <Delete className={classes.icon}/>

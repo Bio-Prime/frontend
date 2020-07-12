@@ -18,7 +18,7 @@ export default function CustomToolbarEdit(props) {
     return (
         <React.Fragment>
             <div></div>
-            {AuthService.getUserRole() !== 'GUEST'
+            {AuthService.getUserRole() !== 'GUEST' && AuthService.getUserRole() !== 'STUDENT'
                 ? <Tooltip title={"Edit"}>
                     <IconButton onClick={handleClickOpen}>
                         <Edit/>
