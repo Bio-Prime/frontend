@@ -105,13 +105,13 @@ export default function AddTwoWanted() {
     const handleLettersForw = (event) => {
         setForwState({
             ...forwState,
-            [event.target.name]: event.target.value.replace(/([^a-zA-Z])/g, ""),
+            [event.target.name]: event.target.value.replace(/([^a-zA-Z])/g, "").toUpperCase(),
         });
     };
     const handleLettersRev = (event) => {
         setRevState({
             ...revState,
-            [event.target.name]: event.target.value.replace(/([^a-zA-Z])/g, ""),
+            [event.target.name]: event.target.value.replace(/([^a-zA-Z])/g, "").toUpperCase(),
         });
     };
 
@@ -445,6 +445,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.formulation}
                                         renderInput={(params) => (
                                             <TextField
@@ -461,6 +462,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.purificationMethod}
                                         renderInput={(params) => (
                                             <TextField
@@ -759,6 +761,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.fiveModification}
                                         renderInput={(params) => (
                                             <TextField
@@ -775,6 +778,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.threeModification}
                                         renderInput={(params) => (
                                             <TextField
@@ -909,6 +913,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.fiveModification}
                                         renderInput={(params) => (
                                             <TextField
@@ -925,6 +930,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.threeModification}
                                         renderInput={(params) => (
                                             <TextField

@@ -84,13 +84,13 @@ export default function Dashboard() {
     if (success) {
       return (
           <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
-            Successfully deleted!
+            Successfully refreshed!
           </Alert>
       )
     } else {
       return (
           <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
-            There was an error deleting primer. Primer was not deleted!
+            There was an error refreshing primers.
           </Alert>
       )
     }

@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Constants from "../../constants";
@@ -46,15 +46,16 @@ const useStyles = makeStyles((theme) => ({
 export default function AddOne() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
     const [date, setDate] = React.useState(Date.now().toString());
-    const [foreignTables, setForeignTables] = React.useState({isLoaded:false});
+    const [foreignTables, setForeignTables] = React.useState({isLoaded: false});
 
     const formRef = useRef();
 
     useEffect(() => {
         PrimersService.getAllForeignTables().then((tables) => {
-            tables.typeOfPrimer.filter(el => el !== "typeOfPrimer")
-            return {...Constants.foreignTables, ...tables, isLoaded:true };
-        }).then(setForeignTables);
+            return {...Constants.foreignTables, ...tables, isLoaded: true};
+        })
+            .then(obj => {return {...obj, "typeOfPrimer":obj.typeOfPrimer.filter(el => el !== "TaqProbe")}})
+            .then(setForeignTables);
     }, []);
 
     const handleChange = (event) => {
@@ -75,7 +76,7 @@ export default function AddOne() {
     const handleLetters = (event) => {
         setState({
             ...state,
-            [event.target.name]: event.target.value.replace(/([^a-zA-Z])/g, ""),
+            [event.target.name]: event.target.value.replace(/([^a-zA-Z])/g, "").toUpperCase(),
         });
     };
 
@@ -116,7 +117,7 @@ export default function AddOne() {
 
     if (AuthService.getUserRole() === 'GUEST') {
         return (
-            <Redirect to='/dashboard' />
+            <Redirect to='/dashboard'/>
         )
     } else if (!foreignTables.isLoaded) {
         return (
@@ -126,9 +127,9 @@ export default function AddOne() {
                 direction="column"
                 alignItems="center"
                 justify="center"
-                style={{ minHeight: "90vh" }}
+                style={{minHeight: "90vh"}}
             >
-                <CircularProgress />
+                <CircularProgress/>
             </Grid>
         );
     } else {
@@ -327,6 +328,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.fiveModification}
                                         renderInput={(params) => (
                                             <TextField
@@ -343,6 +345,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.threeModification}
                                         renderInput={(params) => (
                                             <TextField
@@ -402,6 +405,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.formulation}
                                         renderInput={(params) => (
                                             <TextField
@@ -418,6 +422,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.purificationMethod}
                                         renderInput={(params) => (
                                             <TextField
