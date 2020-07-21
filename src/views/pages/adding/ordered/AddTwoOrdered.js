@@ -49,7 +49,7 @@ export default function AddTwoWanted() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
     const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
     const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
-    const [date, setDate] = React.useState(Date.now().toString());
+    const [date, setDate] = React.useState(Date.now());
     const [foreignTables, setForeignTables] = React.useState({ isLoaded: false });
 
     const formRef = useRef();
@@ -164,7 +164,13 @@ export default function AddTwoWanted() {
             rev["project"] = "";
             rev["analysis"] = "";
 
-            if (Constants.requiredWanted.every((el) => primer[el] !== "")) {
+            if (Constants.requiredWanted.some((el) => forw[el] === "" && rev[el] === "")
+                // eslint-disable-next-line
+                || (rev["typeOfPrimer"] === "TaqProbe" && (rev["assayId"] == "" || rev["size"] == ""))) {
+                alert("Required field missing.");
+                return;
+            }
+
                 // order status to wanted
                 forw["orderStatus"] = "ordered";
                 forw["orientation"] = "forward";
@@ -176,14 +182,12 @@ export default function AddTwoWanted() {
                 PrimersService.add(forw)
                     .then((forwPrimer) => {
                         PrimersService.add(rev).then((revPrimer) => {
-                            PrimersService.addPair(forwPrimer.id, revPrimer.id);
+                            PrimersService.addPair(forwPrimer, revPrimer);
                         });
                     })
                     .then(history.push("/dashboard"))
                     .catch((err) => alert("Error adding primer:", err));
-            } else {
-                alert("Required field missing.");
-            }
+
         });
     };
 
@@ -623,7 +627,8 @@ export default function AddTwoWanted() {
                                             variant="inline"
                                             format="dd/MM/yyyy"
                                             label="Date of receipt"
-                                            onAccept={setDate}
+                                            onChange={setDate}
+                                            value={date}
                                         />
                                     </MuiPickersUtilsProvider>
                                 </Grid>
@@ -745,6 +750,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.positionInReference}
                                         renderInput={(params) => (
                                             <TextField
@@ -897,6 +903,7 @@ export default function AddTwoWanted() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.positionInReference}
                                         renderInput={(params) => (
                                             <TextField

@@ -31,7 +31,7 @@ function CustomToolbarSelect(props) {
 
     // data json
     let dataJson = {};
-    const columns = PrimersColumns.getPrimersColumns();
+    const columns = PrimersColumns;
     columns.forEach((item, index) => {
         dataJson[item.name] = dataArray[index];
     });

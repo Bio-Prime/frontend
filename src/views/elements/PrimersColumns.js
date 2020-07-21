@@ -1,6 +1,4 @@
-export default class PrimersColumns {
-  static getPrimersColumns = () => {
-    const columns = [
+export default [
       {
         name: "id",
         label: "Id",
@@ -451,8 +449,4 @@ export default class PrimersColumns {
           sort: true,
         },
       },
-    ];
-
-    return columns;
-  };
-}
+    ]

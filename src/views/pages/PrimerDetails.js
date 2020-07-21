@@ -56,7 +56,7 @@ const columns = [
     }
 ];
 
-const columnsRelated = PrimersColumns.getPrimersColumns();
+const columnsRelated = PrimersColumns;
 
 const optionsRelated = {
     filterType: 'checkbox',
@@ -145,7 +145,7 @@ export default function PrimerDetails(props) {
         return <Redirect to='/' />
     } else if (data !== null) {
 
-        let primerColumns = PrimersColumns.getPrimersColumns();
+        let primerColumns = PrimersColumns;
 
         const options = {
             filterType: 'checkbox',
@@ -168,24 +168,24 @@ export default function PrimerDetails(props) {
 
         const formatDownloadPrimerData = () => {
 
-            let downloadData = [];
+            let headerRow = [];
             let downloadDataString = "\"";
 
             primerColumns.forEach((item, index) => {
-                downloadData.push(item.label);
+                headerRow.push(item.label);
             });
 
-            downloadDataString += downloadData.join("\",\"");
+            downloadDataString += headerRow.join("\";\"");
             downloadDataString += "\"\n\"";
 
-            downloadData = [];
+            let dataRow = [];
 
             primerColumns.forEach((item, index) => {
                 let dataName = data[item.name];
-                downloadData.push(dataName);
+                dataRow.push(dataName);
             });
 
-            downloadDataString += downloadData.join("\",\"");
+            downloadDataString += dataRow.join("\";\"");
 
             return downloadDataString;
         };

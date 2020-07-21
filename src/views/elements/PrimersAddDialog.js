@@ -89,7 +89,7 @@ export default function PrimersAddDialog({ open, setOpen }) {
           >
             Two old
           </Button>
-          <div>{showDropzone ? <DropzoneAreaCSV /> : null}</div>
+          <div>{showDropzone ? <DropzoneAreaCSV handleClose={handleClose}/> : null}</div>
         </div>
       </DialogContent>
       <DialogActions>

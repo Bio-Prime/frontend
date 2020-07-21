@@ -49,7 +49,7 @@ export default function AddOne() {
   const [state, setState] = React.useState(Constants.defaultPrimerData);
   const [forwState, setForwState] = React.useState(Constants.defaultPrimerData);
   const [revState, setRevState] = React.useState(Constants.defaultPrimerData);
-  const [date, setDate] = React.useState(Date.now().toString());
+  const [date, setDate] = React.useState(Date.now());
   const [foreignTables, setForeignTables] = React.useState({ isLoaded: false });
 
   const formRef = useRef();
@@ -140,7 +140,13 @@ export default function AddOne() {
         rev[key] = value;
       });
 
-      if (Constants.requiredNew.every((el) => primer[el] !== "")) {
+      if (Constants.requiredOld.some((el) => forw[el] === "" && rev[el] === "")
+          // eslint-disable-next-line
+          || (rev["typeOfPrimer"] === "TaqProbe" && (rev["assayId"] == "" || rev["size"] == ""))) {
+        alert("Required field missing.");
+        return;
+      }
+
         forw["orderStatus"] = "received";
         forw["orientation"] = "forward";
         forw["date"] = date;
@@ -153,15 +159,13 @@ export default function AddOne() {
 
         PrimersService.add(forw)
           .then((forwPrimer) => {
-            PrimersService.add(rev).then((revPrimer) => {
-              PrimersService.addPair(forwPrimer.id, revPrimer.id);
-            });
+                        PrimersService.add(rev).then((revPrimer) => {
+                            PrimersService.addPair(forwPrimer, revPrimer);
+                        });
           })
           .then(history.push("/dashboard"))
           .catch((err) => alert("Error adding primer:", err));
-      } else {
-        alert("Required field missing.");
-      }
+
     });
   };
 
@@ -692,7 +696,8 @@ export default function AddOne() {
                       variant="inline"
                       format="dd/MM/yyyy"
                       label="Date of receipt"
-                      onAccept={setDate}
+                      onChange={setDate}
+                      value={date}
                     />
                   </MuiPickersUtilsProvider>
                 </Grid>
@@ -824,18 +829,19 @@ export default function AddOne() {
 
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <Autocomplete
-                    options={foreignTables.positionInReference}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        name="positionInReference"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        label="Position in the reference"
-                      />
-                    )}
-                  />
+                                        freeSolo
+                                        options={foreignTables.positionInReference}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="positionInReference"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Position in the reference"
+                                            />
+                                        )}
+                                    />
                 </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth}>
@@ -1033,18 +1039,19 @@ export default function AddOne() {
 
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <Autocomplete
-                    options={foreignTables.positionInReference}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        name="positionInReference"
-                        variant="outlined"
-                        required
-                        fullWidth
-                        label="Position in the reference"
-                      />
-                    )}
-                  />
+                                        freeSolo
+                                        options={foreignTables.positionInReference}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="positionInReference"
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                label="Position in the reference"
+                                            />
+                                        )}
+                                    />
                 </Grid>
 
                 <Grid item xs={xsWidth} sm={smWidth}>

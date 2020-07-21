@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddOne() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
-    const [date, setDate] = React.useState(Date.now().toString());
+    const [date, setDate] = React.useState(Date.now());
     const [foreignTables, setForeignTables] = React.useState({isLoaded:false});
 
     const formRef = useRef();
@@ -283,6 +283,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
                                     <Autocomplete
+                                        freeSolo
                                         options={foreignTables.positionInReference}
                                         renderInput={(params) => (
                                             <TextField
@@ -577,8 +578,8 @@ export default function AddOne() {
                                             variant="inline"
                                             format="dd/MM/yyyy"
                                             label="Date of receipt"
-                                            onAccept={setDate}
-
+                                            onChange={setDate}
+                                            value={date}
                                         />
                                     </MuiPickersUtilsProvider>
                                 </Grid>

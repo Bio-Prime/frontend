@@ -9,7 +9,7 @@ export default {
             return data;
         }
         catch (error) {
-            console.error("Error getting primers:", error);
+            alert("Error getting primers:" + error);
             return null;
         }
   },
@@ -19,7 +19,7 @@ export default {
         return data;
     }
     catch (error) {
-        console.error("Error getting primer with id" + id + ": ", error);
+        alert("Error getting primer with id" + id + ": " + error);
         return null;
     }
   },
@@ -29,7 +29,7 @@ export default {
         return data;
     }
     catch (error) {
-        console.error("Error getting primer json example", error);
+        alert("Error getting primer json example" + error);
         return null;
     }
   },
@@ -39,7 +39,7 @@ export default {
         return data;
     }
     catch (error) {
-        console.error("Error getting primers:", error);
+        alert("Error getting primers:" + error);
         return null;
     }
   },
@@ -49,18 +49,17 @@ export default {
         return data;
     }
     catch (error) {
-        console.error("Error getting primers:", error);
+        alert("Error getting primers:" + error);
         return null;
     }
   },
   async add(primer) {
     const addPath = "/add"
     try {
-            const returnPrimer = await DataFetcher.post(path+addPath, primer);
-            return returnPrimer;
+        return await DataFetcher.post(path + addPath, primer);
         }
         catch (error) {
-            console.error("Error adding primer:", error);
+            alert("Error adding primer:" + error);
             return null;
         }
   },
@@ -68,14 +67,24 @@ export default {
     const updatePath = "/update";
     try {
         const id = primer.id;
-        const returnPrimer = await DataFetcher.post(path+updatePath+"?id="+id, primer);
-        return returnPrimer;
+        return await DataFetcher.post(path + updatePath + "?id=" + id, primer);
     }
     catch (error) {
-        console.error("Error updating primer:", error);
+        alert("Error updating primer:" + error);
         return null;
     }
   },
+    async updateAmountCommentAnalysis(primer) {
+        const updatePath = "/updateAmountCommentAnalysisi";
+        try {
+            const id = primer.id;
+            return await DataFetcher.post(path + updatePath + "?id=" + id, primer);
+        }
+        catch (error) {
+            alert("Error updating primer amount/comment/analysis:" + error);
+            return null;
+        }
+    },
   async delete(id) {
     const deletePath = "/delete"
     try {
@@ -83,18 +92,18 @@ export default {
             return true;
         }
         catch (error) {
-            console.error("Error deleting primer:", error);
+            alert("Error deleting primer:" + error);
             return null;
         }
   },
-  async addPair(id1,id2) {
+  async addPair(primer1,primer2) {
     const addPairPath = "/pair"
     try {
-            await DataFetcher.post(path+addPairPath, [id1,id2]);
+            await DataFetcher.post(path+addPairPath, [primer1.id,primer2.id]);
             return true;
         }
         catch (error) {
-            console.error("Error adding pair: " + id1 + " - " + id2, error);
+            alert("Error adding pair: " + error);
             return null;
         }
   },
@@ -104,7 +113,7 @@ export default {
             return data;
         }
         catch (error) {
-            console.error("Error getting foreign tables:", error);
+            alert("Error getting foreign tables:" + error);
             return null;
         }
   },

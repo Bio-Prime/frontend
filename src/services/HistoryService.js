@@ -9,7 +9,7 @@ export default {
             return data;
         }
         catch (error) {
-            console.error("Error getting history:", error);
+            alert("Error getting history:" + error);
             return null;
         }
     },

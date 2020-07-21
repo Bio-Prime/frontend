@@ -6,7 +6,7 @@ import LoginLayout from "./layouts/LoginLayout";
 import PrivateRoute from "./components/PrivateRoute";
 
 const palette = {
-  type: "dark",
+  type: "light",
   primary: {
     main: "#876E9B",
   },

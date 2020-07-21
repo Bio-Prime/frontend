@@ -5,6 +5,7 @@ function handleErrors(response) {
   if (!response.ok) {
     if(response.status === 401){
       localStorage.removeItem("bioprime-token");
+      window.location.reload();
     }
     throw Error(response.statusText);
   }
