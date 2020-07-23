@@ -13,6 +13,7 @@ import AddOneWanted from "./pages/adding/wanted/AddOneWanted";
 import AddTwoWanted from "./pages/adding/wanted/AddTwoWanted";
 import AddOneOrdered from "./pages/adding/ordered/AddOneOrdered";
 import AddTwoOrdered from "./pages/adding/ordered/AddTwoOrdered";
+import AddOneGeneral from "./pages/adding/primers/AddOneGeneral";
 
 const pageList = [
     {
@@ -34,6 +35,11 @@ const pageList = [
         name: 'Admin',
         path: '/admin',
         component: Admin,
+    },
+    {
+        name: 'AddTwo',
+        path: '/add-one-general',
+        component: AddOneGeneral,
     },
     {
         name: 'AddTwo',

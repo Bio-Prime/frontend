@@ -50,6 +50,15 @@ export default function PrimersAddDialog({ open, setOpen }) {
         </DialogContentText>
         <div className={classes.root}>
           <Button
+              variant="contained"
+              onClick={() => {
+                history.push("/add-one-new");
+              }}
+              color="primary"
+          >
+            One general
+          </Button>
+          <Button
             variant="contained"
             onClick={() => {
               history.push("/add-one-new");
