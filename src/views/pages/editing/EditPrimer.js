@@ -14,7 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import PrimersService from "../../../services/PrimersService";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -64,7 +64,7 @@ export default function EditPrimer(props) {
   };
 
   useEffect(() => {
-    setPrimersData();
+    // setPrimersData();
     PrimersService.getAllForeignTables().then((tables) => {
       return {...Constants.foreignTables, ...tables, isLoaded: true};
     }).then(setForeignTables);
@@ -93,7 +93,7 @@ export default function EditPrimer(props) {
   };
 
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
 
   const submit = (e) => {
     e.preventDefault();

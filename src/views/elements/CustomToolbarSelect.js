@@ -72,16 +72,16 @@ function CustomToolbarSelect(props) {
 
     const { classes } = props;
 
-    function handleLink() {
-        let dataIndexes =  props.selectedRows.data.map(el => el.dataIndex);
-        let data = props.displayData;
-        debugger;
-    }
+    // function handleLink() {
+    //     // let dataIndexes =  props.selectedRows.data.map(el => el.dataIndex);
+    //     // let data = props.displayData;
+    //     // debugger;
+    // }
 
     return (
         <div className={classes.iconContainer}>
             <Tooltip title={"Link"}>
-                <IconButton className={classes.iconButton} onClick={handleLink}>
+                <IconButton className={classes.iconButton} onClick={alert("TODO")}>
                     <LinkIcon className={classes.icon} />
                 </IconButton>
             </Tooltip>
