@@ -41,7 +41,6 @@ export default function Dashboard() {
                 filename: "primers.csv",
                 separator: ",",
             },
-            selectableRows: "single",
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                 <CustomToolbarSelect

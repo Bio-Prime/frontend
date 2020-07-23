@@ -339,6 +339,39 @@ export default function AddOne() {
                                 </Grid>
 
                                 <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={["Forward","Reverse"]}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="orientation"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Orientation"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                    <Autocomplete
+                                        options={["Wanted","Ordered","Received"]}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                name="orderStatus"
+                                                variant="outlined"
+                                                fullWidth
+                                                label="Order status"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={xsWidth} sm={smWidth}>
+                                </Grid>
+
+                                <Grid item xs={xsWidth} sm={smWidth}>
                                     <Typography
                                         variant="subtitle1"
                                         align="center"
@@ -703,6 +736,7 @@ export default function AddOne() {
                                             format="dd/MM/yyyy"
                                             label="Date of receipt"
                                             onChange={setDate}
+                                            value={date}
                                         />
                                     </MuiPickersUtilsProvider>
                                 </Grid>

@@ -52,7 +52,7 @@ export default function PrimersAddDialog({ open, setOpen }) {
           <Button
               variant="contained"
               onClick={() => {
-                history.push("/add-one-new");
+                history.push("/add-one-general");
               }}
               color="primary"
           >

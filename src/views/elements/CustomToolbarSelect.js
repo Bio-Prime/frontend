@@ -8,6 +8,7 @@ import {Delete} from "@material-ui/icons";
 import { useHistory } from 'react-router-dom';
 import PrimerService from "./../../services/PrimersService";
 import AuthService from "../../services/AuthService";
+import LinkIcon from '@material-ui/icons/Link';
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -71,8 +72,19 @@ function CustomToolbarSelect(props) {
 
     const { classes } = props;
 
+    function handleLink() {
+        let dataIndexes =  props.selectedRows.data.map(el => el.dataIndex);
+        let data = props.displayData;
+        debugger;
+    }
+
     return (
         <div className={classes.iconContainer}>
+            <Tooltip title={"Link"}>
+                <IconButton className={classes.iconButton} onClick={handleLink}>
+                    <LinkIcon className={classes.icon} />
+                </IconButton>
+            </Tooltip>
             <Tooltip title={"Open selected"}>
                 <IconButton className={classes.iconButton} onClick={handleClickOpen}>
                     <OpenInNewIcon className={classes.icon} />

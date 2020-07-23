@@ -82,9 +82,7 @@ export default function PrimerDetails(props) {
     const [data, setData] = React.useState(null);
 
     useEffect(() => {
-        PrimersService.getOne(id).then((data) => {
-            setData(data);
-        });
+        PrimersService.getOne(id).then(setData);
     }, [id]);
 
     // success alert

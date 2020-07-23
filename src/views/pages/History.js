@@ -53,33 +53,35 @@ export default function Orders() {
     const [page, setPage] = React.useState(1);
     const handleChange = (event, value) => {
         setPage(value);
-        setPaginationData(data.slice((value-1) * 5, value * 5));
+        setPaginationData(data.slice((value - 1) * 5, value * 5));
     };
 
     if (AuthService.getUserRole() === 'GUEST') {
         return (
-            <Redirect to='/dashboard' />
+            <Redirect to='/dashboard'/>
         )
     } else if (paginationData != null) {
         return (
             <div className={classes.paperCenter}>
                 <Grid container alignItems={"center"} style={{width: '75%'}} spacing={3}>
-                    { paginationData.map((item, index) => {
+                    {paginationData.map((item, index) => {
                         return (
                             <Grid item xs={12} md={12} lg={12} key={index}>
                                 <Paper className={fixedHeightPaper}>
                                     <Title>{item.primer}</Title>
-                                    <Typography>User {item.user} performed an action {item.action}.</Typography>
+                                    <Typography>{"User"} <b> {item.user} </b>{"performed action "}<b>{item.action}</b></Typography>
                                     <br/>
                                     <Typography color="textSecondary" className={classes.depositContext}>
                                         on {new Date(item.timestamp).toDateString()}
                                     </Typography>
                                 </Paper>
                             </Grid>
-                        )})
+                        )
+                    })
                     }
                 </Grid>
-                <Pagination count={Math.ceil(data.length / 5)} page={page} onChange={handleChange} style={{marginTop: '20px'}} />
+                <Pagination count={Math.ceil(data.length / 5)} page={page} onChange={handleChange}
+                            style={{marginTop: '20px'}}/>
             </div>
         );
     } else {
