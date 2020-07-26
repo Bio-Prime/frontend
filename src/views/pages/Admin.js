@@ -1,11 +1,10 @@
-import DataTable from "../../components/DataTable";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Count from "../../components/Count";
 import clsx from "clsx";
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import UsersColumns from "../elements/UsersColumns";
 import CustomToolbarAdmin from "../elements/CustomToolbarAdmin";
 import CustomToolbarSelectAdmin from "../elements/CustomToolbarSelectAdmin";
@@ -15,6 +14,7 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import AuthService from "../../services/AuthService";
 import {Redirect} from "react-router-dom";
+import MUIDataTable from "mui-datatables";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -101,35 +101,34 @@ export default function Admin() {
 
     if (AuthService.getUserRole() !== 'ADMIN') {
         return (
-            <Redirect to="/dashboard" />
+            <Redirect to="/dashboard"/>
         )
-    }
-    else if (data != null) {
+    } else if (data != null) {
         return (
             <div>
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                     {showAlert()}
                 </Snackbar>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={8} lg={9}>
-                    <Paper className={fixedHeightPaper}>
-                        <UsersChart allData={data}/>
-                    </Paper>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={8} lg={9}>
+                        <Paper className={fixedHeightPaper}>
+                            <UsersChart allData={data}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4} lg={3}>
+                        <Paper className={fixedHeightPaper}>
+                            <Count dataCount={data.length} title={'Total Number of Users'}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <MUIDataTable
+                            title={"All users"}
+                            data={data}
+                            columns={columns}
+                            options={options}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <Count dataCount={data.length} title={'Total Number of Users'}/>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                    <DataTable
-                        title={"All users"}
-                        columns={columns}
-                        data={data}
-                        options={options}
-                    />
-                </Grid>
-            </Grid>
             </div>
         );
     } else {

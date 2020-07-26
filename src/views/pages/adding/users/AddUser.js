@@ -129,7 +129,7 @@ export default function AddUser() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <Typography gutterBottom variant="h6">
-                Properties of oligonucleotide primer
+                Properties of primer
               </Typography>
             </Grid>
 

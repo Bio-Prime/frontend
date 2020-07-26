@@ -6,6 +6,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {Link} from "react-router-dom";
 import {History, SupervisorAccount} from "@material-ui/icons";
+import AddIcon from '@material-ui/icons/Add';
 
 export const mainListItems = (
     <div>
@@ -26,6 +27,13 @@ export const mainListItems = (
                 <History />
             </ListItemIcon>
             <ListItemText primary="History" />
+        </ListItem>
+
+        <ListItem button component={Link} to="/add-one-general">
+            <ListItemIcon>
+                <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add primer/probe" />
         </ListItem>
     </div>
 );

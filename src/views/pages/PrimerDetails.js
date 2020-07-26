@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from "@material-ui/core/Grid";
-import DataTable from "../../components/DataTable";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
 import {makeStyles} from "@material-ui/core/styles";
@@ -14,6 +13,7 @@ import PrimersService from "../../services/PrimersService";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import MUIDataTable from "mui-datatables";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -140,7 +140,7 @@ export default function PrimerDetails(props) {
     const fixedHeightPaperTimesTwo = clsx(classes.paper, classes.fixedHeightTimesTwo);
 
     if (typeof props.location.state === 'undefined') {
-        return <Redirect to='/' />
+        return <Redirect to='/'/>
     } else if (data !== null) {
 
         let primerColumns = PrimersColumns;
@@ -219,8 +219,12 @@ export default function PrimerDetails(props) {
                     {showAlert()}
                 </Snackbar>
                 <Grid item xs={12} md={6} lg={6}>
-                    <DataTable title={data.generatedName} columns={columns} data={tableData}
-                               options={options}/>
+                    <MUIDataTable
+                        title={data.name}
+                        data={tableData}
+                        columns={columns}
+                        options={options}
+                    />
                 </Grid>
                 <Grid item xs={12} md={6} lg={6}>
                     <Grid container spacing={2}>
@@ -310,8 +314,12 @@ export default function PrimerDetails(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
-                    <DataTable title={'Related Oligonucleotide Primers'} columns={columnsRelated} data={pairsData}
-                               options={optionsRelated}/>
+                    <MUIDataTable
+                        title={"Related"}
+                        data={pairsData}
+                        columns={columnsRelated}
+                        options={optionsRelated}
+                    />
                 </Grid>
             </Grid>
         );
@@ -323,9 +331,9 @@ export default function PrimerDetails(props) {
                 direction="column"
                 alignItems="center"
                 justify="center"
-                style={{ minHeight: "90vh" }}
+                style={{minHeight: "90vh"}}
             >
-                <CircularProgress />
+                <CircularProgress/>
             </Grid>
         );
     }

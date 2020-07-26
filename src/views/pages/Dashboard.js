@@ -1,4 +1,3 @@
-import DataTable from "../../components/DataTable";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -11,9 +10,11 @@ import CustomToolbarSelect from "../elements/CustomToolbarSelect";
 import PrimersService from "../../services/PrimersService";
 import PrimersColumns from "../elements/PrimersColumns";
 import React, {useEffect, useState} from "react";
+import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import AuthService from "../../services/AuthService";
+import MUIDataTable from "mui-datatables";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -32,6 +33,8 @@ export default function Dashboard() {
 
     const columns = PrimersColumns;
 
+    let history = useHistory();
+
     let options = {};
 
     if (AuthService.getUserRole() !== 'GUEST') {
@@ -40,6 +43,12 @@ export default function Dashboard() {
             downloadOptions: {
                 filename: "primers.csv",
                 separator: ",",
+            },
+            pagination: false,
+            onRowClick: (rowData, rowMeta) => {
+                history.push('/primer-details', {
+                    data: data[rowMeta.dataIndex]
+                });
             },
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
@@ -59,6 +68,7 @@ export default function Dashboard() {
                 filename: "primers.csv",
                 separator: ",",
             },
+            pagination: false,
             selectableRows: "none",
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
         };
@@ -122,14 +132,14 @@ export default function Dashboard() {
                     </Grid>
                     <Grid item xs={12} md={4} lg={3}>
                         <Paper className={fixedHeightPaper}>
-                            <Count dataCount={data.length} title={'Total Number of Primers'}/>
+                            <Count dataCount={data.length} title={'Total number of primers/probes'}/>
                         </Paper>
                     </Grid>
                     <Grid item xs={12}>
-                        <DataTable
-                            title={"Oligonucleotide Primers"}
-                            columns={columns}
+                        <MUIDataTable
+                            title={"Primers/Probes"}
                             data={data}
+                            columns={columns}
                             options={options}
                         />
                     </Grid>

@@ -217,7 +217,7 @@ export default function AddTwoWanted() {
                 <Paper className={classes.paper}>
                     <div className={classes.paperCenter}>
                         <Typography variant="h4" gutterBottom>
-                            Add a pair of ordered oligonucleotide primers
+                            Add a pair of ordered primers
                         </Typography>
                         <DialogContentText>
                             The fields marked with a "*" are required.

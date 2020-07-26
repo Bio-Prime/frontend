@@ -125,14 +125,12 @@ export default function AddOne() {
                 <Paper className={classes.paper}>
                     <div className={classes.paperCenter}>
                         <Typography variant="h5" gutterBottom>
-                            Add one new oligonucleotide primer/probe
+                            Add one new primer/probe
                         </Typography>
-                        <DialogContentText>
-                            The fields marked with a "*" are required.
-                        </DialogContentText>
                         <DialogContentText>
                             Enter decimal numbers with "." and not ",".
                         </DialogContentText>
+
 
                         <form
                             ref={formRef}
@@ -146,7 +144,7 @@ export default function AddOne() {
                             <Grid container spacing={2}>
                                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                                     <Typography gutterBottom variant="h6">
-                                        Properties of oligonucleotide primer/probe
+                                        Properties of primer/probe
                                     </Typography>
                                 </Grid>
 

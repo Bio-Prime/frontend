@@ -136,7 +136,7 @@ export default function AddOne() {
                 <Paper className={classes.paper}>
                     <div className={classes.paperCenter}>
                         <Typography variant="h5" gutterBottom>
-                            Add one wanted oligonucleotide primer
+                            Add one wanted primer
                         </Typography>
                         <DialogContentText>
                             The fields marked with a "*" are required.
@@ -157,7 +157,7 @@ export default function AddOne() {
                             <Grid container spacing={2}>
                                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                                     <Typography gutterBottom variant="h6">
-                                        Properties of oligonucleotide primer
+                                        Properties of primer
                                     </Typography>
                                 </Grid>
 

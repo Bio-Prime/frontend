@@ -131,7 +131,7 @@ export default function EditPrimer(props) {
           <Paper className={classes.paper}>
             <div className={classes.paperCenter}>
               <Typography variant="h5" gutterBottom>
-                Edit oligonucleotide primer/probe
+                Edit primer/probe
               </Typography>
               <DialogContentText>
                 Enter decimal numbers with "." and not ",".
@@ -149,7 +149,7 @@ export default function EditPrimer(props) {
                 <Grid container spacing={2}>
                   <Grid item xs={xsWidth} sm={smWidth * 3}>
                     <Typography gutterBottom variant="h6">
-                      Properties of oligonucleotide primer/probe
+                      Properties of primer/probe
                     </Typography>
                   </Grid>
 

@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import DataTable from "../../components/DataTable";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import clsx from "clsx";
@@ -20,6 +19,7 @@ import CircularProgress from "@material-ui/core/CircularProgress/CircularProgres
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import AuthService from "../../services/AuthService";
+import MUIDataTable from "mui-datatables";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -201,62 +201,70 @@ export default function Orders() {
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                     {showAlert()}
                 </Snackbar>
-            <Grid container spacing={3}>
-                {/* Recent Orders */}
-                <Grid item xs={12} md={6} lg={6}>
-                    <Paper className={fixedHeightPaperTwo}>
-                        <Title>Ordered by</Title>
-                        <ResponsiveContainer width="100%">
-                            <PieChart>
-                                <Pie data={dataOrderedBy} nameKey="name" dataKey="value"
-                                     label={({index, value}) => {
-                                         return dataOrderedBy[index].name + " (" + value + ")"
-                                     }}
-                                     cx="50%" cy="50%" outerRadius={'80%'} fill="#8884d8"
-                                />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Paper className={fixedHeightPaper}>
-                                <Title>Number of ordered primers</Title>
-                                <Typography component="p" variant="h4">
-                                    {dataOrdered.length}
-                                </Typography>
-                                <Typography color="textSecondary" className={classes.depositContext}>
-                                    on {new Date().toDateString()}
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Paper className={fixedHeightPaperThree}>
-                                <Title>Suppliers</Title>
-                                <br/>
-                                <ResponsiveContainer width="90%">
-                                    <BarChart data={dataSupplier}>
-                                        <XAxis dataKey="name" stroke={theme.palette.text.secondary}/>
-                                        <YAxis stroke={theme.palette.text.secondary}/>
-                                        <Tooltip/>
-                                        <Legend/>
-                                        <Bar dataKey="value" fill="#8884d8"/>
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </Paper>
+                <Grid container spacing={3}>
+                    {/* Recent Orders */}
+                    <Grid item xs={12} md={6} lg={6}>
+                        <Paper className={fixedHeightPaperTwo}>
+                            <Title>Ordered by</Title>
+                            <ResponsiveContainer width="100%">
+                                <PieChart>
+                                    <Pie data={dataOrderedBy} nameKey="name" dataKey="value"
+                                         label={({index, value}) => {
+                                             return dataOrderedBy[index].name + " (" + value + ")"
+                                         }}
+                                         cx="50%" cy="50%" outerRadius={'80%'} fill="#8884d8"
+                                    />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={6} lg={6}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={12} lg={12}>
+                                <Paper className={fixedHeightPaper}>
+                                    <Title>Number of ordered primers</Title>
+                                    <Typography component="p" variant="h4">
+                                        {dataOrdered.length}
+                                    </Typography>
+                                    <Typography color="textSecondary" className={classes.depositContext}>
+                                        on {new Date().toDateString()}
+                                    </Typography>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={12} lg={12}>
+                                <Paper className={fixedHeightPaperThree}>
+                                    <Title>Suppliers</Title>
+                                    <br/>
+                                    <ResponsiveContainer width="90%">
+                                        <BarChart data={dataSupplier}>
+                                            <XAxis dataKey="name" stroke={theme.palette.text.secondary}/>
+                                            <YAxis stroke={theme.palette.text.secondary}/>
+                                            <Tooltip/>
+                                            <Legend/>
+                                            <Bar dataKey="value" fill="#8884d8"/>
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </Paper>
+                            </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item xs={12}>
+                        <MUIDataTable
+                            title={"Ordered"}
+                            data={dataOrdered}
+                            columns={columns}
+                            options={optionsOrdered}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <MUIDataTable
+                            title={"Wanted"}
+                            data={dataWanted}
+                            columns={columns}
+                            options={optionsWanted}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <DataTable title={"Ordered Oligonucleotide Primers"} columns={columns} data={dataOrdered}
-                               options={optionsOrdered}/>
-                </Grid>
-                <Grid item xs={12}>
-                    <DataTable title={"Wanted Oligonucleotide Primers"} columns={columns} data={dataWanted}
-                               options={optionsWanted}/>
-                </Grid>
-            </Grid>
             </div>
         );
     } else {
@@ -267,9 +275,9 @@ export default function Orders() {
                 direction="column"
                 alignItems="center"
                 justify="center"
-                style={{ minHeight: "90vh" }}
+                style={{minHeight: "90vh"}}
             >
-                <CircularProgress />
+                <CircularProgress/>
             </Grid>
         );
     }

@@ -37,7 +37,7 @@ const pageList = [
         component: Admin,
     },
     {
-        name: 'AddTwo',
+        name: 'Add one general',
         path: '/add-one-general',
         component: AddOneGeneral,
     },
