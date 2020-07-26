@@ -23,6 +23,7 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import {ExitToApp} from "@material-ui/icons";
 import { useHistory } from 'react-router-dom';
 import AuthService from "../services/AuthService";
+import {withStyles} from "@material-ui/core";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -89,13 +90,12 @@ const useStyles = makeStyles(theme => ({
         height: '100vh',
         overflow: 'auto',
     },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
+    container:{
+        paddingTop: "1%"
+    }
 }));
 
-export default function DashboardLayout({onClickDark}) {
+function DashboardLayout({onClickDark}) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
@@ -173,7 +173,7 @@ export default function DashboardLayout({onClickDark}) {
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
-                <Container maxWidth="lg" className={classes.container}>
+                <Container maxWidth={false} className={classes.container}>
                     <Switch>
                         {routes.map((page, key) => (
                                 <Route path={page.path} component={page.component} key={key} />
@@ -189,4 +189,4 @@ export default function DashboardLayout({onClickDark}) {
         </div>
     );
 }
-
+export default withStyles(useStyles)(DashboardLayout);

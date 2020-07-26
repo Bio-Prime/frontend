@@ -6,15 +6,16 @@ import Chart from "../../components/Chart";
 import Count from "../../components/Count";
 import clsx from "clsx";
 import CustomToolbar from "../elements/CustomToolbar";
-import CustomToolbarSelect from "../elements/CustomToolbarSelect";
 import PrimersService from "../../services/PrimersService";
 import PrimersColumns from "../elements/PrimersColumns";
 import React, {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import AuthService from "../../services/AuthService";
 import MUIDataTable from "mui-datatables";
+import DashboardSelectToolbar from "../elements/DashboardSelectToolbar";
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
+    gridWidht:{
+        width: "100%"
+    }
 }));
 
 export default function Dashboard() {
@@ -51,15 +55,12 @@ export default function Dashboard() {
                 });
             },
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
-            customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
-                <CustomToolbarSelect
+            customToolbarSelect: (selectedRows, displayData, setSelectedRows) =>
+                <DashboardSelectToolbar
                     selectedRows={selectedRows}
                     displayData={displayData}
-                    setSelectedRows={setSelectedRows}
-                    allData={data}
-                    afterDelete={reloadData}
+                    reload={reloadData}
                 />
-            ),
         };
     } else {
         options = {
@@ -124,7 +125,7 @@ export default function Dashboard() {
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                     {showAlert()}
                 </Snackbar>
-                <Grid container spacing={3}>
+                <Grid container className={useStyles.gridWidht} spacing={3}>
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper className={fixedHeightPaper}>
                             <Chart allData={data}/>

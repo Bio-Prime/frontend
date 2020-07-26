@@ -85,10 +85,10 @@ export default {
             return null;
         }
     },
-  async delete(id) {
+  async delete(ids) {
     const deletePath = "/delete"
     try {
-            await DataFetcher.postNoReturn(path+deletePath, id);
+            await DataFetcher.postNoReturn(path+deletePath, ids);
             return true;
         }
         catch (error) {
@@ -96,21 +96,31 @@ export default {
             return null;
         }
   },
-  async addPair(primer1,primer2) {
-    const addPairPath = "/pair"
+  async linkPrimersByIds(ids) {
+    const lingPath = "/link"
     try {
-            await DataFetcher.post(path+addPairPath, [primer1.id,primer2.id]);
+            await DataFetcher.postRawDataNoReturn(path+lingPath, "["+ids+"]");
             return true;
         }
         catch (error) {
-            alert("Error adding pair: " + error);
+            alert("Error linking primers: " + error);
+            return null;
+        }
+  },
+  async unLinkPrimersByIds(ids) {
+    const lingPath = "/unlink"
+    try {
+            await DataFetcher.postRawDataNoReturn(path+lingPath, "["+ids+"]");
+            return true;
+        }
+        catch (error) {
+            alert("Error unlinking primers: " + error);
             return null;
         }
   },
   async getAllForeignTables() {
     try {
-            const data = await DataFetcher.get(path+"/get-all-foreign-tables");
-            return data;
+        return await DataFetcher.get(path + "/get-all-foreign-tables");
         }
         catch (error) {
             alert("Error getting foreign tables:" + error);
