@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddOne() {
+export default function AddOneGeneral() {
     const [state, setState] = React.useState(Constants.defaultPrimerData);
     const [date, setDate] = React.useState(Date.now());
     const [foreignTables, setForeignTables] = React.useState({isLoaded: false});

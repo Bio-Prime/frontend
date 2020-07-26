@@ -118,12 +118,22 @@ export default {
             return null;
         }
   },
+  async getLinked(id) {
+      const lingsPath = "/links"
+    try {
+        return await DataFetcher.get(path + lingsPath+"?id="+id);
+        }
+        catch (error) {
+            alert("Error getting linked: " + error);
+            return null;
+        }
+  },
   async getAllForeignTables() {
     try {
         return await DataFetcher.get(path + "/get-all-foreign-tables");
         }
         catch (error) {
-            alert("Error getting foreign tables:" + error);
+            alert("Error getting foreign tables: " + error);
             return null;
         }
   },

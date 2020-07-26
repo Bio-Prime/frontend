@@ -27,9 +27,6 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
         height: 240,
     },
-    gridWidht:{
-        width: "100%"
-    }
 }));
 
 export default function Dashboard() {
@@ -41,7 +38,7 @@ export default function Dashboard() {
 
     let options = {};
 
-    if (AuthService.getUserRole() !== 'GUEST') {
+    if (AuthService.getUserRole() !== 'GUEST' && AuthService.getUserRole() !== 'STUDENT') {
         options = {
             filterType: "checkbox",
             downloadOptions: {
@@ -50,9 +47,11 @@ export default function Dashboard() {
             },
             pagination: false,
             onRowClick: (rowData, rowMeta) => {
-                history.push('/primer-details', {
-                    data: data[rowMeta.dataIndex]
-                });
+                // history.push({
+                //     pathname: '/primer-details',
+                //     data: rowData
+                // });
+                alert("Primer/probe details and editing are currently not working. ");
             },
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) =>
@@ -70,6 +69,11 @@ export default function Dashboard() {
                 separator: ",",
             },
             pagination: false,
+            onRowClick: (rowData, rowMeta) => {
+                history.push('/primer-details', {
+                    data: data[rowMeta.dataIndex]
+                });
+            },
             selectableRows: "none",
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
         };
@@ -125,7 +129,7 @@ export default function Dashboard() {
                 <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                     {showAlert()}
                 </Snackbar>
-                <Grid container className={useStyles.gridWidht} spacing={3}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper className={fixedHeightPaper}>
                             <Chart allData={data}/>
