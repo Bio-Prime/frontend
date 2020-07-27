@@ -91,8 +91,6 @@ export default function AddOneGeneral() {
             formdata.forEach((value, key) => {
                 primer[key] = value;
             });
-
-            primer["orderStatus"] = "received";
             primer["date"] = date;
             console.log(primer);
             PrimersService.add(primer)

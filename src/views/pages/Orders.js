@@ -93,25 +93,27 @@ export default function Orders() {
     const [open, setOpen] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
 
-    const reloadDataAfterDelete = () => {
+    const reloadData = () => {
         PrimersService.getAllOrdered().then(setDataOrdered);
-        PrimersService.getAllWanted().then(setDataWanted);
+        PrimersService.getAllWanted().then(setDataWanted).then(() => {
+            setSuccess(true);
+            setOpen(true);
+        });
 
-        setSuccess(true);
-        setOpen(true);
     };
+
 
     const showAlert = () => {
         if (success) {
             return (
                 <Alert elevation={6} variant="filled" onClose={handleClose} severity="success">
-                    Successfully deleted!
+                    Successfully refreshed!
                 </Alert>
             )
         } else {
             return (
                 <Alert elevation={6} variant="filled" onClose={handleClose} severity="error">
-                    There was an error deleting primer. Primer was not deleted!
+                    Error refreshing!
                 </Alert>
             )
         }
@@ -143,14 +145,14 @@ export default function Orders() {
                 selectableRows: "single",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
-                customToolbar: () => <CustomToolbarOrdered/>,
+                customToolbar: () => <CustomToolbarOrdered reloadData={reloadData}/>,
                 customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                     <CustomToolbarSelectOrdered
                         selectedRows={selectedRows}
                         displayData={displayData}
                         setSelectedRows={setSelectedRows}
                         allData={dataOrdered}
-                        afterDelete={reloadDataAfterDelete}
+                        afterDelete={reloadData}
                     />
                 )
             };
@@ -162,7 +164,7 @@ export default function Orders() {
                 selectableRows: "none",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
-                customToolbar: () => <CustomToolbarOrdered/>,
+                customToolbar: () => <CustomToolbarOrdered reloadData={reloadData}/>,
             };
         }
 
@@ -174,16 +176,16 @@ export default function Orders() {
                 selectableRows: "multiple",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
-                customToolbar: () => <CustomToolbarWanted/>,
+                customToolbar: () => <CustomToolbarWanted reloadData={reloadData}/>,
                 customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                     <CustomToolbarSelectWanted
                         selectedRows={selectedRows}
                         displayData={displayData}
                         setSelectedRows={setSelectedRows}
-                        afterDelete={reloadDataAfterDelete}
+                        afterDelete={reloadData}
                     />
                 )
-            };
+            }
         } else {
             optionsWanted = {
                 filterType: 'checkbox',
@@ -192,8 +194,8 @@ export default function Orders() {
                 selectableRows: "none",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
-                customToolbar: () => <CustomToolbarWanted/>,
-            };
+                customToolbar: () => <CustomToolbarWanted reloadData={reloadData}/>,
+            }
         }
 
         return (
