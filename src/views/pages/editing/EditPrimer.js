@@ -108,11 +108,12 @@ export default function EditPrimer(props) {
     e.preventDefault();
     let formdata = new FormData(formRef.current);
 
-    formdata.forEach((value, key) => {
-      primerData[key] = value;
-    });
-    PrimersService.update(primerData);
-
+      formdata.forEach((value, key) => {
+        primerData[key] = value;
+      });
+    primerData["date"] = date;
+      PrimersService.update(primerData)
+          .catch((err) => alert("Error adding primer:", err));
   };
 
   const xsWidth = 12;

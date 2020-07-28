@@ -92,7 +92,7 @@ export default function PrimerDetails(props) {
         data.analysis = object.analysis;
         data.comment = object.comment;
 
-        PrimersService.update(data).then(returnData => {
+        PrimersService.updateAmountCommentAnalysis(data).then(returnData => {
             if (returnData != null) {
                 setSuccess(true);
             } else {
