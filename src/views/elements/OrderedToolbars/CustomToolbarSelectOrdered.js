@@ -1,15 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import { withStyles } from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import {ArrowUpward, Delete} from "@material-ui/icons";
-import OrdersColumns from "../OrdersColumns";
 import OrderedMoveDialog from "./dialogs/OrderedMoveDialog";
 import PrimerService from "../../../services/PrimersService";
+import PrimersService from "../../../services/PrimersService";
 
 const defaultToolbarSelectStyles = {
-    iconButton: {
-    },
+    iconButton: {},
     iconContainer: {
         marginRight: "24px",
     },
@@ -20,18 +19,24 @@ const defaultToolbarSelectStyles = {
 
 function CustomToolbarSelectOrdered(props) {
 
-    // the row that was selected
-    let selectedRow = props.selectedRows.data[0].index;
 
-    // the data of the row that was selected
-    let dataArray = props.displayData[selectedRow].data;
+    const [primerData, setPrimerData] = React.useState(null);
 
-    // data json
-    let dataJson = {};
-    const columns = OrdersColumns.getOrdersColumns();
-    columns.forEach((item, index) => {
-        dataJson[item.name] = dataArray[index];
-    });
+    let dataIndexes = props.selectedRows.data.map(el => el.dataIndex)
+    let id = 0
+    for (let row in props.displayData) {
+        for (let index in dataIndexes) {
+            // eslint-disable-next-line
+            if (props.displayData[row].dataIndex == dataIndexes[index]) {
+                id = props.displayData[row].data[0];
+            }
+        }
+    }
+
+    useEffect(() => {
+        PrimersService.getOne(id).then(setPrimerData);
+        // eslint-disable-next-line
+    }, []);
 
     const [open, setOpen] = React.useState(false);
 
@@ -40,32 +45,26 @@ function CustomToolbarSelectOrdered(props) {
     };
 
     const handleClickDelete = () => {
-        PrimerService.delete(dataJson.id).then((data) => {
-            if(data){
-                props.afterDelete();
-            } else {
-                alert("Error deleting primer!");
-            }
-        });
+        PrimerService.delete([id]).then(props.afterDelete());
     };
 
-    const { classes } = props;
+    const {classes} = props;
 
     return (
         <div className={classes.iconContainer}>
             <Tooltip title={"Move to received primers"}>
                 <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-                    <ArrowUpward className={classes.icon} />
+                    <ArrowUpward className={classes.icon}/>
                 </IconButton>
             </Tooltip>
-            <OrderedMoveDialog open={open} setOpen={setOpen} data={dataJson} />
+            <OrderedMoveDialog open={open} setOpen={setOpen} data={primerData}/>
             <Tooltip title={"Delete"}>
                 <IconButton className={classes.iconButton} onClick={handleClickDelete}>
-                    <Delete className={classes.icon} />
+                    <Delete className={classes.icon}/>
                 </IconButton>
             </Tooltip>
         </div>
     );
 }
 
-export default withStyles(defaultToolbarSelectStyles, { name: "CustomToolbarSelectOrdered" })(CustomToolbarSelectOrdered);
+export default withStyles(defaultToolbarSelectStyles, {name: "CustomToolbarSelectOrdered"})(CustomToolbarSelectOrdered);

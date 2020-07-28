@@ -17,8 +17,8 @@ import AddOneGeneral from "./pages/adding/primers/AddOneGeneral";
 
 const pageList = [
     {
-        name: 'Dashboard',
-        path: '/dashboard',
+        name: 'Overview',
+        path: '/Overview',
         component: Dashboard,
     },
     {

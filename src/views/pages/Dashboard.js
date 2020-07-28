@@ -49,7 +49,6 @@ export default function Dashboard() {
             onRowClick: (rowData, rowMeta) => {
                 let dataJson = {};
                 PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
-                console.log(dataJson);
                 PrimersService.getLinked(rowData[0]).then(pairsData => {
 
                     history.push('/primer-details', {

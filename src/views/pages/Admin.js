@@ -101,7 +101,7 @@ export default function Admin() {
 
     if (AuthService.getUserRole() !== 'ADMIN') {
         return (
-            <Redirect to="/dashboard"/>
+            <Redirect to="/overview"/>
         )
     } else if (data != null) {
         return (

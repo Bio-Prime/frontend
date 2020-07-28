@@ -10,11 +10,11 @@ import AddIcon from '@material-ui/icons/Add';
 
 export const mainListItems = (
     <div>
-        <ListItem button component={Link} to="/dashboard">
+        <ListItem button component={Link} to="/overview">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Overview" />
         </ListItem>
         <ListItem button component={Link} to="/orders">
             <ListItemIcon>
@@ -40,7 +40,7 @@ export const mainListItems = (
 
 export const mainListItemsGUEST = (
     <div>
-        <ListItem button component={Link} to="/dashboard">
+        <ListItem button component={Link} to="/overview">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>

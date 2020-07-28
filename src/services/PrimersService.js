@@ -74,6 +74,26 @@ export default {
         return null;
     }
   },
+    async moveToOrdered(ids) {
+        const updatePath = "/update/orderStatus";
+        try {
+            return await DataFetcher.postRawDataNoReturn(path + updatePath + "/ORDERED", "["+ids+"]");
+        }
+        catch (error) {
+            alert("Error moving primer to Ordered:" + error);
+            return null;
+        }
+    },
+    async moveToWanted(ids) {
+        const updatePath = "/update/orderStatus";
+        try {
+            return await DataFetcher.postRawDataNoReturn(path + updatePath + "/WANTED", "["+ids+"]");
+        }
+        catch (error) {
+            alert("Error moving primer to Wanted:" + error);
+            return null;
+        }
+    },
     async updateAmountCommentAnalysis(primer) {
         const updatePath = "/updateAmountCommentAnalysisi";
         try {
@@ -88,7 +108,7 @@ export default {
   async delete(ids) {
     const deletePath = "/delete"
     try {
-            await DataFetcher.postNoReturn(path+deletePath, ids);
+            await DataFetcher.postRawDataNoReturn(path+deletePath, "["+ids+"]");
             return true;
         }
         catch (error) {
@@ -130,7 +150,8 @@ export default {
   },
   async getAllForeignTables() {
     try {
-        return await DataFetcher.get(path + "/get-all-foreign-tables");
+        const data = await DataFetcher.get(path + "/get-all-foreign-tables");
+        return data;
         }
         catch (error) {
             alert("Error getting foreign tables: " + error);

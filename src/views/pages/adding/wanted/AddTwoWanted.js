@@ -185,7 +185,7 @@ export default function AddTwoWanted() {
                             PrimersService.addPair(forwPrimer, revPrimer);
                         });
                     })
-                    .then(history.push("/dashboard"))
+                    .then(history.push("/overview"))
                     .catch((err) => alert("Error adding primer:", err));
 
         });

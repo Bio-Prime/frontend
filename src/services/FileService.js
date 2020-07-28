@@ -33,4 +33,7 @@ export default {
         }
 
     },
+    getSampleCsvUrl() {
+        return ADDRESS + "/csv/sample";
+    },
 };

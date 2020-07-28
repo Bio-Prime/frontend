@@ -309,6 +309,9 @@ export default [
             display: false,
             filter: true,
             sort: true,
+            customBodyRender: (value, tableMeta, updateValue) => {
+                return value ? "yes" : "no";
+            }
         },
     },
     {

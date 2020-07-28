@@ -138,11 +138,15 @@ function DashboardLayout({onClickDark}) {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         {renderPageTitle()}
                     </Typography>
+
                     <Tooltip title={"Switch theme"}>
                         <IconButton color="inherit" aria-label="delete" className={classes.margin} onClick={onClickDark}>
                             <InvertColorsIcon />
                         </IconButton>
                     </Tooltip>
+                    <Typography component="h1" variant="h6" color="inherit" noWrap>
+                        {AuthService.getUsername()}
+                    </Typography>
                     <Tooltip title={"Logout"}>
                         <IconButton color="inherit" onClick={onClickLogout}>
                             <ExitToApp />
@@ -179,7 +183,7 @@ function DashboardLayout({onClickDark}) {
                                 <Route path={page.path} component={page.component} key={key} />
                         ))}
                         
-                        <Redirect from="/" to="/dashboard" />
+                        <Redirect from="/" to="/overview" />
                     </Switch>
                     <Box pt={4}>
                         <Copyright />

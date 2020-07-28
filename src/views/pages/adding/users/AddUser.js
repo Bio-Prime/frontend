@@ -77,7 +77,6 @@ export default function AddUser() {
     formdata.forEach((value, key) => {
       user[key] = value;
     });
-    console.log(user);
 
     UserService.add(user).then((data) => {
       if (data) {

@@ -54,7 +54,6 @@ export default function AddOneGeneral() {
         PrimersService.getAllForeignTables().then((tables) => {
             return {...Constants.foreignTables, ...tables, isLoaded: true};
         })
-            .then(obj => {return {...obj, "typeOfPrimer":obj.typeOfPrimer.filter(el => el !== "TaqProbe")}})
             .then(setForeignTables);
     }, []);
 
@@ -92,9 +91,8 @@ export default function AddOneGeneral() {
                 primer[key] = value;
             });
             primer["date"] = date;
-            console.log(primer);
             PrimersService.add(primer)
-                .then(history.push("/dashboard"))
+                .then(history.push("/overview"))
                 .catch((err) => alert("Error adding primer:", err));
         });
     };
@@ -504,7 +502,7 @@ export default function AddOneGeneral() {
                                         fullWidth
                                         label="Unit"
                                         value={
-                                            state.amountAvailablePackType === "Plate" ? "wells" : "µl"
+                                            state.amountAvailablePackType === "PLATE" ? "wells" : "µl"
                                         }
                                     />
                                 </Grid>

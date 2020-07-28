@@ -59,7 +59,6 @@ export default function UserDetails({open, setOpen, data}) {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log(formData);
     };
 
     const classes = useStyles();

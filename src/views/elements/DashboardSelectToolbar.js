@@ -1,7 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import {Delete} from "@material-ui/icons";
+import {Delete, ShoppingCart} from "@material-ui/icons";
 import LinkIcon from '@material-ui/icons/Link';
 import LinkOffIcon from '@material-ui/icons/LinkOff';
 import PrimersService from "../../services/PrimersService";
@@ -12,11 +12,12 @@ function DashboardSelectToolbar(props) {
 
 
         let dataIndexes = props.selectedRows.data.map(el => el.dataIndex)
+
         let ids = [];
         for (let row in props.displayData) {
             for (let index in dataIndexes) {
                 // eslint-disable-next-line
-                if (props.displayData[row].dataIndex == index) {
+                if (props.displayData[row].dataIndex == dataIndexes[index]) {
                     ids.push(props.displayData[row].data[0])
                 }
             }
@@ -27,6 +28,11 @@ function DashboardSelectToolbar(props) {
     function deletePrimers() {
         let ids = getIdsFromSelectedRows();
         PrimersService.delete(ids).then(props.reload())
+    }
+
+    function moveToOrdered() {
+        let ids = getIdsFromSelectedRows();
+        PrimersService.moveToOrdered(ids).then(props.reload())
     }
 
     function linkPrimers() {
@@ -48,6 +54,11 @@ function DashboardSelectToolbar(props) {
             <Tooltip title={"Link"}>
                 <IconButton onClick={linkPrimers}>
                     <LinkIcon/>
+                </IconButton>
+            </Tooltip>
+            <Tooltip title={"Move to ordered"}>
+                <IconButton onClick={moveToOrdered}>
+                    <ShoppingCart/>
                 </IconButton>
             </Tooltip>
             <Tooltip title={"Delete"}>

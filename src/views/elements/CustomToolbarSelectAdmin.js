@@ -41,7 +41,6 @@ function CustomToolbarSelectAdmin(props) {
   const { classes } = props;
 
   const handleClickDelete = () => {
-    console.log(dataJson);
     UserService.delete(dataJson.username).then((ok) => {
       if (ok) props.afterDelete();
     });

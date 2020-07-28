@@ -96,9 +96,8 @@ export default function AddOne() {
             if (Constants.requiredOld.every((el) => primer[el] !== "")) {
                 primer["orderStatus"] = "received";
                 primer["date"] = date;
-                console.log(primer);
                 PrimersService.add(primer)
-                    .then(history.push("/dashboard"))
+                    .then(history.push("/overview"))
                     .catch((err) => alert("Error adding primer:", err));
             } else {
                 alert("Required field missing.");
@@ -489,7 +488,7 @@ export default function AddOne() {
                                         fullWidth
                                         label="Unit"
                                         value={
-                                            state.amountAvailablePackType === "Plate" ? "wells" : "µl"
+                                            state.amountAvailablePackType === "PLATE" ? "wells" : "µl"
                                         }
                                     />
                                 </Grid>

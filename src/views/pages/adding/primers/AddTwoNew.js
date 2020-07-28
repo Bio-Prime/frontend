@@ -152,10 +152,7 @@ export default function AddOne() {
         forw["date"] = date;
         rev["orderStatus"] = "received";
         rev["orientation"] = "reverse";
-        forw["date"] = date;
-
-        console.log(forw);
-        console.log(rev);
+        rev["date"] = date;
 
         PrimersService.add(forw)
           .then((forwPrimer) => {
@@ -163,7 +160,7 @@ export default function AddOne() {
                             PrimersService.linkPrimersByIds([forwPrimer.id, revPrimer.id]);
                         });
           })
-          .then(history.push("/dashboard"))
+          .then(history.push("/overview"))
           .catch((err) => alert("Error adding primer:", err));
 
     });
@@ -521,7 +518,7 @@ export default function AddOne() {
                     fullWidth
                     label="Unit"
                     value={
-                      state.amountAvailablePackType === "Plate" ? "wells" : "µl"
+                      state.amountAvailablePackType === "PLATE" ? "wells" : "µl"
                     }
                   />
                 </Grid>

@@ -95,10 +95,9 @@ export default function AddOne() {
             if (Constants.requiredNew.every((el) => primer[el] !== "")) {
                 primer["orderStatus"] = "received";
                 primer["date"] = date;
-                console.log(primer);
                 PrimersService.add(primer)
-                    .then(history.push("/dashboard"))
-                    .catch((err) => alert("Error adding primer:", err));
+                    .then(history.push("/overview"))
+                    .catch((err) => alert("Error adding primer/probe:", err));
             } else {
                 alert("Required field missing.");
             }
@@ -129,7 +128,7 @@ export default function AddOne() {
                 <Paper className={classes.paper}>
                     <div className={classes.paperCenter}>
                         <Typography variant="h5" gutterBottom>
-                            Add one new primer
+                            Add one new primer/probe
                         </Typography>
                         <DialogContentText>
                             The fields marked with a "*" are required.
@@ -150,7 +149,7 @@ export default function AddOne() {
                             <Grid container spacing={2}>
                                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                                     <Typography gutterBottom variant="h6">
-                                        Properties of primer
+                                        Properties of primer/probe
                                     </Typography>
                                 </Grid>
 
@@ -162,7 +161,7 @@ export default function AddOne() {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        label="Name of primer"
+                                        label="Name of primer/probe"
                                         autoFocus
                                     />
                                 </Grid>
@@ -310,7 +309,7 @@ export default function AddOne() {
                                                 variant="outlined"
                                                 required
                                                 fullWidth
-                                                label="Type of primer"
+                                                label="Type of primer/probe"
                                             />
                                         )}
                                     />
@@ -389,7 +388,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                                     <Typography variant="h6" gutterBottom>
-                                        Form of ordered primer
+                                        Form of ordered primer/probe
                                     </Typography>
                                 </Grid>
 
@@ -490,7 +489,7 @@ export default function AddOne() {
                                         fullWidth
                                         label="Unit"
                                         value={
-                                            state.amountAvailablePackType === "Plate" ? "wells" : "µl"
+                                            state.amountAvailablePackType === "PLATE" ? "wells" : "µl"
                                         }
                                     />
                                 </Grid>
@@ -528,7 +527,7 @@ export default function AddOne() {
 
                                 <Grid item xs={xsWidth} sm={smWidth * 3}>
                                     <Typography variant="h6" gutterBottom>
-                                        Location of the primer in laboratory
+                                        Location of the primer/probe in laboratory
                                     </Typography>
                                 </Grid>
 

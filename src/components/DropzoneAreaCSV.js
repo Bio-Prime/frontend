@@ -3,6 +3,7 @@ import {DropzoneArea} from 'material-ui-dropzone'
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import FileService from "../services/FileService";
+import Typography from "@material-ui/core/Typography";
 
 export default function DropzoneAreaCSV(props) {
 
@@ -32,10 +33,17 @@ export default function DropzoneAreaCSV(props) {
                         acceptedFiles={[".csv, text/csv, application/vnd.ms-excel, application/csv, text/x-csv, application/x-csv, text/comma-separated-values, text/x-comma-separated-values"]}
                     />
                 </Grid>
-                <Grid item xs={12} sm={12}>
+                <Grid item xs={3} sm={3}>
                     <Button variant="outlined" onClick={handleClickSave} color="primary">
                         Save
                     </Button>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                    <Typography>
+                        <a href={FileService.getSampleCsvUrl()} download>
+                            Get sample.csv
+                        </a>
+                    </Typography>
                 </Grid>
             </Grid>
         </div>

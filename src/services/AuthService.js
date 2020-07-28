@@ -29,6 +29,12 @@ export default {
     return parseJwt(localStorage.getItem("bioprime-token")).role;
   },
 
+
+  getUsername() {
+    let jwt = parseJwt(localStorage.getItem("bioprime-token"));
+    return jwt.sub;
+  },
+
   login(data, onSuccess, onFail) {
     const url = ADDRESS + "/auth/login";
     const response = fetch(url, {
@@ -60,7 +66,6 @@ export default {
 
   refreshToken() {
     const url = ADDRESS + "/auth/refresh";
-    console.log(JSON.stringify(localStorage.getItem("bioprime-token")));
     const response = fetch(url, {
       method: "POST",
       mode: "cors",
