@@ -76,6 +76,7 @@ export default function EditPrimer(props) {
     }
     setState(newState);
     setDate(primerData.date);
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (event) => {

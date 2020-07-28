@@ -133,7 +133,6 @@ export default function Orders() {
         const dataOrderedBy = formatChartData(dataOrdered, "user");
         const dataSupplier = formatChartData(dataOrdered, "supplier");
 
-        const columns = OrdersColumns.getOrdersColumns();
 
         let optionsOrdered = {};
         let optionsWanted = {};
