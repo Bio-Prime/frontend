@@ -5,7 +5,6 @@ import clsx from "clsx";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Title from "../../components/Title";
 import Typography from "@material-ui/core/Typography";
-import OrdersColumns from "../elements/OrdersColumns";
 import CustomToolbarOrdered from "../elements/OrderedToolbars/CustomToolbarOrdered";
 import CustomToolbarSelectOrdered from "../elements/OrderedToolbars/CustomToolbarSelectOrdered";
 import CustomToolbarWanted from "../elements/WantedToolbars/CustomToolbarWanted";
