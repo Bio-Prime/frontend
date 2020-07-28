@@ -47,11 +47,16 @@ export default function Dashboard() {
             },
             pagination: false,
             onRowClick: (rowData, rowMeta) => {
-                // history.push({
-                //     pathname: '/primer-details',
-                //     data: rowData
-                // });
-                alert("Primer/probe details and editing are currently not working. ");
+                let dataJson = {};
+                PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
+                console.log(dataJson);
+                PrimersService.getLinked(rowData[0]).then(pairsData => {
+
+                    history.push('/primer-details', {
+                        data: dataJson,
+                        pairsData: pairsData,
+                    });
+                });
             },
             customToolbar: () => <CustomToolbar reloadData={reloadData}/>,
             customToolbarSelect: (selectedRows, displayData, setSelectedRows) =>

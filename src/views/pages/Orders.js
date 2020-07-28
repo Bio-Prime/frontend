@@ -20,6 +20,7 @@ import Alert from "@material-ui/lab/Alert/Alert";
 import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import AuthService from "../../services/AuthService";
 import MUIDataTable from "mui-datatables";
+import PrimersColumns from "../elements/PrimersColumns";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -254,7 +255,7 @@ export default function Orders() {
                         <MUIDataTable
                             title={"Ordered"}
                             data={dataOrdered}
-                            columns={columns}
+                            columns={PrimersColumns}
                             options={optionsOrdered}
                         />
                     </Grid>
@@ -262,7 +263,7 @@ export default function Orders() {
                         <MUIDataTable
                             title={"Wanted"}
                             data={dataWanted}
-                            columns={columns}
+                            columns={PrimersColumns}
                             options={optionsWanted}
                         />
                     </Grid>

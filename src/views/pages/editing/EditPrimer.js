@@ -50,24 +50,32 @@ export default function EditPrimer(props) {
 
   const formRef = useRef();
 
-  const setPrimersData = () => {
-      const primerData = props.location.state.data;
+  let primerData = props.location.state.data;
 
-      // clean object
-      for (let key in primerData) {
-        if (primerData[key] === null || primerData[key] === undefined) {
-          primerData[key] = "";
-        }
-      }
 
-      return primerData;
-  };
+
+  //set state values to that of provided data
+
+
+
 
   useEffect(() => {
-    // setPrimersData();
     PrimersService.getAllForeignTables().then((tables) => {
       return {...Constants.foreignTables, ...tables, isLoaded: true};
     }).then(setForeignTables);
+
+    for (let key in primerData) {
+      if (primerData[key] === null || primerData[key] === undefined) {
+        primerData[key] = "";
+      }
+    }
+
+    let newState = {};
+    for (let key in state) {
+      newState[key] = primerData[key];
+    }
+    setState(newState);
+    setDate(primerData.date);
   }, []);
 
   const handleChange = (event) => {
@@ -98,7 +106,6 @@ export default function EditPrimer(props) {
   const submit = (e) => {
     e.preventDefault();
     let formdata = new FormData(formRef.current);
-    let primerData = setPrimersData();
 
     formdata.forEach((value, key) => {
       primerData[key] = value;
@@ -162,6 +169,7 @@ export default function EditPrimer(props) {
                         fullWidth
                         label="Name of primer/probe"
                         autoFocus
+                        defaultValue={primerData.name}
                     />
                   </Grid>
 
@@ -222,6 +230,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.organism}
+                        defaultValue={primerData.organism}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -240,6 +249,7 @@ export default function EditPrimer(props) {
                         variant="outlined"
                         fullWidth
                         label="Gen"
+                        defaultValue={primerData.gen}
                     />
                   </Grid>
 
@@ -249,12 +259,14 @@ export default function EditPrimer(props) {
                         variant="outlined"
                         fullWidth
                         label="NCBI gen ID"
+                        defaultValue={primerData.ncbiGenId}
                     />
                   </Grid>
 
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
                         options={foreignTables.humanGenomBuild}
+                        defaultValue={primerData.humanGenomBuild}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -271,6 +283,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.positionInReference}
+                        defaultValue={primerData.positionInReference}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -291,12 +304,14 @@ export default function EditPrimer(props) {
                         label="Length of amplicone"
                         value={state.lengthOfAmplicone}
                         onChange={handleNumbers}
+                        defaultValue={primerData.lengthOfAmplicone}
                     />
                   </Grid>
 
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
                         options={foreignTables.typeOfPrimer}
+                        defaultValue={primerData.typeOfPrimer}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -313,6 +328,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.fiveModification}
+                        defaultValue={primerData.fiveModification}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -329,6 +345,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.threeModification}
+                        defaultValue={primerData.threeModification}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -344,6 +361,7 @@ export default function EditPrimer(props) {
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
                         options={["Forward","Reverse"]}
+                        defaultValue={primerData.orientation}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -360,6 +378,7 @@ export default function EditPrimer(props) {
                   <Grid item xs={xsWidth} sm={smWidth}>
                     <Autocomplete
                         options={["Wanted","Ordered","Received"]}
+                        defaultValue={primerData.orderStatus}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -391,7 +410,7 @@ export default function EditPrimer(props) {
                           row
                           aria-label="checkSpecifityInBlast"
                           name="checkSpecifityInBlast"
-                          defaultValue="false"
+                          defaultValue={primerData.checkSpecifityInBlast}
                       >
                         <FormControlLabel
                             value="true"
@@ -421,6 +440,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.formulation}
+                        defaultValue={primerData.formulation}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -437,6 +457,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.storingT}
+                        defaultValue={primerData.storingT}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -453,6 +474,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.purificationMethod}
+                        defaultValue={primerData.purificationMethod}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -511,7 +533,7 @@ export default function EditPrimer(props) {
                         fullWidth
                         label="Unit"
                         value={
-                          state.amountAvailablePackType === "Plate" ? "wells" : "µl"
+                          state.amountAvailablePackType === "PLATE" ? "wells" : "µl"
                         }
                     />
                   </Grid>
@@ -556,6 +578,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.freezer}
+                        defaultValue={primerData.freezer}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -572,6 +595,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.drawer}
+                        defaultValue={primerData.drawer}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -588,6 +612,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.box}
+                        defaultValue={primerData.box}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -610,6 +635,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.project}
+                        defaultValue={primerData.project}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -626,6 +652,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.primerApplication}
+                        defaultValue={primerData.primerApplication}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -657,6 +684,7 @@ export default function EditPrimer(props) {
                         fullWidth
                         rows={2}
                         variant="outlined"
+                        defaultValue={primerData.applicationComment}
                     />
                   </Grid>
 
@@ -672,6 +700,7 @@ export default function EditPrimer(props) {
                         variant="outlined"
                         fullWidth
                         label="Name & surname"
+                        defaultValue={primerData.designerName}
                     />
                   </Grid>
 
@@ -681,6 +710,7 @@ export default function EditPrimer(props) {
                         variant="outlined"
                         fullWidth
                         label="Publication"
+                        defaultValue={primerData.designerPublication}
                     />
                   </Grid>
 
@@ -690,6 +720,7 @@ export default function EditPrimer(props) {
                         variant="outlined"
                         fullWidth
                         label="Link to database"
+                        defaultValue={primerData.designerPublication}
                     />
                   </Grid>
 
@@ -703,6 +734,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.supplier}
+                        defaultValue={primerData.supplier}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -719,6 +751,7 @@ export default function EditPrimer(props) {
                     <Autocomplete
                         freeSolo
                         options={foreignTables.manufacturer}
+                        defaultValue={primerData.manufacturer}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -758,6 +791,7 @@ export default function EditPrimer(props) {
                         fullWidth
                         rows={2}
                         variant="outlined"
+                        defaultValue={primerData.document}
                     />
                   </Grid>
 
@@ -769,6 +803,7 @@ export default function EditPrimer(props) {
                         fullWidth
                         rows={2}
                         variant="outlined"
+                        defaultValue={primerData.comment}
                     />
                   </Grid>
 
@@ -780,6 +815,7 @@ export default function EditPrimer(props) {
                         fullWidth
                         rows={2}
                         variant="outlined"
+                        defaultValue={primerData.analysis}
                     />
                   </Grid>
                 </Grid>

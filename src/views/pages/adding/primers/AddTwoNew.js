@@ -160,7 +160,7 @@ export default function AddOne() {
         PrimersService.add(forw)
           .then((forwPrimer) => {
                         PrimersService.add(rev).then((revPrimer) => {
-                            PrimersService.addPair(forwPrimer, revPrimer);
+                            PrimersService.linkPrimersByIds([forwPrimer.id, revPrimer.id]);
                         });
           })
           .then(history.push("/dashboard"))

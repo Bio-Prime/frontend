@@ -56,18 +56,10 @@ const columns = [
     }
 ];
 
-const columnsRelated = PrimersColumns;
-
 const optionsRelated = {
-    filterType: 'checkbox',
-    downloadOptions: {
-        filename: "primers.csv",
-        separator: ","
-    },
+    filterType: "checkbox",
+    pagination: false,
     selectableRows: "none",
-    print: false,
-    download: false,
-    filter: false,
 };
 
 export default function PrimerDetails(props) {
@@ -315,9 +307,9 @@ export default function PrimerDetails(props) {
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
                     <MUIDataTable
-                        title={"Related"}
+                        title={"Linked"}
                         data={pairsData}
-                        columns={columnsRelated}
+                        columns={PrimersColumns}
                         options={optionsRelated}
                     />
                 </Grid>
