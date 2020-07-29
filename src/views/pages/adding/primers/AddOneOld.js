@@ -244,7 +244,7 @@ export default function AddOne() {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        label="Gen"
+                                        label="Gene"
                                     />
                                 </Grid>
 
@@ -253,7 +253,7 @@ export default function AddOne() {
                                         name="ncbiGenId"
                                         variant="outlined"
                                         fullWidth
-                                        label="NCBI gen ID"
+                                        label="NCBI gene ID"
                                     />
                                 </Grid>
 

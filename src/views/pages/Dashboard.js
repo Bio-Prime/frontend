@@ -74,8 +74,14 @@ export default function Dashboard() {
             },
             pagination: false,
             onRowClick: (rowData, rowMeta) => {
-                history.push('/primer-details', {
-                    data: data[rowMeta.dataIndex]
+                let dataJson = {};
+                PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
+                PrimersService.getLinked(rowData[0]).then(pairsData => {
+
+                    history.push('/primer-details', {
+                        data: dataJson,
+                        pairsData: pairsData,
+                    });
                 });
             },
             selectableRows: "none",

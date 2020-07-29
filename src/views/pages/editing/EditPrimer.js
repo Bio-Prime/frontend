@@ -251,7 +251,7 @@ let history = useHistory();
                         name="gen"
                         variant="outlined"
                         fullWidth
-                        label="Gen"
+                        label="Gene"
                         defaultValue={primerData.gen}
                     />
                   </Grid>
@@ -261,7 +261,7 @@ let history = useHistory();
                         name="ncbiGenId"
                         variant="outlined"
                         fullWidth
-                        label="NCBI gen ID"
+                        label="NCBI gene ID"
                         defaultValue={primerData.ncbiGenId}
                     />
                   </Grid>
