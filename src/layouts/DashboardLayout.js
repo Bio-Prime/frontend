@@ -17,13 +17,17 @@ import { mainListItems, mainListItemsGUEST, secondaryListItems } from './listIte
 import { Switch, Route, Redirect } from 'react-router-dom';
 import routes from '../views/index'
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
-import Copyright from "../components/Copyright";
+import Sponzorji from "../components/Sponzorji";
 import { useLocation } from 'react-router-dom'
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import {ExitToApp} from "@material-ui/icons";
 import { useHistory } from 'react-router-dom';
 import AuthService from "../services/AuthService";
 import {withStyles} from "@material-ui/core";
+import Link from "@material-ui/core/Link";
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -144,6 +148,13 @@ function DashboardLayout({onClickDark}) {
                             <InvertColorsIcon />
                         </IconButton>
                     </Tooltip>
+                    <Typography component="h1" variant="h6"  noWrap>
+                        <Link href={"https://bioprimedocs.readthedocs.io/en/latest/"}>
+                            <IconButton >
+                                <HelpOutlineIcon  style={{ color: "white" }} />
+                            </IconButton>
+                        </Link>
+                    </Typography>
                     <Typography component="h1" variant="h6" color="inherit" noWrap>
                         {AuthService.getUsername()}
                     </Typography>
@@ -186,7 +197,7 @@ function DashboardLayout({onClickDark}) {
                         <Redirect from="/" to="/overview" />
                     </Switch>
                     <Box pt={4}>
-                        <Copyright />
+                        <Sponzorji />
                     </Box>
                 </Container>
             </main>

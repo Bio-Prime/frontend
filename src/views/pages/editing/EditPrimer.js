@@ -14,7 +14,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import PrimersService from "../../../services/PrimersService";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -52,7 +52,7 @@ export default function EditPrimer(props) {
 
   let primerData = props.location.state.data;
 
-
+let history = useHistory();
 
   //set state values to that of provided data
 
@@ -113,6 +113,7 @@ export default function EditPrimer(props) {
       });
     primerData["date"] = date;
       PrimersService.update(primerData)
+          .then(history.push("/overview"))
           .catch((err) => alert("Error adding primer:", err));
   };
 
