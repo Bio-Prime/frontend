@@ -178,7 +178,7 @@ export default [
     },
     {
         name: "gen",
-        label: "Gen",
+        label: "Gene",
         options: {
             display: false,
             filter: true,
@@ -187,7 +187,7 @@ export default [
     },
     {
         name: "ncbiGenId",
-        label: "NCBI gen ID",
+        label: "NCBI gene ID",
         options: {
             display: false,
             filter: true,
