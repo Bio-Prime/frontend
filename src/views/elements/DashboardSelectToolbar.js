@@ -5,6 +5,8 @@ import {Delete, ShoppingCart} from "@material-ui/icons";
 import LinkIcon from '@material-ui/icons/Link';
 import LinkOffIcon from '@material-ui/icons/LinkOff';
 import PrimersService from "../../services/PrimersService";
+import UserService from "../../services/UserService";
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 function DashboardSelectToolbar(props) {
 
@@ -39,13 +41,24 @@ function DashboardSelectToolbar(props) {
         let ids = getIdsFromSelectedRows();
         PrimersService.linkPrimersByIds(ids).then(props.reload())
     }
+
     function unLinkPrimers() {
         let ids = getIdsFromSelectedRows();
         PrimersService.unLinkPrimersByIds(ids).then(props.reload())
     }
 
+    function favourite() {
+        let ids = getIdsFromSelectedRows();
+        UserService.addFavouritesByIds(ids).then(props.reload())
+    }
+
     return (
         <div>
+            <Tooltip title={"Favourite"}>
+                <IconButton onClick={favourite}>
+                    <FavoriteIcon/>
+                </IconButton>
+            </Tooltip>
             <Tooltip title={"Unlink"}>
                 <IconButton onClick={unLinkPrimers}>
                     <LinkOffIcon/>

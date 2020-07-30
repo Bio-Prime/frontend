@@ -252,7 +252,7 @@ export default function Orders() {
                                     <YAxis stroke={theme.palette.text.secondary}/>
                                     <Tooltip/>
                                     <Legend/>
-                                    <Bar dataKey="value" fill="#8884d8"/>
+                                    <Bar dataKey="value" fill="#876E9B"/>
                                 </BarChart>
                             </ResponsiveContainer>
                         </Paper>
@@ -278,7 +278,7 @@ export default function Orders() {
                                     <YAxis stroke={theme.palette.text.secondary}/>
                                     <Tooltip/>
                                     <Legend/>
-                                    <Bar dataKey="value" fill="#8884d8"/>
+                                    <Bar dataKey="value" fill="#876E9B"/>
                                 </BarChart>
                             </ResponsiveContainer>
                         </Paper>

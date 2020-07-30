@@ -22,6 +22,35 @@ export default {
       return null;
     }
   },
+  async addFavouritesByIds(ids) {
+    const addFavouritesPath = "/addFavourites"
+    try {
+      await DataFetcher.postRawDataNoReturn(path + addFavouritesPath, "[" + ids + "]");
+      return true;
+    } catch (error) {
+      alert("Error adding favourites: " + error);
+      return null;
+    }
+  },
+  async removeFavouritesByIds(ids) {
+    const removeFavouritesPath = "/removeFavourites"
+    try {
+      await DataFetcher.postRawDataNoReturn(path + removeFavouritesPath, "[" + ids + "]");
+      return true;
+    } catch (error) {
+      alert("Error removing favourites: " + error);
+      return null;
+    }
+  },
+  async getFavourites() {
+    const getFavouritesPath = "/favourites"
+    try {
+      return await DataFetcher.get(path + getFavouritesPath);
+    } catch (error) {
+      alert("Error getting favourites: " + error);
+      return null;
+    }
+  },
   async add(user) {
     const addPath = "/add";
     try {

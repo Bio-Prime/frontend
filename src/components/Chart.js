@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTheme } from '@material-ui/core/styles';
-import { BarChart, XAxis, YAxis, ResponsiveContainer, Tooltip, Bar, Legend } from 'recharts';
+import {useTheme} from '@material-ui/core/styles';
+import {Bar, BarChart, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import Title from './Title';
 
 export default function Chart({allData}) {
@@ -45,8 +45,8 @@ export default function Chart({allData}) {
                     <XAxis dataKey="name"  stroke={theme.palette.text.secondary}/>
                     <YAxis stroke={theme.palette.text.secondary} />
                     <Tooltip />
-                    <Legend />
-                    <Bar dataKey="num" fill="#8884d8" />
+                    <Legend/>
+                    <Bar dataKey="num" fill="#876E9B"/>
                 </BarChart>
             </ResponsiveContainer>
         </React.Fragment>

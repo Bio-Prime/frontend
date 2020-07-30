@@ -15,12 +15,18 @@ import AddOneOrdered from "./pages/adding/ordered/AddOneOrdered";
 import AddTwoOrdered from "./pages/adding/ordered/AddTwoOrdered";
 import AddOneGeneral from "./pages/adding/primers/AddOneGeneral";
 import NewPassword from "./pages/editing/NewPassword";
+import Favourites from "./pages/Favourites";
 
 const pageList = [
     {
         name: 'Overview',
         path: '/Overview',
         component: Dashboard,
+    },
+    {
+        name: 'Favourites',
+        path: '/favourites',
+        component: Favourites,
     },
     {
         name: 'New password',

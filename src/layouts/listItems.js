@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import {History, SupervisorAccount} from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import TableChartIcon from '@material-ui/icons/TableChart';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 export const mainListItems = (
     <div>
@@ -22,13 +23,18 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Orders"/>
         </ListItem>
+        <ListItem button component={Link} to="/favourites">
+            <ListItemIcon>
+                <FavoriteIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Favourites"/>
+        </ListItem>
         <ListItem button component={Link} to="/history">
             <ListItemIcon>
                 <History/>
             </ListItemIcon>
             <ListItemText primary="History"/>
         </ListItem>
-
         <ListItem button component={Link} to="/add-one-general">
             <ListItemIcon>
                 <AddIcon/>
@@ -51,6 +57,12 @@ export const mainListItemsGUEST = (
                 <ShoppingCartIcon/>
             </ListItemIcon>
             <ListItemText primary="Orders"/>
+        </ListItem>
+        <ListItem button component={Link} to="/favourites">
+            <ListItemIcon>
+                <FavoriteIcon/>
+            </ListItemIcon>
+            <ListItemText primary="Favourites"/>
         </ListItem>
     </div>
 );
