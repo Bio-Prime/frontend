@@ -26,7 +26,7 @@ export default function CustomToolbarOrdered(props) {
                     <RefreshIcon />
                 </IconButton>
             </Tooltip>
-            {AuthService.getUserRole() !== 'GUEST'
+            {AuthService.getUserRole() !== 'GUEST' || AuthService.getUserRole() !== 'STUDENT'
                 ? <Tooltip title={"Add"}>
                     <IconButton onClick={handleClickOpen}>
                         <AddIcon/>
