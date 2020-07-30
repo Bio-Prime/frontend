@@ -40,7 +40,7 @@ export default function DropzoneAreaCSV(props) {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                     <Typography>
-                        <a href={FileService.getSampleCsvUrl()} download>
+                        <a href={process.env.PUBLIC_URL + "/sample.csv"} download>
                             Get sample.csv
                         </a>
                     </Typography>
