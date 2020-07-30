@@ -32,7 +32,7 @@ function DashboardSelectToolbar(props) {
 
     function moveToOrdered() {
         let ids = getIdsFromSelectedRows();
-        PrimersService.moveToOrdered(ids).then(props.reload())
+        PrimersService.moveToWanted(ids).then(props.reload())
     }
 
     function linkPrimers() {
