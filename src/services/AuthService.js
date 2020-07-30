@@ -60,6 +60,32 @@ export default {
       });
   },
 
+  changePassword(data, onSuccess, onFail) {
+    const url = ADDRESS + "/auth/change-password";
+    const response = fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      redirect: "error",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(data),
+    });
+    response
+        .then(handleErrors)
+        .then((response) => response.text())
+        .then((data) => {
+          localStorage.setItem("bioprime-token", data);
+          onSuccess();
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+          onFail();
+        });
+  },
+
+
   logout() {
     localStorage.removeItem("bioprime-token");
   },

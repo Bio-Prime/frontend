@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
@@ -13,19 +13,18 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, mainListItemsGUEST, secondaryListItems } from './listItems';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import {mainListItems, mainListItemsGUEST, secondaryListItems} from './listItems';
+import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import routes from '../views/index'
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import Sponzorji from "../components/Sponzorji";
-import { useLocation } from 'react-router-dom'
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import {ExitToApp} from "@material-ui/icons";
-import { useHistory } from 'react-router-dom';
 import AuthService from "../services/AuthService";
 import {withStyles} from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import Button from "@material-ui/core/Button";
 
 
 const drawerWidth = 240;
@@ -94,7 +93,7 @@ const useStyles = makeStyles(theme => ({
         height: '100vh',
         overflow: 'auto',
     },
-    container:{
+    container: {
         paddingTop: "1%"
     }
 }));
@@ -126,8 +125,8 @@ function DashboardLayout({onClickDark}) {
     };
 
     return (
-        <div className={classes.root} >
-            <CssBaseline />
+        <div className={classes.root}>
+            <CssBaseline/>
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
@@ -137,30 +136,33 @@ function DashboardLayout({onClickDark}) {
                         onClick={handleDrawerOpen}
                         className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         {renderPageTitle()}
                     </Typography>
 
                     <Tooltip title={"Switch theme"}>
-                        <IconButton color="inherit" aria-label="delete" className={classes.margin} onClick={onClickDark}>
-                            <InvertColorsIcon />
+                        <IconButton color="inherit" aria-label="delete" className={classes.margin}
+                                    onClick={onClickDark}>
+                            <InvertColorsIcon/>
                         </IconButton>
                     </Tooltip>
-                    <Typography component="h1" variant="h6"  noWrap>
+                    <Typography component="h1" variant="h6" noWrap>
                         <Link href={"https://bioprimedocs.readthedocs.io/en/latest/"}>
-                            <IconButton >
-                                <HelpOutlineIcon  style={{ color: "white" }} />
+                            <IconButton>
+                                <HelpOutlineIcon style={{color: "white"}}/>
                             </IconButton>
                         </Link>
                     </Typography>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap>
-                        {AuthService.getUsername()}
-                    </Typography>
+                    <Tooltip title={"Change password"}>
+                        <Button onClick={() => history.push("/new-password")} color="inherit">
+                            {AuthService.getUsername()}
+                        </Button>
+                    </Tooltip>
                     <Tooltip title={"Logout"}>
                         <IconButton color="inherit" onClick={onClickLogout}>
-                            <ExitToApp />
+                            <ExitToApp/>
                         </IconButton>
                     </Tooltip>
                 </Toolbar>
@@ -174,7 +176,7 @@ function DashboardLayout({onClickDark}) {
             >
                 <div className={classes.toolbarIcon}>
                     <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
+                        <ChevronLeftIcon/>
                     </IconButton>
                 </div>
                 {AuthService.getUserRole() === 'GUEST'
@@ -182,26 +184,27 @@ function DashboardLayout({onClickDark}) {
                     : <List>{mainListItems}</List>
                 }
                 {AuthService.getUserRole() === 'ADMIN'
-                    ? <div><Divider /><List>{secondaryListItems}</List></div>
+                    ? <div><Divider/><List>{secondaryListItems}</List></div>
                     : <div></div>
                 }
             </Drawer>
             <main className={classes.content}>
-                <div className={classes.appBarSpacer} />
+                <div className={classes.appBarSpacer}/>
                 <Container maxWidth={false} className={classes.container}>
                     <Switch>
                         {routes.map((page, key) => (
-                                <Route path={page.path} component={page.component} key={key} />
+                            <Route path={page.path} component={page.component} key={key}/>
                         ))}
-                        
-                        <Redirect from="/" to="/overview" />
+
+                        <Redirect from="/" to="/overview"/>
                     </Switch>
                     <Box pt={4}>
-                        <Sponzorji />
+                        <Sponzorji/>
                     </Box>
                 </Container>
             </main>
         </div>
     );
 }
+
 export default withStyles(useStyles)(DashboardLayout);

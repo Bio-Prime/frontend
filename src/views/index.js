@@ -14,12 +14,18 @@ import AddTwoWanted from "./pages/adding/wanted/AddTwoWanted";
 import AddOneOrdered from "./pages/adding/ordered/AddOneOrdered";
 import AddTwoOrdered from "./pages/adding/ordered/AddTwoOrdered";
 import AddOneGeneral from "./pages/adding/primers/AddOneGeneral";
+import NewPassword from "./pages/editing/NewPassword";
 
 const pageList = [
     {
         name: 'Overview',
         path: '/Overview',
         component: Dashboard,
+    },
+    {
+        name: 'New password',
+        path: '/new-password',
+        component: NewPassword,
     },
     {
         name: 'Orders',
