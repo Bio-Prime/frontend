@@ -9,8 +9,6 @@ import CustomToolbarOrdered from "../elements/OrderedToolbars/CustomToolbarOrder
 import CustomToolbarSelectOrdered from "../elements/OrderedToolbars/CustomToolbarSelectOrdered";
 import CustomToolbarWanted from "../elements/WantedToolbars/CustomToolbarWanted";
 import CustomToolbarSelectWanted from "../elements/WantedToolbars/CustomToolbarSelectWanted";
-import PieChart from "recharts/lib/chart/PieChart";
-import Pie from "recharts/lib/polar/Pie";
 import ResponsiveContainer from "recharts/lib/component/ResponsiveContainer";
 import {Bar, BarChart, Legend, Tooltip, XAxis, YAxis} from "recharts";
 import PrimersService from "../../services/PrimersService";
@@ -20,6 +18,8 @@ import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import AuthService from "../../services/AuthService";
 import MUIDataTable from "mui-datatables";
 import OrdersColumns from "../elements/OrdersColumns";
+import PrimersColumns from "../elements/PrimersColumns";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -31,12 +31,6 @@ const useStyles = makeStyles(theme => ({
     fixedHeight: {
         height: 150,
     },
-    fixedHeightTwo: {
-        height: 480,
-    },
-    fixedHeightThree: {
-        height: 305,
-    }
 }));
 
 const formatChartData = (allData, attribute) => {
@@ -76,6 +70,9 @@ export default function Orders() {
     const [dataOrdered, setDataOrdered] = React.useState(null);
     const [dataWanted, setDataWanted] = React.useState(null);
 
+
+    let history = useHistory();
+
     useEffect(() => {
         PrimersService.getAllOrdered().then(setDataOrdered);
         PrimersService.getAllWanted().then(setDataWanted);
@@ -84,8 +81,6 @@ export default function Orders() {
     const classes = useStyles();
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const fixedHeightPaperTwo = clsx(classes.paper, classes.fixedHeightTwo);
-    const fixedHeightPaperThree = clsx(classes.paper, classes.fixedHeightThree);
 
     const theme = useTheme();
 
@@ -144,6 +139,17 @@ export default function Orders() {
                 selectableRows: "single",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
+                onRowClick: (rowData, rowMeta) => {
+                    let dataJson = {};
+                    PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
+                    PrimersService.getLinked(rowData[0]).then(pairsData => {
+
+                        history.push('/primer-details', {
+                            data: dataJson,
+                            pairsData: pairsData,
+                        });
+                    });
+                },
                 customToolbar: () => <CustomToolbarOrdered reloadData={reloadData}/>,
                 customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                     <CustomToolbarSelectOrdered
@@ -164,6 +170,17 @@ export default function Orders() {
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
                 customToolbar: () => <CustomToolbarOrdered reloadData={reloadData}/>,
+                onRowClick: (rowData, rowMeta) => {
+                    let dataJson = {};
+                    PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
+                    PrimersService.getLinked(rowData[0]).then(pairsData => {
+
+                        history.push('/primer-details', {
+                            data: dataJson,
+                            pairsData: pairsData,
+                        });
+                    });
+                },
             };
         }
 
@@ -175,6 +192,17 @@ export default function Orders() {
                 selectableRows: "multiple",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
+                onRowClick: (rowData, rowMeta) => {
+                    let dataJson = {};
+                    PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
+                    PrimersService.getLinked(rowData[0]).then(pairsData => {
+
+                        history.push('/primer-details', {
+                            data: dataJson,
+                            pairsData: pairsData,
+                        });
+                    });
+                },
                 customToolbar: () => <CustomToolbarWanted reloadData={reloadData}/>,
                 customToolbarSelect: (selectedRows, displayData, setSelectedRows) => (
                     <CustomToolbarSelectWanted
@@ -193,6 +221,17 @@ export default function Orders() {
                 selectableRows: "none",
                 rowsPerPage: 5,
                 rowsPerPageOptions: [5, 10, 15],
+                onRowClick: (rowData, rowMeta) => {
+                    let dataJson = {};
+                    PrimersColumns.forEach((item, index) => dataJson[item.name] = rowData[index]);
+                    PrimersService.getLinked(rowData[0]).then(pairsData => {
+
+                        history.push('/primer-details', {
+                            data: dataJson,
+                            pairsData: pairsData,
+                        });
+                    });
+                },
                 customToolbar: () => <CustomToolbarWanted reloadData={reloadData}/>,
             }
         }
@@ -204,50 +243,45 @@ export default function Orders() {
                 </Snackbar>
                 <Grid container spacing={3}>
                     {/* Recent Orders */}
-                    <Grid item xs={12} md={6} lg={6}>
-                        <Paper className={fixedHeightPaperTwo}>
+                    <Grid item xs={12} md={4} lg={4}>
+                        <Paper className={fixedHeightPaper}>
                             <Title>Ordered by</Title>
                             <ResponsiveContainer width="100%">
-                                <PieChart>
-                                    <Pie data={dataOrderedBy} nameKey="name" dataKey="value"
-                                         label={({index, value}) => {
-                                             return dataOrderedBy[index].name + " (" + value + ")"
-                                         }}
-                                         cx="50%" cy="50%" outerRadius={'80%'} fill="#8884d8"
-                                    />
-                                </PieChart>
+                                <BarChart data={dataOrderedBy}>
+                                    <XAxis dataKey="name" stroke={theme.palette.text.secondary}/>
+                                    <YAxis stroke={theme.palette.text.secondary}/>
+                                    <Tooltip/>
+                                    <Legend/>
+                                    <Bar dataKey="value" fill="#8884d8"/>
+                                </BarChart>
                             </ResponsiveContainer>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={6}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Paper className={fixedHeightPaper}>
-                                    <Title>Number of ordered primers</Title>
-                                    <Typography component="p" variant="h4">
-                                        {dataOrdered.length}
-                                    </Typography>
-                                    <Typography color="textSecondary" className={classes.depositContext}>
-                                        on {new Date().toDateString()}
-                                    </Typography>
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <Paper className={fixedHeightPaperThree}>
-                                    <Title>Suppliers</Title>
-                                    <br/>
-                                    <ResponsiveContainer width="90%">
-                                        <BarChart data={dataSupplier}>
-                                            <XAxis dataKey="name" stroke={theme.palette.text.secondary}/>
-                                            <YAxis stroke={theme.palette.text.secondary}/>
-                                            <Tooltip/>
-                                            <Legend/>
-                                            <Bar dataKey="value" fill="#8884d8"/>
-                                        </BarChart>
-                                    </ResponsiveContainer>
-                                </Paper>
-                            </Grid>
-                        </Grid>
+                    <Grid item xs={12} md={4} lg={4}>
+                        <Paper className={fixedHeightPaper}>
+                            <Title>Number of ordered primers</Title>
+                            <Typography component="p" variant="h4">
+                                {dataOrdered.length}
+                            </Typography>
+                            <Typography color="textSecondary" className={classes.depositContext}>
+                                on {new Date().toDateString()}
+                            </Typography>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} md={4} lg={4}>
+                        <Paper className={fixedHeightPaper}>
+                            <Title>Suppliers</Title>
+                            <br/>
+                            <ResponsiveContainer width="90%">
+                                <BarChart data={dataSupplier}>
+                                    <XAxis dataKey="name" stroke={theme.palette.text.secondary}/>
+                                    <YAxis stroke={theme.palette.text.secondary}/>
+                                    <Tooltip/>
+                                    <Legend/>
+                                    <Bar dataKey="value" fill="#8884d8"/>
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </Paper>
                     </Grid>
                     <Grid item xs={12}>
                         <MUIDataTable
