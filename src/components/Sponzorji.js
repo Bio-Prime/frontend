@@ -16,7 +16,7 @@ const useStyles = makeStyles({
         justifyContent: "center",
         alignItems: "stretch",
         flexWrap: "nowrap",
-        height: "8vh",
+        height: "8em",
     },
     img: {
         display: "block",
