@@ -288,10 +288,6 @@ export default {
   ],
   concentrationOrderedUnit: [
     {
-      value: "NANOMOL",
-      label: "nmol",
-    },
-    {
       value: "MIKROM",
       label: "µM",
     },

@@ -689,7 +689,7 @@ export default function AddOne() {
                                         <DatePicker
                                             name="date"
                                             variant="inline"
-                                            format="dd/MM/yyyy"
+                                            format="dd.MM.yyyy"
                                             label="Date of receipt"
                                             onChange={setDate}
                                             value={date}

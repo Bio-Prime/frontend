@@ -194,6 +194,11 @@ export default function PrimerDetails(props) {
                         dataName = (data[item.name] === false) ? "No" : "Yes";
                     }
 
+                    if (item.name === 'date') {
+                        const date = new Date(data[item.name]);
+                        dataName = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+                    }
+
                     tableData.push({
                         "label": item.label,
                         "value": dataName

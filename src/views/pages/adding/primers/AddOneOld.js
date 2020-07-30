@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -16,7 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Divider from "@material-ui/core/Divider";
 import {Redirect, useHistory} from 'react-router-dom';
 import PrimersService from "../../../../services/PrimersService";
-import {MuiPickersUtilsProvider, DatePicker} from "@material-ui/pickers";
+import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AuthService from "../../../../services/AuthService";
@@ -718,7 +718,7 @@ export default function AddOne() {
                                         <DatePicker
                                             name="date"
                                             variant="inline"
-                                            format="dd/MM/yyyy"
+                                            format="dd.MM.yyyy"
                                             label="Date of receipt"
                                             onChange={setDate}
                                             value={date}

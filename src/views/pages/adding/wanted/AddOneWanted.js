@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Constants from "../../constants";
@@ -576,7 +576,7 @@ export default function AddOne() {
                                         <DatePicker
                                             name="date"
                                             variant="inline"
-                                            format="dd/MM/yyyy"
+                                            format="dd.MM.yyyy"
                                             label="Date of receipt"
                                             onChange={setDate}
                                             value={date}

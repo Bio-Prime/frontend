@@ -432,12 +432,15 @@ export default [
         },
     },
     {
-        name: "pairs",
-        label: "Pairs",
+        name: "linked",
+        label: "Linked",
         options: {
             display: false,
             filter: false,
             sort: true,
+            customBodyRender: (value, tableMeta, updateValue) => {
+                return value.join(", ");
+            }
         },
     },
     {

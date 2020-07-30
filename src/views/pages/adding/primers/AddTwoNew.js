@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, {useEffect, useRef} from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Constants from "../../constants";
@@ -18,7 +18,7 @@ import {Redirect, useHistory} from "react-router-dom";
 import PrimersService from "../../../../services/PrimersService";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AuthService from "../../../../services/AuthService";
@@ -689,12 +689,12 @@ export default function AddOne() {
                 <Grid item xs={xsWidth} sm={smWidth}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DatePicker
-                      name="date"
-                      variant="inline"
-                      format="dd/MM/yyyy"
-                      label="Date of receipt"
-                      onChange={setDate}
-                      value={date}
+                        name="date"
+                        variant="inline"
+                        format="dd.MM.yyyy"
+                        label="Date of receipt"
+                        onChange={setDate}
+                        value={date}
                     />
                   </MuiPickersUtilsProvider>
                 </Grid>
