@@ -165,7 +165,7 @@ export default function PrimerDetails(props) {
                 headerRow.push(item.label);
             });
 
-            downloadDataString += headerRow.join("\";\"");
+            downloadDataString += headerRow.join("\",\"");
             downloadDataString += "\"\n\"";
 
             let dataRow = [];
@@ -175,7 +175,7 @@ export default function PrimerDetails(props) {
                 dataRow.push(dataName);
             });
 
-            downloadDataString += dataRow.join("\";\"");
+            downloadDataString += dataRow.join("\",\"");
 
             return downloadDataString;
         };
